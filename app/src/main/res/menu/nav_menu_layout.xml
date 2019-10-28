@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+
+        <item
+            android:id="@+id/nav_reset"
+            android:icon="@drawable/ic_reset"
+            android:title="Reset Game" />
+
+        <item
+            android:id="@+id/nav_leaderboard"
+            android:icon="@drawable/ic_hstemp"
+            android:title="@string/leaderboard" />
+
+        <item
+            android:id="@+id/nav_grid_size"
+            android:icon="@drawable/ic_grid"
+            android:title="@string/gridsize" />
+
+        <item
+            android:id="@+id/nav_sound"
+            android:icon="@drawable/ic_sound"
+            android:title="@string/sound" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="@string/help" />
+
+    </group>
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_about"
+        android:title="@string/about" />
+
+</menu>
