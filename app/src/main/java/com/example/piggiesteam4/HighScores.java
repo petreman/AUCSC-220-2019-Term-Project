@@ -44,7 +44,7 @@ public class HighScores {
          */
         public void setScore(int score) {
             this.score = score;
-        }
+        }//setScore
 
         /**
          * Compares this Score to another Score.
