@@ -65,13 +65,14 @@ public class Grid {
     }//constructor
 
     void clearGrid(){
-        for (int i = 0 ; i < x - 1 ; i++){
+
+        for (int i = 0 ; i < this.x - 1 ; i++){
             for (int j = 0 ; j < y ; j++){
                 this.xCoords[i][j].setExistence(false);
             }//for
         }//for
 
-        for (int i = 0 ; i < x ; i++){
+        for (int i = 0 ; i < this.x ; i++){
             for (int j = 0 ; j < y - 1 ; j++){
                 this.yCoords[i][j].setExistence(false);
             }//for
@@ -79,21 +80,29 @@ public class Grid {
 
     }//clearGrid
 
+    int getX(){
+        return this.x;
+    }//xDimension
+
+    int getY(){
+        return this.y;
+    }//yDimension
+
     /**
      * Tries to place a horizontal fence at the specified grid location
      * Need to index into xCoords to get correct location
      *
-     * @param x - row coord into xCoords
-     * @param y - column coord into xCoords
+     * @param row - row coord into xCoords
+     * @param col - column coord into xCoords
      * @param color - color to set the fence to
      * @return - true if placed successfully,
      *           false if fence already exits at that spot
      * TODO add player as a parameter!
      */
-    boolean setFenceX(int x, int y, int color){
+    boolean setFenceX(int row, int col, int color){
 
-        if (this.xCoords[x][y].exists() == false){
-            this.xCoords[x][y].setExistence(true);
+        if (this.xCoords[row][col].exists() == false){
+            this.xCoords[row][col].setExistence(true);
             //this.xCoords[x][y].setColor(color);
             return true;
         }//if
@@ -108,17 +117,17 @@ public class Grid {
      * Tries to place a vertical fence at the specified grid location in game class
      * Need to index into yCoords to get correct location
      *
-     * @param x - row coord into xCoords
-     * @param y - column coord into xCoords
+     * @param row - row coord into xCoords
+     * @param col - column coord into xCoords
      * @param color - color to set the fence to
      * @return - true if placed successfully,
      *           false if fence already exits at that spot
      * TODO add player as a parameter!
      */
-    boolean setFenceY(int x, int y, int color){
+    boolean setFenceY(int row, int col, int color){
 
-        if (this.yCoords[x][y].exists() == false){
-            this.yCoords[x][y].setExistence(true);
+        if (this.yCoords[row][col].exists() == false){
+            this.yCoords[row][col].setExistence(true);
             //this.yCoords[x][y].setColor(color);
             return true;
         }//if
@@ -130,51 +139,94 @@ public class Grid {
     }//setFenceY
 
     /**
-     * Checks for a completed pen starting by checking the horizontal fences.
-     * Intended to called after successfully placing a horizontal fence.
-     * For vertical fences, it's safest to use completedPenY.
+     * Checks for a potentially completed pen below the provided horizontal
+     * fence coordinate
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists
+     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
+     * However the AI may use this function to help find potential pens
      *
-     * @param xIn - row coord into xCoords
-     * @param yIn - column coord into xCoords
+     * @param row - row coord into xCoords
+     * @param col - column coord into xCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenBelow(int xIn, int yIn){
+    boolean checkPenBelow(int row, int col){
 
-        if (this.xCoords[xIn+1][yIn].exists() && this.yCoords[xIn][yIn].exists() &&
-                this.yCoords[xIn][yIn + 1].exists()){
+        if (this.xCoords[row+1][col].exists() && this.yCoords[row][col].exists() &&
+                this.yCoords[row][col + 1].exists()){
             return true;
         }//if
 
-        else{
-            return false;
-        }//else
+        return false;
 
     }//checkPenBelow
 
     /**
-     * Checks for a completed pen starting by checking the horizontal fences.
-     * Intended to called after successfully placing a horizontal fence.
-     * For vertical fences, it's safest to use completedPenY.
+     * Checks for a potentially completed pen above the provided horizontal
+     * fence coordinate
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists
+     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
+     * However the AI may use this function to help find potential pens
      *
-     * @param xIn - row coord into xCoords
-     * @param yIn - column coord into xCoords
+     * @param row - row coord into xCoords
+     * @param col - column coord into xCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenAbove(int xIn, int yIn){
+    boolean checkPenAbove(int row, int col){
 
-        if (this.xCoords[xIn - 1][yIn].exists() && this.yCoords[xIn - 1][yIn].exists() &&
-                this.yCoords[xIn - 1][yIn + 1].exists()){
+        if (this.xCoords[row - 1][col].exists() &&
+                this.yCoords[row - 1][col].exists() &&
+                this.yCoords[row - 1][col + 1].exists()){
             return true;
         }//if
 
-        else{
-            return false;
-        }//else
+        return false;
 
     }//checkPenAbove
 
-}//grid
+    /**
+     * Checks for a potentially completed pen to the left of the provided vertical
+     * fence coordinate
+     *
+     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
+     * However the AI may use this function to help find potential pens
+     *
+     * @param row - row coord into yCoords
+     * @param col - column coord into yCoords
+     * @return - true if a pen is completed, false otherwise
+     */
+    boolean checkPenLeft(int row, int col){
+
+        if (this.yCoords[row][col - 1].exists() &&
+                this.xCoords[row][col - 1].exists() &&
+                this.xCoords[row + 1][col - 1].exists()){
+            return true;
+        }//if
+
+        return false;
+
+    }//checkPenLeft
+
+    /**
+     * Checks for a potentially completed pen to the right of the provided vertical
+     * fence coordinate
+     *
+     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
+     * However the AI may use this function to help find potential pens
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    boolean checkPenRight(int row, int col){
+
+        if (this.yCoords[row][col + 1].exists() &&
+                this.xCoords[row][col].exists() &&
+                this.xCoords[row + 1][col].exists()){
+            return true;
+        }//if
+
+        return false;
+
+    }//checkPenRight
+
+}//Grid
