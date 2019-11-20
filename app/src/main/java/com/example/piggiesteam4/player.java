@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 public class player {
 
-    private int Color;
+    private int color;
     private boolean turn;
     private int score;
 

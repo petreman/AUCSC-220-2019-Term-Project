@@ -5,4 +5,9 @@
     <string name="gridsize">Grid Size</string>
     <string name="about">About</string>
     <string name="sound">Sound</string>
+    <string name="menu">Menu</string>
+    <string name="leader_board">Leader Board</string>
+    <string name="player">Player</string>
+    <string name="leader_board">Leader Board</string>
+    <string name="leader_board">Leader Board</string>
 </resources>
