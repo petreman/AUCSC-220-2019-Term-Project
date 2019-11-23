@@ -1,3 +1,10 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * MainActivity.java
+ */
+
 package com.example.piggiesteam4;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements
      * This basically tells the main activity that is has an options menu
      * (the navigation drawer)
      *
+     * By Keegan
+     *
      * @param menu - Gonna be honest, I don't know
      * @return - true, as the the menu is created on creation of the activity
      */
@@ -59,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * On selection of the an item in the drawer menu,
      * the corresponding activity is started.
+     *
+     * By Keegan
      *
      * @param item - the item in the menu that has been selected
      * @return - true, as the selected item's activity should be started
