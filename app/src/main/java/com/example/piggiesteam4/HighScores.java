@@ -1,5 +1,10 @@
 package com.example.piggiesteam4;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -217,4 +222,31 @@ public class HighScores {
         }//switch
         return false; //this should never happen
     }//addHighScore
+
+    /**
+     * Saves the high score lists.
+     * This should be called whenever the leaderboard is changed.
+     * Whether a new score is added, or one or all high scores for the grid sizes are removed.
+     * @param context from getApplicationContext() called inside activity class.
+     */
+    public void save(Context context){
+        SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
+        //The above String should be changed later, add to resources
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson(); //added implementation 'com.google.code.gson:gson:2.8.5' to gradle
+        String smallest = gson.toJson(smallestGrid);
+        String small = gson.toJson(smallGrid);
+        String medium = gson.toJson(mediumGrid);
+        String large = gson.toJson(largeGrid);
+        String largest = gson.toJson(largestGrid);
+        editor.putString("smallest", smallest);
+        editor.putString("small", small);
+        editor.putString("medium", medium);
+        editor.putString("large", large);
+        editor.putString("largest", largest);
+        editor.commit();
+        //may need commit after each putString? also move strings to string resource
+        //after tests, it doesn't appear to require multiple commits.
+
+    }//save
 }//HighScore
