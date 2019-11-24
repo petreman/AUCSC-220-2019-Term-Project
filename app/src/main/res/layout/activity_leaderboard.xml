@@ -6,4 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".LeaderboardActivity">
 
+    <Button
+        android:id="@+id/nextScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:onClick="nextLeaderboard"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <Button
+        android:id="@+id/previousScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:onClick="previousLeaderboard"
+        android:text="@string/previous"
+        app:layout_constraintBottom_toBottomOf="@+id/nextScores"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nextScores" />
+
+    <TextView
+        android:id="@+id/leaderboardP1Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/scoreplaceholder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/previousScores"
+        app:layout_constraintTop_toBottomOf="@+id/previousScores" />
+
+    <TextView
+        android:id="@+id/leaderboardP2Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreplaceholder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardP1Name"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP1Name" />
+
+    <TextView
+        android:id="@+id/leaderboardP3Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreplaceholder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardP2Name"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP2Name" />
+
+    <TextView
+        android:id="@+id/leaderboardP4Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreplaceholder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardP3Name"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP3Name" />
+
+    <TextView
+        android:id="@+id/leaderboardP5Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreplaceholder"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardP4Name"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP4Name" />
+
+    <TextView
+        android:id="@+id/P1HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/nextScores"
+        app:layout_constraintTop_toTopOf="@+id/leaderboardP1Name" />
+
+    <TextView
+        android:id="@+id/P2HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/P1HighScore"
+        app:layout_constraintTop_toBottomOf="@+id/P1HighScore" />
+
+    <TextView
+        android:id="@+id/P3HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/P2HighScore"
+        app:layout_constraintTop_toBottomOf="@+id/P2HighScore" />
+
+    <TextView
+        android:id="@+id/P4HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/P3HighScore"
+        app:layout_constraintTop_toBottomOf="@+id/P3HighScore" />
+
+    <TextView
+        android:id="@+id/P5HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/P4HighScore"
+        app:layout_constraintTop_toBottomOf="@+id/P4HighScore" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetAllScores"
+        android:text="@string/resetleaderboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

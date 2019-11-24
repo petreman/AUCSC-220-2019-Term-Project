@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HighScores {
 
-    private static class Score implements Comparable{
+    public static class Score implements Comparable{
         private String name;
         private int score;
 
@@ -146,7 +146,7 @@ public class HighScores {
     public static Score getHighScores(Grid grid){ //this method for getting highest score to show on main screen
         //may change based on how getting grid size works
         //via getX and getY !warning! this does not get the box dimensions, it gets the fence dimensions.
-        int size = ;
+        int size = 0;
         //switch to get highscores for a grid
         switch (size){
             case SMALLEST:
@@ -196,7 +196,7 @@ public class HighScores {
      */
     public static boolean addHighScore(String name, int score, Grid grid){
         Score highscore = new Score(name, score);
-        int size = ;//size via grid getX getY note doesn't get dimensions of box only of points
+        int size = 0;//size via grid getX getY note doesn't get dimensions of box only of points
         switch (size){
             case SMALLEST:
                 smallestGrid.add(highscore);

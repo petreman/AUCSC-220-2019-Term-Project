@@ -22,11 +22,11 @@
         android:layout_height="45dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="12dp"
-        android:text="@string/leader_board"
+        android:text="@string/leaderboard"
         android:textSize="100sp"
         app:layout_constraintStart_toEndOf="@+id/hamMenuButton"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/leader_board" />
+        tools:text="@string/leaderboard" />
 
     <ToggleButton
         android:id="@+id/toggleButton"

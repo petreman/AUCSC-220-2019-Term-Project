@@ -7,4 +7,9 @@
     <string name="sound">Sound</string>
     <string name="menu">Menu</string>
     <string name="player">Player</string>
+    <string name="scoreplaceholder">Your name here</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="resetleaderboard">Reset all scores</string>
+    <string name="resetcurrent">Reset only currently viewed scores.</string>
 </resources>
