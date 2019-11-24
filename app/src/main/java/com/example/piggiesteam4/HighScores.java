@@ -253,7 +253,7 @@ public class HighScores {
     /**
      * Retrieves saved score lists. Should be called when the app is opened.
      * A list should always be able to be retrieved as the variables have an empty list by default.
-     * @param context  from getApplicationContext() called inside activity class.
+     * @param context from getApplicationContext() called inside activity class.
      * @return whether saved scores have been retrieved.
      */
     public static boolean retrieveScores(Context context){
