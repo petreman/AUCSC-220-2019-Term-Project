@@ -4,20 +4,6 @@
  *
  * Player.java
  *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
  * Finished on: November 23, 2019
@@ -32,18 +18,30 @@ import android.graphics.Color;
 
 public class Player {
 
+    //private final int playerColor;
     private int color;
     private boolean turn;
     private int score;
 
 
-
-
+    /**
+     * Constructor
+     * @param playerColor-- the color of the player!
+     */
     Player(int playerColor){
         this.turn = false;
         this.score = 0;
+        this.color = Color.WHITE;
 
     }// end of player
+
+    /**
+     * Default consturctor
+     */
+    Player() {
+        //this.color = Color.parseColor("ffffff");
+        this(0);
+    }// default constructor
 
     /**
      *

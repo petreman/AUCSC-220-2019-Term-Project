@@ -86,6 +86,8 @@ package com.example.piggiesteam4;
 
 import android.graphics.Color;
 
+import com.example.piggiesteam4.Player;
+
 public class Grid {
 
     /**
@@ -278,7 +280,7 @@ public class Grid {
      * @param col - column coord into xCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenBelow(int row, int col){
+   public boolean checkPenBelow(int row, int col){
 
         if (this.xCoords[row+1][col].exists() &&
                 this.yCoords[row][col].exists() &&
