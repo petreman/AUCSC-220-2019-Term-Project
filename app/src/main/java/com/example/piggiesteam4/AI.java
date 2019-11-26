@@ -1,10 +1,10 @@
-package com.example.piggiesteam4;
-
-public class AI extend player {
-
-
-
-
-
-}// end of ai class
+//package com.example.piggiesteam4;
+//
+//public class AI extends Player {
+//
+//
+//
+//
+//
+//}// end of ai class
 

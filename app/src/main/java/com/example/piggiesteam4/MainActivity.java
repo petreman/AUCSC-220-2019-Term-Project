@@ -13,7 +13,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +27,7 @@ import android.widget.ImageButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener, GridFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,32 @@ public class MainActivity extends AppCompatActivity implements
             }//onClick
         });
 
+        // Check that the activity is using the layout version with
+        // the fragment_container FrameLayout
+        if (findViewById(R.id.fragment_container) != null) {
+
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }//if
+
+            // Create a new Fragment to be placed in the activity layout
+            GridFragment firstFragment = new GridFragment();
+
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            firstFragment.setArguments(getIntent().getExtras());
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+
+            androidx.fragment.app.FragmentTransaction fragTrans =
+                getSupportFragmentManager().beginTransaction();
+
+            fragTrans.add(R.id.fragment_container, firstFragment).commit();
+
+        }
 
     }//onCreate
 
@@ -114,4 +143,16 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onNavigationItemSelected
 
+    /**
+     * Intentionally left blank
+     *
+     * Needs to be "implemented" for fragments to display
+     * and not cause the app to crash
+     *
+     * @param uri - no idea
+     */
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        //empty
+    }
 }//MainActivity
