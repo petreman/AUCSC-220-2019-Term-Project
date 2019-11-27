@@ -196,7 +196,7 @@ public class HighScores {
      */
     public static boolean addHighScore(String name, int score, Grid grid){
         Score highscore = new Score(name, score);
-        int size = ;//size via grid getX getY note doesn't get dimensions of box only of points
+        int size = 0;//size via grid getX getY note doesn't get dimensions of box only of points
         switch (size){
             case SMALLEST:
                 smallestGrid.add(highscore);

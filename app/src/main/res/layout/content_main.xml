@@ -16,25 +16,4 @@
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/menu" />
 
-    <TextView
-        android:id="@+id/LeaderBoardTxtView"
-        android:layout_width="110dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/leader_board"
-        android:textSize="100sp"
-        app:layout_constraintStart_toEndOf="@+id/hamMenuButton"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/leader_board" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/image"
-        android:text="ToggleButton"
-        tools:layout_editor_absoluteX="283dp"
-        tools:layout_editor_absoluteY="7dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
