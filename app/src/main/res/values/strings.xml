@@ -11,5 +11,6 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="resetleaderboard">Reset all scores</string>
-    <string name="resetcurrent">Reset only currently viewed scores.</string>
+    <string name="resetcurrent">Reset current scores.</string>
+    <string name="confirm">Confirm your changes and exit</string>
 </resources>

@@ -12,12 +12,13 @@ import java.util.List;
 public class LeaderboardActivity extends AppCompatActivity {
 
     int counter;
+    boolean scoresReset = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-        counter = 0;
-        testset();
+        resetText();
+        //testset();
         getLeaderboard();
     }//onCreate
 
@@ -36,27 +37,35 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public void setPlayerNames(List<HighScores.Score> scores){
         int size = scores.size();
+        TextView player1 = (TextView) findViewById(R.id.leaderboardP1Name);
+        TextView player2 = (TextView) findViewById(R.id.leaderboardP2Name);
+        TextView player3 = (TextView) findViewById(R.id.leaderboardP3Name);
+        TextView player4 = (TextView) findViewById(R.id.leaderboardP4Name);
+        TextView player5 = (TextView) findViewById(R.id.leaderboardP5Name);
         switch (size) {
+            default:
             case 5:
                 String nameP5 = scores.get(4).getName();
-                TextView player5 = (TextView) findViewById(R.id.leaderboardP5Name);
                 player5.setText("5. " + nameP5);
             case 4:
                 String nameP4 = scores.get(3).getName();
-                TextView player4 = (TextView) findViewById(R.id.leaderboardP4Name);
                 player4.setText("4. " + nameP4);
             case 3:
                 String nameP3 = scores.get(2).getName();
-                TextView player3 = (TextView) findViewById(R.id.leaderboardP3Name);
                 player3.setText("3. " + nameP3);
             case 2:
                 String nameP2 = scores.get(1).getName();
-                TextView player2 = (TextView) findViewById(R.id.leaderboardP2Name);
                 player2.setText("2. " + nameP2);
             case 1:
                 String nameP1 = scores.get(0).getName();
-                TextView player1 = (TextView) findViewById(R.id.leaderboardP1Name);
                 player1.setText("1. " + nameP1);
+                break;
+            case 0:
+                player1.setText(R.string.scoreplaceholder);
+                player2.setText(R.string.scoreplaceholder);
+                player3.setText(R.string.scoreplaceholder);
+                player4.setText(R.string.scoreplaceholder);
+                player5.setText(R.string.scoreplaceholder);
         }//switch
     }//setPlayerNames
 
@@ -66,27 +75,35 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public void setPlayerScores(List<HighScores.Score> scores){
         int size = scores.size();
+        TextView player1 = (TextView) findViewById(R.id.P1HighScore);
+        TextView player2 = (TextView) findViewById(R.id.P2HighScore);
+        TextView player3 = (TextView) findViewById(R.id.P3HighScore);
+        TextView player4 = (TextView) findViewById(R.id.P4HighScore);
+        TextView player5 = (TextView) findViewById(R.id.P5HighScore);
         switch (size) {
+            default:
             case 5:
                 int scoreP5 = scores.get(4).getScore();
-                TextView player5 = (TextView) findViewById(R.id.P5HighScore);
                 player5.setText(scoreP5 + "");
             case 4:
                 int scoreP4 = scores.get(3).getScore();
-                TextView player4 = (TextView) findViewById(R.id.P4HighScore);
                 player4.setText(scoreP4 + "");
             case 3:
                 int scoreP3 = scores.get(2).getScore();
-                TextView player3 = (TextView) findViewById(R.id.P3HighScore);
                 player3.setText(scoreP3 + "");
             case 2:
                 int scoreP2 = scores.get(1).getScore();
-                TextView player2 = (TextView) findViewById(R.id.P2HighScore);
                 player2.setText(scoreP2 + "");
             case 1:
                 int scoreP1 = scores.get(0).getScore();
-                TextView player1 = (TextView) findViewById(R.id.P1HighScore);
                 player1.setText(scoreP1 + "");
+                break;
+            case 0:
+                player1.setText("0");
+                player2.setText("0");
+                player3.setText("0");
+                player4.setText("0");
+                player5.setText("0");
         }//switch
     }//setPlayerScores
 
@@ -147,18 +164,28 @@ public class LeaderboardActivity extends AppCompatActivity {
     }//resetText
 
     /**
+     * Resets the current scores being viewed. It does not save the reset, and must be confirmed.
+     * @param v
+     */
+    public void resetCurrentScores(View v){
+        HighScores.resetScores(counter);
+        resetText();
+    }
+
+    /**
      * Confirms the resetting of scores.
      * @param v View
      */
     public void confirm(View v){
         Context context = getApplicationContext();
         HighScores.save(context);
+        getLeaderboard();
     }//confirm
 
     /**
      * Method for testing, remove later.
      */
-    public void testset(){
+    public void testset(View v){
         List<HighScores.Score> a = HighScores.getHighScores(0);
         List<HighScores.Score> b = HighScores.getHighScores(1);
         List<HighScores.Score> c = HighScores.getHighScores(2);

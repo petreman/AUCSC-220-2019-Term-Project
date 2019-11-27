@@ -3,6 +3,8 @@ package com.example.piggiesteam4;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -65,6 +67,12 @@ public class HighScores {
             int otherScore = ((Score)otherPlayer).getScore();
             return otherScore - this.score;
         }//compareTo
+
+        @NonNull
+        @Override
+        public String toString() {
+            return name + ": "+ score;
+        }
     }//Score
 
     private static List<Score> smallestGrid = new ArrayList<Score>(); //change names when specific size finalized
@@ -135,6 +143,7 @@ public class HighScores {
      */
     public static boolean sort(List<Score> gridScores){
         Collections.sort(gridScores);
+        reduceSize();
         return true;
     }//sort
 
@@ -221,6 +230,36 @@ public class HighScores {
         }//switch
         return false; //this should never happen
     }//addHighScore
+
+    /**
+     * Reduces the size of the lists of scores down to 5.
+     */
+    public static void reduceSize(){
+        boolean tooLarge = false;
+        if (smallestGrid.size() >= 6){
+            smallestGrid.remove(5);
+            tooLarge = smallestGrid.size() >= 6;
+        }
+        if (smallGrid.size() >= 6){
+            smallGrid.remove(5);
+            tooLarge = tooLarge || smallGrid.size() >= 6;
+        }
+        if (mediumGrid.size() >= 6){
+            mediumGrid.remove(5);
+            tooLarge = tooLarge || mediumGrid.size() >= 6;
+        }
+        if (largeGrid.size() >= 6){
+            largeGrid.remove(5);
+            tooLarge = tooLarge || largeGrid.size() >= 6;
+        }
+        if (largestGrid.size() >= 6){
+            largestGrid.remove(5);
+            tooLarge = tooLarge || largestGrid.size() >= 6;
+        }
+        if (tooLarge){
+            reduceSize();
+        }
+    }
 
     /**
      * Saves the high score lists.
