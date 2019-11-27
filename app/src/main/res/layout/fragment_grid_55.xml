@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GridFragment"
+    tools:layout_editor_absoluteY="25dp">
+
+    <ImageView
+        android:id="@+id/grid_55_post_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/grid_55_hfence_00"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_02"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_00"
+        app:layout_constraintTop_toTopOf="@+id/grid_55_hfence_00" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_10"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_01"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_03"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_12"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_03"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_01"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_13"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_04"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_02"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_30"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_10"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_21"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_10" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_40"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_20"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_31"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_20" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_30"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_41"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_30" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_20"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_00"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_00" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_21"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_10"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_01" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_31"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_22"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_20"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_11" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_41"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_32"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_30"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_21" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_42"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_40"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_31" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_43"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_41"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_32" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_44"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_42"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_33" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_43"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_34" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_42"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_33"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_31"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_22" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_43"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_34"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_32"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_23" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_44"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_33"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_24" />
+
+    <ImageView
+        android:id="@+id/grid_55_post_22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_32"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_23"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_21"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_12" />
+
+
+    <ImageView
+        android:id="@+id/grid_55_post_23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_33"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_24"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_22"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_13" />
+
+
+    <ImageView
+        android:id="@+id/grid_55_post_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_23"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_14" />
+
+
+    <ImageView
+        android:id="@+id/grid_55_post_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_22"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_13"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_11"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_02" />
+
+
+    <ImageView
+        android:id="@+id/grid_55_post_13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_23"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_12"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_03" />
+
+
+    <ImageView
+        android:id="@+id/grid_55_post_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_post"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/grid_55_post_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_13"
+        app:layout_constraintTop_toBottomOf="@+id/grid_55_post_04" />
+
+
+    <Button
+        android:id="@+id/grid_55_hfence_00"
+        android:layout_width="64dp"
+        android:layout_height="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/grid_55_post_00"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_01"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_00"
+        app:layout_constraintTop_toTopOf="@+id/grid_55_post_00" />
+
+
+    <Button
+        android:id="@+id/grid_55_hfence_01"
+        android:layout_width="64dp"
+        android:layout_height="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/grid_55_post_01"
+        app:layout_constraintEnd_toStartOf="@+id/grid_55_post_02"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toEndOf="@+id/grid_55_post_01"
+        app:layout_constraintTop_toTopOf="@+id/grid_55_post_01" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
