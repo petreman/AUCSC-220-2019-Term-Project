@@ -10,7 +10,7 @@ package com.example.piggiesteam4;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import android.widget.Button;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +22,8 @@ import android.widget.ImageButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener {
+        NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
+        Grid66Fragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,22 @@ public class MainActivity extends AppCompatActivity implements
 
             fragTrans.add(R.id.fragment_container, firstFragment).commit();
 
+
+            Button swapButton = findViewById(R.id.testButton);
+
+            swapButton.setOnClickListener(new View.OnClickListener() {
+
+                Grid66Fragment frag2 = new Grid66Fragment();
+
+                @Override
+                public void onClick(View v) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag2).commit();
+                }//onClick
+            });
+
+
         }//if
+
 
     }//onCreate
 
