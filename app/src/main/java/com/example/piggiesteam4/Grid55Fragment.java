@@ -1,14 +1,17 @@
 package com.example.piggiesteam4;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -19,7 +22,7 @@ import android.view.ViewGroup;
  * Use the {@link Grid55Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Grid55Fragment extends Fragment {
+public class Grid55Fragment extends Fragment implements View.OnTouchListener, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,7 +31,7 @@ public class Grid55Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private MainActivity main;
     private OnFragmentInteractionListener mListener;
 
     public Grid55Fragment() {
@@ -61,14 +64,133 @@ public class Grid55Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        main = (MainActivity) getActivity(); //get the main activity to share game variable
+
+
+
+
+
+
     }
 
+    /**
+     * Set up the views on creation of the fragment
+     *
+     * I'm sorry Rosanna, but because everything is done with buttons,
+     * this is the way it has to be: I cant use the "onClick" attribute
+     * in the XML as that is apparently only able to grab functions
+     * from the view's activity, NOT fragment
+     *
+     * Every button had to be manually set for the onClickListener
+     *
+     * By Keegan
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
+
+
+        Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
+        hfence00.setOnClickListener(this);
+        Button hfence01 = (Button) v.findViewById(R.id.grid_55_hfence_01);
+        hfence01.setOnClickListener(this);
+        Button hfence02 = (Button) v.findViewById(R.id.grid_55_hfence_02);
+        hfence02.setOnClickListener(this);
+        Button hfence03 = (Button) v.findViewById(R.id.grid_55_hfence_03);
+        hfence03.setOnClickListener(this);
+
+        Button hfence10 = (Button) v.findViewById(R.id.grid_55_hfence_10);
+        hfence10.setOnClickListener(this);
+        Button hfence11 = (Button) v.findViewById(R.id.grid_55_hfence_11);
+        hfence11.setOnClickListener(this);
+        Button hfence12 = (Button) v.findViewById(R.id.grid_55_hfence_12);
+        hfence12.setOnClickListener(this);
+        Button hfence13 = (Button) v.findViewById(R.id.grid_55_hfence_13);
+        hfence13.setOnClickListener(this);
+
+        Button hfence20 = (Button) v.findViewById(R.id.grid_55_hfence_20);
+        hfence20.setOnClickListener(this);
+        Button hfence21 = (Button) v.findViewById(R.id.grid_55_hfence_21);
+        hfence21.setOnClickListener(this);
+        Button hfence22 = (Button) v.findViewById(R.id.grid_55_hfence_22);
+        hfence22.setOnClickListener(this);
+        Button hfence23 = (Button) v.findViewById(R.id.grid_55_hfence_23);
+        hfence23.setOnClickListener(this);
+
+        Button hfence30 = (Button) v.findViewById(R.id.grid_55_hfence_30);
+        hfence30.setOnClickListener(this);
+        Button hfence31 = (Button) v.findViewById(R.id.grid_55_hfence_31);
+        hfence31.setOnClickListener(this);
+        Button hfence32 = (Button) v.findViewById(R.id.grid_55_hfence_32);
+        hfence32.setOnClickListener(this);
+        Button hfence33 = (Button) v.findViewById(R.id.grid_55_hfence_33);
+        hfence33.setOnClickListener(this);
+
+        Button hfence40 = (Button) v.findViewById(R.id.grid_55_hfence_40);
+        hfence40.setOnClickListener(this);
+        Button hfence41 = (Button) v.findViewById(R.id.grid_55_hfence_41);
+        hfence41.setOnClickListener(this);
+        Button hfence42 = (Button) v.findViewById(R.id.grid_55_hfence_42);
+        hfence42.setOnClickListener(this);
+        Button hfence43 = (Button) v.findViewById(R.id.grid_55_hfence_43);
+        hfence43.setOnClickListener(this);
+
+        Button vfence00 = (Button) v.findViewById(R.id.grid_55_vfence_00);
+        vfence00.setOnClickListener(this);
+        Button vfence01 = (Button) v.findViewById(R.id.grid_55_vfence_01);
+        vfence01.setOnClickListener(this);
+        Button vfence02 = (Button) v.findViewById(R.id.grid_55_vfence_02);
+        vfence02.setOnClickListener(this);
+        Button vfence03 = (Button) v.findViewById(R.id.grid_55_vfence_03);
+        vfence03.setOnClickListener(this);
+
+        Button vfence10 = (Button) v.findViewById(R.id.grid_55_vfence_10);
+        vfence10.setOnClickListener(this);
+        Button vfence11 = (Button) v.findViewById(R.id.grid_55_vfence_11);
+        vfence11.setOnClickListener(this);
+        Button vfence12 = (Button) v.findViewById(R.id.grid_55_vfence_12);
+        vfence12.setOnClickListener(this);
+        Button vfence13 = (Button) v.findViewById(R.id.grid_55_vfence_13);
+        vfence13.setOnClickListener(this);
+
+        Button vfence20 = (Button) v.findViewById(R.id.grid_55_vfence_20);
+        vfence20.setOnClickListener(this);
+        Button vfence21 = (Button) v.findViewById(R.id.grid_55_vfence_21);
+        vfence21.setOnClickListener(this);
+        Button vfence22 = (Button) v.findViewById(R.id.grid_55_vfence_22);
+        vfence22.setOnClickListener(this);
+        Button vfence23 = (Button) v.findViewById(R.id.grid_55_vfence_23);
+        vfence23.setOnClickListener(this);
+
+        Button vfence30 = (Button) v.findViewById(R.id.grid_55_vfence_30);
+        vfence30.setOnClickListener(this);
+        Button vfence31 = (Button) v.findViewById(R.id.grid_55_vfence_31);
+        vfence31.setOnClickListener(this);
+        Button vfence32 = (Button) v.findViewById(R.id.grid_55_vfence_32);
+        vfence32.setOnClickListener(this);
+        Button vfence33 = (Button) v.findViewById(R.id.grid_55_vfence_33);
+        vfence33.setOnClickListener(this);
+
+        Button vfence04 = (Button) v.findViewById(R.id.grid_55_vfence_04);
+        vfence04.setOnClickListener(this);
+        Button vfence14 = (Button) v.findViewById(R.id.grid_55_vfence_14);
+        vfence14.setOnClickListener(this);
+        Button vfence24 = (Button) v.findViewById(R.id.grid_55_vfence_24);
+        vfence24.setOnClickListener(this);
+        Button vfence34 = (Button) v.findViewById(R.id.grid_55_vfence_34);
+        vfence34.setOnClickListener(this);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_grid_55, container, false);
-    }
+        return v;
+
+    }//onCreateView
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -94,6 +216,35 @@ public class Grid55Fragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        Grid currentGrid = main.singlePlayer.getGrid();
+        int currentColor = main.singlePlayer.getCurrentPlayerColor();
+        Button fence;
+
+
+        switch (v.getId()){
+
+            case R.id.grid_55_hfence_00:
+
+                if (currentGrid.setFenceX(0,0, currentColor)){
+                    fence = (Button) v.findViewById(R.id.grid_55_hfence_00);
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float)1.0);
+                }//if
+
+                break;
+
+            default:
+                fence = (Button) v.findViewById(v.getId());
+                fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                fence.setAlpha((float)1.0);
+                break;
+
+        }//switch
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -108,4 +259,17 @@ public class Grid55Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        // default method for handling onClick Events..
+
+
+        return false;
+    }
+
+
+
 }
+
+

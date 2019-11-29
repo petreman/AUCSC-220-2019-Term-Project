@@ -25,10 +25,14 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
         Grid66Fragment.OnFragmentInteractionListener{
 
+    public Game singlePlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);
@@ -57,31 +61,20 @@ public class MainActivity extends AppCompatActivity implements
             }//if
 
             // Create a new Fragment to be placed in the activity layout
-            Grid55Fragment firstFragment = new Grid55Fragment();
+            Grid55Fragment defaultFragment = new Grid55Fragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            defaultFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
 
             androidx.fragment.app.FragmentTransaction fragTrans =
                 getSupportFragmentManager().beginTransaction();
 
-            fragTrans.add(R.id.fragment_container, firstFragment).commit();
+            fragTrans.add(R.id.fragment_container, defaultFragment).commit();
 
-
-            Button swapButton = findViewById(R.id.testButton);
-
-            swapButton.setOnClickListener(new View.OnClickListener() {
-
-                Grid66Fragment frag2 = new Grid66Fragment();
-
-                @Override
-                public void onClick(View v) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag2).commit();
-                }//onClick
-            });
+            singlePlayer = new Game(55, false);
 
 
         }//if

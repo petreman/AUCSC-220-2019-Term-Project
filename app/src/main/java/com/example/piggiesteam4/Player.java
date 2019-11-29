@@ -42,7 +42,13 @@ public class Player {
     Player(int playerColor){
         this.turn = false;
         this.score = 0;
+        this.color = playerColor;
+    }// end of player
 
+    Player(String playerColor){
+        this.turn = false;
+        this.score = 0;
+        this.color = Color.parseColor(playerColor);
     }// end of player
 
     /**
