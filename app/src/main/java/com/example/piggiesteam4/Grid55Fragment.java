@@ -99,93 +99,133 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
         Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
         hfence00.setOnClickListener(this);
+        hfence00.setOnTouchListener(this);
         Button hfence01 = (Button) v.findViewById(R.id.grid_55_hfence_01);
         hfence01.setOnClickListener(this);
+        hfence01.setOnTouchListener(this);
         Button hfence02 = (Button) v.findViewById(R.id.grid_55_hfence_02);
         hfence02.setOnClickListener(this);
+        hfence02.setOnTouchListener(this);
         Button hfence03 = (Button) v.findViewById(R.id.grid_55_hfence_03);
         hfence03.setOnClickListener(this);
+        hfence03.setOnTouchListener(this);
 
         Button hfence10 = (Button) v.findViewById(R.id.grid_55_hfence_10);
         hfence10.setOnClickListener(this);
+        hfence10.setOnTouchListener(this);
         Button hfence11 = (Button) v.findViewById(R.id.grid_55_hfence_11);
         hfence11.setOnClickListener(this);
+        hfence11.setOnTouchListener(this);
         Button hfence12 = (Button) v.findViewById(R.id.grid_55_hfence_12);
         hfence12.setOnClickListener(this);
+        hfence12.setOnTouchListener(this);
         Button hfence13 = (Button) v.findViewById(R.id.grid_55_hfence_13);
         hfence13.setOnClickListener(this);
+        hfence13.setOnTouchListener(this);
 
         Button hfence20 = (Button) v.findViewById(R.id.grid_55_hfence_20);
         hfence20.setOnClickListener(this);
+        hfence20.setOnTouchListener(this);
         Button hfence21 = (Button) v.findViewById(R.id.grid_55_hfence_21);
         hfence21.setOnClickListener(this);
+        hfence21.setOnTouchListener(this);
         Button hfence22 = (Button) v.findViewById(R.id.grid_55_hfence_22);
         hfence22.setOnClickListener(this);
+        hfence22.setOnTouchListener(this);
         Button hfence23 = (Button) v.findViewById(R.id.grid_55_hfence_23);
         hfence23.setOnClickListener(this);
+        hfence23.setOnTouchListener(this);
 
         Button hfence30 = (Button) v.findViewById(R.id.grid_55_hfence_30);
         hfence30.setOnClickListener(this);
+        hfence30.setOnTouchListener(this);
         Button hfence31 = (Button) v.findViewById(R.id.grid_55_hfence_31);
         hfence31.setOnClickListener(this);
+        hfence31.setOnTouchListener(this);
         Button hfence32 = (Button) v.findViewById(R.id.grid_55_hfence_32);
         hfence32.setOnClickListener(this);
+        hfence32.setOnTouchListener(this);
         Button hfence33 = (Button) v.findViewById(R.id.grid_55_hfence_33);
         hfence33.setOnClickListener(this);
+        hfence33.setOnTouchListener(this);
 
         Button hfence40 = (Button) v.findViewById(R.id.grid_55_hfence_40);
         hfence40.setOnClickListener(this);
+        hfence40.setOnTouchListener(this);
         Button hfence41 = (Button) v.findViewById(R.id.grid_55_hfence_41);
         hfence41.setOnClickListener(this);
+        hfence41.setOnTouchListener(this);
         Button hfence42 = (Button) v.findViewById(R.id.grid_55_hfence_42);
         hfence42.setOnClickListener(this);
+        hfence42.setOnTouchListener(this);
         Button hfence43 = (Button) v.findViewById(R.id.grid_55_hfence_43);
         hfence43.setOnClickListener(this);
+        hfence43.setOnTouchListener(this);
 
         Button vfence00 = (Button) v.findViewById(R.id.grid_55_vfence_00);
         vfence00.setOnClickListener(this);
+        vfence00.setOnTouchListener(this);
         Button vfence01 = (Button) v.findViewById(R.id.grid_55_vfence_01);
         vfence01.setOnClickListener(this);
+        vfence01.setOnTouchListener(this);
         Button vfence02 = (Button) v.findViewById(R.id.grid_55_vfence_02);
         vfence02.setOnClickListener(this);
+        vfence02.setOnTouchListener(this);
         Button vfence03 = (Button) v.findViewById(R.id.grid_55_vfence_03);
         vfence03.setOnClickListener(this);
+        vfence03.setOnTouchListener(this);
 
         Button vfence10 = (Button) v.findViewById(R.id.grid_55_vfence_10);
         vfence10.setOnClickListener(this);
+        vfence10.setOnTouchListener(this);
         Button vfence11 = (Button) v.findViewById(R.id.grid_55_vfence_11);
         vfence11.setOnClickListener(this);
+        vfence11.setOnTouchListener(this);
         Button vfence12 = (Button) v.findViewById(R.id.grid_55_vfence_12);
         vfence12.setOnClickListener(this);
+        vfence12.setOnTouchListener(this);
         Button vfence13 = (Button) v.findViewById(R.id.grid_55_vfence_13);
         vfence13.setOnClickListener(this);
+        vfence13.setOnTouchListener(this);
 
         Button vfence20 = (Button) v.findViewById(R.id.grid_55_vfence_20);
         vfence20.setOnClickListener(this);
+        vfence20.setOnTouchListener(this);
         Button vfence21 = (Button) v.findViewById(R.id.grid_55_vfence_21);
         vfence21.setOnClickListener(this);
+        vfence21.setOnTouchListener(this);
         Button vfence22 = (Button) v.findViewById(R.id.grid_55_vfence_22);
         vfence22.setOnClickListener(this);
+        vfence22.setOnTouchListener(this);
         Button vfence23 = (Button) v.findViewById(R.id.grid_55_vfence_23);
         vfence23.setOnClickListener(this);
+        vfence23.setOnTouchListener(this);
 
         Button vfence30 = (Button) v.findViewById(R.id.grid_55_vfence_30);
         vfence30.setOnClickListener(this);
+        vfence30.setOnTouchListener(this);
         Button vfence31 = (Button) v.findViewById(R.id.grid_55_vfence_31);
         vfence31.setOnClickListener(this);
+        vfence31.setOnTouchListener(this);
         Button vfence32 = (Button) v.findViewById(R.id.grid_55_vfence_32);
         vfence32.setOnClickListener(this);
+        vfence32.setOnTouchListener(this);
         Button vfence33 = (Button) v.findViewById(R.id.grid_55_vfence_33);
         vfence33.setOnClickListener(this);
+        vfence33.setOnTouchListener(this);
 
         Button vfence04 = (Button) v.findViewById(R.id.grid_55_vfence_04);
         vfence04.setOnClickListener(this);
+        vfence04.setOnTouchListener(this);
         Button vfence14 = (Button) v.findViewById(R.id.grid_55_vfence_14);
         vfence14.setOnClickListener(this);
+        vfence14.setOnTouchListener(this);
         Button vfence24 = (Button) v.findViewById(R.id.grid_55_vfence_24);
         vfence24.setOnClickListener(this);
+        vfence24.setOnTouchListener(this);
         Button vfence34 = (Button) v.findViewById(R.id.grid_55_vfence_34);
         vfence34.setOnClickListener(this);
+        vfence34.setOnTouchListener(this);
 
         // Inflate the layout for this fragment
         return v;
@@ -260,15 +300,38 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * Added for fun
+     * If a "fence" hasn't been place yet, hovering over it with your finger
+     * will make it slightly visible
+     *
+     * By Keegan
+     *
+     * @param v
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // default method for handling onClick Events..
+
+
+
+
+        //Button Pressed
+        if(event.getAction() == MotionEvent.ACTION_DOWN && v.findViewById(v.getId()).getAlpha() != 1){
+            v.findViewById(v.getId()).setAlpha((float)0.15);
+        }//if
+
+        //button released
+        if(event.getAction() == MotionEvent.ACTION_UP && v.findViewById(v.getId()).getAlpha() != 1){
+            v.findViewById(v.getId()).setAlpha((float)(0.0));
+        }//if
+
 
 
         return false;
-    }
 
-
+    }//onTouch
 
 }
 
