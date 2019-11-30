@@ -52,40 +52,14 @@ public class AI extends Player {
         boolean isGameEnd = false;
 
         while (!isPlacementFound && !isGameEnd){
-            // checking for 1st row
-            while (yValue <= grid.getX() - 1){
-                if (grid.checkPenBelow(xValue,yValue) == true){
-                    grid.setFenceX(xValue,yValue,color);
-                    isPlacementFound = true;
-                    break;
-                }else
-                    yValue ++;
-            }// end of while
 
-            // check for the rest of the board (2 row --> on wards)
-            yValue = 0;
-            xValue ++;
-            while (xValue <= grid.getX() - 1){
-                while (yValue <= grid.getX() - 1){
-                    if (grid.checkPenBelow(xValue,yValue) == true || grid.checkPenAbove(xValue,yValue) == true) {
-                        grid.setFenceX(xValue,yValue,color);
-                        isPlacementFound = true;
-                        break;
-                    }else
-                        yValue ++;
-                }// end of inner loop
-                xValue ++;
-            }// end of outer loop
-
-            // bottom of the row
-            while (yValue <= grid.getX() - 1){
-                if (grid.checkPenAbove(xValue,yValue) == true){
-                    grid.setFenceX(xValue,yValue,color);
-                    isPlacementFound = true;
-                    break;
-                }else
-                    yValue ++;
-            }// end of while
+            if (checkTopRow() == true){
+                isPlacementFound = true;
+            }else if (checkMiddleRows() == true){
+                isPlacementFound = true;
+            }else if (checkBottomRow() == true){
+                isPlacementFound = true;
+            }
 
             //================================================================================
             // checking for cols
@@ -114,6 +88,7 @@ public class AI extends Player {
                         xValue ++;
                 }// end of inner loop
                 yValue ++;
+                xValue = 0;
             }// end of outer loop
 
             // far right row
@@ -126,24 +101,48 @@ public class AI extends Player {
                     xValue ++;
             }// end of while
 
-
-
-
-
         }// end of while
 
     }// end of function
-//    void checkForPossiblePen (Grid grid){
-//        for (int pos = 0; pos < grid.getY(); pos ++){ //we want to check for each single player
-//            grid.checkPenBelow(grid.getX(),grid.getY());
-//        }//end of for
-//
-//        this.grid;
-//
-//
-//    }// end of checkForPossiblePen
 
+    public boolean checkTopRow(){
+        while (yValue <= grid.getX() - 1){
+            if  (grid.checkPenBelow(xValue,yValue) == true){
+                grid.setFenceX(xValue,yValue,color);
+                return true;
+            }else
+                yValue ++;
+        }// end of while
+        return false;
+    } // end of checkTopRow
 
+    public boolean checkMiddleRows(){
+        yValue = 0;
+        xValue ++;
+        while (xValue <= grid.getX() - 1){
+            while (yValue <= grid.getX() - 1){
+                if (grid.checkPenBelow(xValue,yValue) == true || grid.checkPenAbove(xValue,yValue) == true) {
+                    grid.setFenceX(xValue,yValue,color);
+                    return true;
+                }else
+                    yValue ++;
+            }// end of inner loop
+        }// end of outer loop
+        return false;
+    }// end of checkMiddleRows
+
+    public boolean checkBottomRow(){
+        xValue ++;
+        yValue = 0;
+        while (yValue <= grid.getX() - 1){
+            if (grid.checkPenAbove(xValue,yValue) == true){
+                grid.setFenceX(xValue,yValue,color);
+                return true;
+            }else
+                yValue ++;
+        }// end of while
+        return false;
+    }// end of checkBottomRow
 
 }// end of AI class
 
