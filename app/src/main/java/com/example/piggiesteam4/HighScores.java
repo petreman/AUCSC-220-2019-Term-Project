@@ -205,6 +205,10 @@ public class HighScores {
      */
     public static boolean addHighScore(String name, int score, Grid grid){
         Score highscore = new Score(name, score);
+        return addHighScore(highscore, grid);
+    }//addHighScore
+
+    public static boolean addHighScore(Score highscore, Grid grid){
         int size = 0;//size via grid getX getY note doesn't get dimensions of box only of points
         switch (size){
             case SMALLEST:
@@ -229,7 +233,7 @@ public class HighScores {
                 return true;
         }//switch
         return false; //this should never happen
-    }//addHighScore
+    }
 
     /**
      * Reduces the size of the lists of scores down to 5.
