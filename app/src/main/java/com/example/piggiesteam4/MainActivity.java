@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +27,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
+
+    private Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,5 +143,23 @@ public class MainActivity extends AppCompatActivity implements
         nameQuery.setListener(listener);
         return name[0];
     }//askForName
+
+    public void askForResetConfirmation(){
+        ResetConfirmationFragment confirmation = new ResetConfirmationFragment();
+        confirmation.show(getSupportFragmentManager(), "resetConfirmation");
+
+        ResetConfirmationFragment.ResetConfirmationListener listener = new ResetConfirmationFragment.ResetConfirmationListener() {
+            @Override
+            public void onDialogPositiveClick(Dialog dialog) {
+                game.resetGame();
+            }//onDialogPositiveClick
+
+            @Override
+            public void onDialogNegativeClick(Dialog dialog) {
+                ;
+            }//onDialogNegativeClick
+        };//ResetConfirmationListener
+        confirmation.setListener(listener);
+    }//askForResetConfirmation
 
 }//MainActivity
