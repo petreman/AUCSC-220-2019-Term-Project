@@ -53,6 +53,8 @@ public class AI extends Player {
 
         while (!isPlacementFound && !isGameEnd){
 
+            // check for the rows
+
             if (checkTopRow() == true){
                 isPlacementFound = true;
             }else if (checkMiddleRows() == true){
@@ -62,45 +64,15 @@ public class AI extends Player {
             }
 
             //================================================================================
-            // checking for cols
-            xValue = 0;
-            yValue = 0;
+            // check for columns
 
-            while (xValue <= grid.getY()){
-                if (grid.checkPenRight(xValue,yValue) == true){
-                    grid.setFenceX(xValue,yValue,color);
-                    isPlacementFound = true;
-                    break;
-                }else
-                    xValue ++;
-            }// end of while
-
-            // check for the rest of the board (2nd col --> on wards)
-            yValue ++;
-            xValue = 0;
-            while (yValue <= grid.getY()){
-                while (xValue <= grid.getX() - 1){
-                    if (grid.checkPenRight(xValue,yValue) == true || grid.checkPenLeft(xValue,yValue) == true) {
-                        grid.setFenceX(xValue,yValue,color);
-                        isPlacementFound = true;
-                        break;
-                    }else
-                        xValue ++;
-                }// end of inner loop
-                yValue ++;
-                xValue = 0;
-            }// end of outer loop
-
-            // far right row
-            while (xValue <= grid.getY()){
-                if (grid.checkPenLeft(xValue,yValue) == true){
-                    grid.setFenceX(xValue,yValue,color);
-                    isPlacementFound = true;
-                    break;
-                }else
-                    xValue ++;
-            }// end of while
-
+            if (checkTopCol() == true){
+                isPlacementFound = true;
+            }else if (checkMiddleCol() == true){
+                isPlacementFound = true;
+            }else if (checkBottomCol() == true){
+                isPlacementFound = true;
+            }
         }// end of while
 
     }// end of function
@@ -127,13 +99,13 @@ public class AI extends Player {
                 }else
                     yValue ++;
             }// end of inner loop
+            yValue = 0;
+            xValue ++;
         }// end of outer loop
         return false;
     }// end of checkMiddleRows
 
     public boolean checkBottomRow(){
-        xValue ++;
-        yValue = 0;
         while (yValue <= grid.getX() - 1){
             if (grid.checkPenAbove(xValue,yValue) == true){
                 grid.setFenceX(xValue,yValue,color);
@@ -143,6 +115,48 @@ public class AI extends Player {
         }// end of while
         return false;
     }// end of checkBottomRow
+
+    public boolean checkTopCol(){
+        xValue = 0;
+        yValue = 0;
+
+        while (xValue <= grid.getY()){
+            if (grid.checkPenRight(xValue,yValue) == true){
+                grid.setFenceX(xValue,yValue,color);
+                return true;
+            }else
+                xValue ++;
+        }// end of while
+        return false;
+    }// end of checkTopCol
+
+    public boolean checkMiddleCol(){
+        yValue ++;
+        xValue = 0;
+        while (yValue <= grid.getY()){
+            while (xValue <= grid.getX() - 1){
+                if (grid.checkPenRight(xValue,yValue) == true || grid.checkPenLeft(xValue,yValue) == true) {
+                    grid.setFenceX(xValue,yValue,color);
+                    return true;
+                }else
+                    xValue ++;
+            }// end of inner loop
+            yValue ++;
+            xValue = 0;
+        }// end of outer loop
+        return false;
+    }// end of checkMiddleCol
+
+    public boolean checkBottomCol(){
+        while (xValue <= grid.getY()){
+            if (grid.checkPenLeft(xValue,yValue) == true){
+                grid.setFenceX(xValue,yValue,color);
+                return true;
+            }else
+                xValue ++;
+        }// end of while
+        return false;
+    }// end of checkBottomCol
 
 }// end of AI class
 
