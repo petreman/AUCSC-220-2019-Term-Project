@@ -13,11 +13,14 @@ public class Game {
     Game(int size, boolean type){
 
         multiplayer = type;
+        player1.setTurn();
         currentPlayer = player1;
 
         switch(size){
+
             case(55):
                 grid = new Grid(5, 5);
+                player2 = new Player(Color.BLUE);
                 break;
 
             case(66):
@@ -29,14 +32,31 @@ public class Game {
     }//constructor
 
 
-    Grid getGrid(){
+    public Grid getGrid(){
         return this.grid;
     }
 
-    int getCurrentPlayerColor(){
+    public int getCurrentPlayerColor(){
         return currentPlayer.getColor();
     }
 
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
 
+    public boolean isMultiplayer(){
+        return this.multiplayer;
+    }
+
+    void toggleCurrentPlayer(){
+
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        }//if
+
+        else{
+            currentPlayer = player1;
+        }
+    }
 
 }//Game

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +33,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     private String mParam1;
     private String mParam2;
     private MainActivity main;
+    private boolean isMultiplayer;
+    private Game fragmentGame;
     private OnFragmentInteractionListener mListener;
 
     public Grid55Fragment() {
@@ -59,16 +62,22 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+            isMultiplayer = getArguments().getBoolean("multiplayer");
+        }//if
 
         main = (MainActivity) getActivity(); //get the main activity to share game variable
 
+        if (isMultiplayer){
+            fragmentGame = main.multiPlayer;
+        }//if
 
-
-
+        else{
+            fragmentGame = main.singlePlayer;
+        }//if
 
 
     }
@@ -256,34 +265,307 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         mListener = null;
     }
 
+    /**
+     * When a button is pressed (ie fence placement attempted), a check is performed to
+     * see if a fence can be placed at the specified location (if it hasn't been placed already)
+     *
+     * By Keegan
+     *
+     * @param v - the button clicked
+     */
     @Override
     public void onClick(View v) {
-
-        Grid currentGrid = main.singlePlayer.getGrid();
-        int currentColor = main.singlePlayer.getCurrentPlayerColor();
-        Button fence;
-
 
         switch (v.getId()){
 
             case R.id.grid_55_hfence_00:
+                setHorizontalFence(v, 0, 0);
+                break;
 
-                if (currentGrid.setFenceX(0,0, currentColor)){
-                    fence = (Button) v.findViewById(R.id.grid_55_hfence_00);
-                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
-                    fence.setAlpha((float)1.0);
-                }//if
+            case R.id.grid_55_hfence_01:
+                setHorizontalFence(v, 0, 1);
+                break;
 
+            case R.id.grid_55_hfence_02:
+                setHorizontalFence(v, 0, 2);
+                break;
+
+            case R.id.grid_55_hfence_03:
+                setHorizontalFence(v, 0, 3);
+                break;
+
+            case R.id.grid_55_hfence_10:
+                setHorizontalFence(v, 1, 0);
+                break;
+
+            case R.id.grid_55_hfence_11:
+                setHorizontalFence(v, 1, 1);
+                break;
+
+            case R.id.grid_55_hfence_12:
+                setHorizontalFence(v, 1, 2);
+                break;
+
+            case R.id.grid_55_hfence_13:
+                setHorizontalFence(v, 1, 3);
+                break;
+
+            case R.id.grid_55_hfence_20:
+                setHorizontalFence(v, 2, 0);
+                break;
+
+            case R.id.grid_55_hfence_21:
+                setHorizontalFence(v, 2, 1);
+                break;
+
+            case R.id.grid_55_hfence_22:
+                setHorizontalFence(v, 2, 2);
+                break;
+
+            case R.id.grid_55_hfence_23:
+                setHorizontalFence(v, 2, 3);
+                break;
+
+            case R.id.grid_55_hfence_30:
+                setHorizontalFence(v, 3, 0);
+                break;
+
+            case R.id.grid_55_hfence_31:
+                setHorizontalFence(v, 3, 1);
+                break;
+
+            case R.id.grid_55_hfence_32:
+                setHorizontalFence(v, 3, 2);
+                break;
+
+            case R.id.grid_55_hfence_33:
+                setHorizontalFence(v, 3, 3);
+                break;
+
+            case R.id.grid_55_hfence_40:
+                setHorizontalFence(v, 4, 0);
+                break;
+
+            case R.id.grid_55_hfence_41:
+                setHorizontalFence(v, 4, 1);
+                break;
+
+            case R.id.grid_55_hfence_42:
+                setHorizontalFence(v, 4, 2);
+                break;
+
+            case R.id.grid_55_hfence_43:
+                setHorizontalFence(v, 4, 3);
+                break;
+
+            case R.id.grid_55_vfence_00:
+                setVerticalFence(v, 0, 0);
+                break;
+
+            case R.id.grid_55_vfence_01:
+                setVerticalFence(v, 0, 1);
+                break;
+
+            case R.id.grid_55_vfence_02:
+                setVerticalFence(v, 0, 2);
+                break;
+
+            case R.id.grid_55_vfence_03:
+                setVerticalFence(v, 0, 3);
+                break;
+
+            case R.id.grid_55_vfence_10:
+                setVerticalFence(v, 1, 0);
+                break;
+
+            case R.id.grid_55_vfence_11:
+                setVerticalFence(v, 1, 1);
+                break;
+
+            case R.id.grid_55_vfence_12:
+                setVerticalFence(v, 1, 2);
+                break;
+
+            case R.id.grid_55_vfence_13:
+                setVerticalFence(v, 1, 3);
+                break;
+
+            case R.id.grid_55_vfence_20:
+                setVerticalFence(v, 2, 0);
+                break;
+
+            case R.id.grid_55_vfence_21:
+                setVerticalFence(v, 2, 1);
+                break;
+
+            case R.id.grid_55_vfence_22:
+                setVerticalFence(v, 2, 2);
+                break;
+
+            case R.id.grid_55_vfence_23:
+                setVerticalFence(v, 2, 3);
+                break;
+
+            case R.id.grid_55_vfence_30:
+                setVerticalFence(v, 3, 0);
+                break;
+
+            case R.id.grid_55_vfence_31:
+                setVerticalFence(v, 3, 1);
+                break;
+
+            case R.id.grid_55_vfence_32:
+                setVerticalFence(v, 3, 2);
+                break;
+
+            case R.id.grid_55_vfence_33:
+                setVerticalFence(v, 3, 3);
+                break;
+
+            case R.id.grid_55_vfence_04:
+                setVerticalFence(v, 0, 4);
+                break;
+
+            case R.id.grid_55_vfence_14:
+                setVerticalFence(v, 1, 4);
+                break;
+
+            case R.id.grid_55_vfence_24:
+                setVerticalFence(v, 2, 4);
+                break;
+
+            case R.id.grid_55_vfence_34:
+                setVerticalFence(v, 3, 4);
                 break;
 
             default:
-                fence = (Button) v.findViewById(v.getId());
-                fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
-                fence.setAlpha((float)1.0);
                 break;
 
         }//switch
     }
+
+    /**
+     * Called when a horizontal button is touched. Takes the button's coordinates on grid
+     * If fence doesn't exist at corresponding spot in the grid, it's placed an the button
+     * is updated to reflect this
+     *
+     * By Keegan
+     *
+     * @param v - the button pressed
+     * @param row - button's respective row coordinate into xCoords of the grid
+     * @param col - button's respective col coordinate into xCoords of the grid
+     * TODO implement pen check
+     */
+    void setHorizontalFence(View v, int row, int col){
+
+        Grid currentGrid = fragmentGame.getGrid();
+        int currentColor = fragmentGame.getCurrentPlayerColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+        Button fence = v.findViewById(v.getId());
+
+        switch (row){
+
+            //top row fences
+            case 0:
+
+                //if fence if placed
+                if (currentGrid.setFenceX(row, col, currentColor)) {
+
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+                    //if fence placement didn't make pen
+                    if (!currentGrid.checkPenBelow(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+            //bottom row fences
+            case 4:
+
+                //if fence if placed
+                if (currentGrid.setFenceX(row, col, currentColor)) {
+
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+                    //if fence placement didn't make pen
+                    if (!currentGrid.checkPenAbove(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+            //fences in between top and bottom
+            default:
+
+                //if fence if placed
+                if (currentGrid.setFenceX(row, col, currentColor)) {
+
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+
+                    //if fence placement didn't make pen either above or below
+                    if (!currentGrid.checkPenAbove(row, col, currentPlayer) &&
+                            !currentGrid.checkPenBelow(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+        }//switch
+
+    }//setHorizontalFence
+
+    /**
+     * Called when a vertical button is touched. Takes the button's coordinates on grid
+     * If fence doesn't exist at corresponding spot in the grid, it's placed an the button
+     * is updated to reflect this
+     *
+     * By Keegan
+     *
+     * @param v - the button pressed
+     * @param row - button's respective row coordinate into xCoords of the grid
+     * @param col - button's respective col coordinate into xCoords of the grid
+     * TODO implement pen check
+     */
+    void setVerticalFence(View v, int row, int col){
+
+        Grid currentGrid = fragmentGame.getGrid();
+        int currentColor = fragmentGame.getCurrentPlayerColor();
+        Button fence = v.findViewById(v.getId());
+
+        if (currentGrid.setFenceY(row, col, currentColor)){
+
+            fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+            fence.setAlpha((float)1.0);
+
+            //if (not make pen)
+            fragmentGame.toggleCurrentPlayer();
+
+        }//if
+
+    }//setHorizontalFence
 
     /**
      * This interface must be implemented by activities that contain this
@@ -315,8 +597,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     public boolean onTouch(View v, MotionEvent event) {
 
 
-
-
         //Button Pressed
         if(event.getAction() == MotionEvent.ACTION_DOWN && v.findViewById(v.getId()).getAlpha() != 1){
             v.findViewById(v.getId()).setAlpha((float)0.15);
@@ -326,7 +606,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         if(event.getAction() == MotionEvent.ACTION_UP && v.findViewById(v.getId()).getAlpha() != 1){
             v.findViewById(v.getId()).setAlpha((float)(0.0));
         }//if
-
 
 
         return false;

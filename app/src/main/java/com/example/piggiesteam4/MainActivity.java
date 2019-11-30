@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements
         Grid66Fragment.OnFragmentInteractionListener{
 
     public Game singlePlayer;
+    public Game multiPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +61,20 @@ public class MainActivity extends AppCompatActivity implements
                 return;
             }//if
 
+            singlePlayer = new Game(55, false);
+
             // Create a new Fragment to be placed in the activity layout
             Grid55Fragment defaultFragment = new Grid55Fragment();
 
+            Bundle args = new Bundle();
+
+            //args = getIntent().getExtras();
+
+            args.putBoolean("multiplayer", singlePlayer.isMultiplayer());
+
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
-            defaultFragment.setArguments(getIntent().getExtras());
+            defaultFragment.setArguments(args);
 
             // Add the fragment to the 'fragment_container' FrameLayout
 
@@ -73,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportFragmentManager().beginTransaction();
 
             fragTrans.add(R.id.fragment_container, defaultFragment).commit();
-
-            singlePlayer = new Game(55, false);
 
 
         }//if
