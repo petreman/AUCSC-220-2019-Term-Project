@@ -13,5 +13,7 @@
     <string name="next">Next</string>
     <string name="resetleaderboard">Reset all scores</string>
     <string name="resetcurrent">Reset current scores.</string>
-    <string name="confirm">Confirm your changes and exit</string>
+    <string name="confirm">Confirm</string>
+    <string name="askwinnername">You won! Enter your name.</string>
+    <string name="name">Name</string>
 </resources>
