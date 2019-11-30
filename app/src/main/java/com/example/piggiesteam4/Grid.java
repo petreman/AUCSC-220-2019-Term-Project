@@ -343,7 +343,7 @@ public class Grid {
 
             player.addScore(1);
             this.pens[row - 1][col] = true;
-            return true;
+             return true;
 
         }//if
 

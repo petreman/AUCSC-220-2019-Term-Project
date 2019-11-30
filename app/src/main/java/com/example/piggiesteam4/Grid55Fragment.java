@@ -454,7 +454,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
      * @param v - the button pressed
      * @param row - button's respective row coordinate into xCoords of the grid
      * @param col - button's respective col coordinate into xCoords of the grid
-     * TODO implement pen check
      */
     void setHorizontalFence(View v, int row, int col){
 
@@ -468,7 +467,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             //top row fences
             case 0:
 
-                //if fence if placed
+                //if fence is placed on top row
                 if (currentGrid.setFenceX(row, col, currentColor)) {
 
                     //set color
@@ -490,7 +489,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             //bottom row fences
             case 4:
 
-                //if fence if placed
+                //if fence is placed on the bottom of grid
                 if (currentGrid.setFenceX(row, col, currentColor)) {
 
                     //set color
@@ -509,10 +508,10 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
                 break;
 
-            //fences in between top and bottom
+            //if fence placed in between top and bottom of grid
             default:
 
-                //if fence if placed
+                //if fence is placed
                 if (currentGrid.setFenceX(row, col, currentColor)) {
 
                     //set color
@@ -545,25 +544,87 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
      * By Keegan
      *
      * @param v - the button pressed
-     * @param row - button's respective row coordinate into xCoords of the grid
-     * @param col - button's respective col coordinate into xCoords of the grid
-     * TODO implement pen check
+     * @param row - button's respective row coordinate into yCoords of the grid
+     * @param col - button's respective col coordinate into yCoords of the grid
      */
     void setVerticalFence(View v, int row, int col){
 
         Grid currentGrid = fragmentGame.getGrid();
         int currentColor = fragmentGame.getCurrentPlayerColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
         Button fence = v.findViewById(v.getId());
 
-        if (currentGrid.setFenceY(row, col, currentColor)){
+        switch (col){
 
-            fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
-            fence.setAlpha((float)1.0);
+            //far left fences
+            case 0:
 
-            //if (not make pen)
-            fragmentGame.toggleCurrentPlayer();
+                //if fence if placed on far left
+                if (currentGrid.setFenceY(row, col, currentColor)) {
 
-        }//if
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+                    //if fence placement didn't make pen
+                    if (!currentGrid.checkPenRight(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+            //far right fences
+            case 4:
+
+                //if fence placed on far right
+                if (currentGrid.setFenceY(row, col, currentColor)) {
+
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+                    //if fence placement didn't make pen
+                    if (!currentGrid.checkPenLeft(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+            //fences placed between far left and right
+            default:
+
+                //if fence is placed
+                if (currentGrid.setFenceY(row, col, currentColor)) {
+
+                    //set color
+                    fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+                    fence.setAlpha((float) 1.0);
+
+
+                    //if fence placement didn't make pen either above or below
+                    if (!currentGrid.checkPenLeft(row, col, currentPlayer) &&
+                            !currentGrid.checkPenRight(row, col, currentPlayer)) {
+
+                        //other players turn
+                        fragmentGame.toggleCurrentPlayer();
+
+                    }//if
+
+                }//if
+
+                break;
+
+        }//switch
 
     }//setHorizontalFence
 
