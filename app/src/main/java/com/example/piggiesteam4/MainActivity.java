@@ -10,6 +10,7 @@ package com.example.piggiesteam4;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements
             }//onClick
         });
 
-
+    askForName();
     }//onCreate
 
     /**
@@ -113,5 +114,31 @@ public class MainActivity extends AppCompatActivity implements
         return true;
 
     }//onNavigationItemSelected
+
+    /**
+     * Shows a popup asking for the name of the winner.
+     * To be called on game end.
+     * @return the name of the winner, or anonymous.
+     */
+    public String askForName(){
+        NameQueryFragment nameQuery = new NameQueryFragment();
+        nameQuery.show(getSupportFragmentManager(), "nameQuery");
+        final String[] name = new String[1];
+
+        NameQueryFragment.QueryDialogListener listener = new NameQueryFragment.QueryDialogListener() {
+            @Override
+            public void onDialogPositiveClick(DialogFragment dialog) {
+                NameQueryFragment query = (NameQueryFragment) dialog;
+                name[0] = query.getName();
+            }//onDialogPositiveClick
+
+            @Override
+            public void onDialogNegativeClick(DialogFragment dialog) {
+                name[0] = "Anonymous";
+            }//OnDialogNegativeClick
+        };//QueryDialogListener
+        nameQuery.setListener(listener);
+        return name[0];
+    }//askForName
 
 }//MainActivity

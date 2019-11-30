@@ -24,7 +24,7 @@ public class Game {
 
     /**
      * Checks if the game is over.
-     * @return
+     * @return whether the game is over.
      */
     public boolean isGameOver(){
         int size = (grid.getX() - 1) * (grid.getY() - 1);
@@ -40,6 +40,7 @@ public class Game {
      */
     public void endGame(){
         //get name from popup
+        String name = "";
         HighScores.Score highscore = getHighscore(name);
         HighScores.addHighScore(highscore, grid);
         resetGame();

@@ -31,6 +31,8 @@ public class NameQueryFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View popupLayout = inflater.inflate(R.layout.name_query_popup, null);
 
+        builder.setView(popupLayout);
+
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -41,20 +43,40 @@ public class NameQueryFragment extends DialogFragment {
             }//onClick
         });//setPositiveButton
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //code to return unknown??
+                listener.onDialogNegativeClick(NameQueryFragment.this);
             }//onClick
         });//setNegativeButton
         return builder.create();
     }//onCreateDialog
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (QueryDialogListener) context;
+        }//try
+        catch(Exception e) {
+            ;
+        }//catch
+    }//onAttach
+
+    /**
+     * Sets the listener.
+     * @param listener new QueryDialogListener with implemented methods.
+     */
     public void setListener(QueryDialogListener listener) {
         this.listener = listener;
-    }
+    }//setListener
 
+    /**
+     * Gets the name of the player entered.
+     * @return the name.
+     */
     public String getName(){
         return name;
     }
-}
+}//NameQueryFragment
