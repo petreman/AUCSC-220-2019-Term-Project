@@ -44,6 +44,14 @@ public class Game {
         return currentPlayer;
     }
 
+    public Player getPlayer1(){
+        return player1;
+    }
+
+    public Player getPlayer2(){
+        return player2;
+    }
+
     public boolean isMultiplayer(){
         return this.multiplayer;
     }

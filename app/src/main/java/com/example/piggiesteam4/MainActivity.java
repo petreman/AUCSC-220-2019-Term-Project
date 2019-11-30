@@ -19,7 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
@@ -32,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);
@@ -83,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements
 
             fragTrans.add(R.id.fragment_container, defaultFragment).commit();
 
+
+            TextView p1Score = (TextView) findViewById(R.id.textView);
+            TextView p2Score = (TextView) findViewById(R.id.textView2);
+
+            p1Score.setText(Integer.toString(singlePlayer.getPlayer1().getScore()));
+            p2Score.setText(Integer.toString(singlePlayer.getPlayer2().getScore()));
 
         }//if
 
