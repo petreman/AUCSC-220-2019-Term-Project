@@ -3,6 +3,20 @@
  * PiggiesTeam4
  *
  * MainActivity.java
+ *
+ * The main, single screen where all games take place.
+ *
+ * Currently by default loads a 5x5 single player game.
+ * Visible grids are represented by fragments, and are swapped in and out as necessary
+ * into a frame layout
+ *
+ * Methods:
+ *  - onCreate
+ *
+ * Started forever ago by Keegan
+ *
+ * Changelog
+ *  - n/a
  */
 
 package com.example.piggiesteam4;
@@ -10,7 +24,6 @@ package com.example.piggiesteam4;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -21,21 +34,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
         Grid66Fragment.OnFragmentInteractionListener{
 
+    //Class Variables
     public Game singlePlayer;
     public Game multiPlayer;
     public Game currentGame;
     public Player currentPlayer;
     public Button p1Score;
     public Button p2Score;
+    public int[] p1Color;
+    public int[] p2Color;
 
+    /**
+     * On creation, creates a defualt single player game (5x5 grid)
+     * Eventually we want to be able to load from a saved state
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,71 +89,15 @@ public class MainActivity extends AppCompatActivity implements
                 return;
             }//if
 
-            singlePlayer = new Game(55, false);
-            multiPlayer = new Game(55, true);
-
-            currentGame = singlePlayer;
-
-            // Create a new Fragment to be placed in the activity layout
-            Grid55Fragment defaultFragment = new Grid55Fragment();
-
-            Bundle args = new Bundle();
-
-            //args = getIntent().getExtras();
-
-            args.putBoolean("multiplayer", currentGame.isMultiplayer());
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            defaultFragment.setArguments(args);
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-
-            androidx.fragment.app.FragmentTransaction fragTrans =
-                getSupportFragmentManager().beginTransaction();
-
-            fragTrans.add(R.id.fragment_container, defaultFragment).commit();
-
-            p1Score.setText(Integer.toString(currentGame.getPlayer1().getScore()));
-            p2Score.setText(Integer.toString(currentGame.getPlayer2().getScore()));
-
-            p1Score.getBackground().setColorFilter(currentGame.getPlayer1().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
-
-            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
+            defaultSinglePlayer();
 
         }//if
-
-
-        currentPlayer = currentGame.getCurrentPlayer();
-
-
-        //TODO make this a function
-        if (currentPlayer == currentGame.getPlayer1()){
-            p1Score.getBackground().setColorFilter(currentGame.getPlayer1().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
-
-            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor() + 6710784,
-                    PorterDuff.Mode.MULTIPLY);
-        }//if
-
-        else{
-            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
-
-            p1Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor() + 26214,
-                    PorterDuff.Mode.MULTIPLY);
-        }
-
-        Player player1 = singlePlayer.getPlayer1();
-        Player player2 = singlePlayer.getPlayer2();
 
     }//onCreate
 
     /**
      * This basically tells the main activity that is has an options menu
-     * (the navigation drawer)
+     * (the navigation drawer) and inflates it so that it is visible
      *
      * By Keegan
      *
@@ -197,10 +161,152 @@ public class MainActivity extends AppCompatActivity implements
     }//onNavigationItemSelected
 
     /**
+     * Sets player 1's color locally
+     * Also takes it's color's lighter version for un-highlighting
+     *
+     * Stored as an array of these two colors, as they're heavily associated with each other
+     *
+     * By Keegan
+     *
+     * @param color - the main color of the player
+     * @param colorLight - a more softer color of the player's main color
+     */
+    public void setP1Color(int color, int colorLight){
+        p1Color = new int[]{ color, colorLight };
+    }//setP1Color
+
+    /**
+     * Sets player 2's color locally
+     * Also takes it's color's lighter version for un-highlighting
+     *
+     * Stored as an array of these two colors, as they're heavily associated with each other
+     *
+     * By Keegan
+     *
+     * @param color - the main color of the player
+     * @param colorLight - a more softer color of the player's main color
+     */
+    public void setP2Color(int color, int colorLight){
+        p2Color = new int[]{ color, colorLight };
+    }//setP2Color
+
+    /**
+     * Sets up a default single player game
+     *
+     * Defaults are:
+     *  - player 1 is red
+     *  - player 2 is an AI and brown
+     *  - game grid size is 5x5
+     *
+     *  Intended to be only called on the app's first launch
+     *
+     *  By Keegan
+     */
+    public void defaultSinglePlayer(){
+
+        setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
+        setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
+
+        singlePlayer = new Game(55, false, p1Color, p2Color);
+        currentGame = singlePlayer;
+        currentPlayer = currentGame.getCurrentPlayer();
+
+        Grid55Fragment singlePlayerDefaultFragment = createGrid55Fragment(false);
+
+        p1Score.setText(Integer.toString(currentGame.getPlayer1().getScore()));
+        p2Score.setText(Integer.toString(currentGame.getPlayer2().getScore()));
+
+        setScoreButtonColor();
+
+    }//defaultSinglePlayer
+
+    /**
+     * Creates a fragment for a 5x5 grid, then inflates it to fragment_container with call
+     * to setGrid55Fragment()
+     *
+     * By Keegan
+     *
+     * @param isMultiplayer - if the grid being created is for a multiplayer game
+     * @return - the created instance of the fragment grid
+     */
+    public Grid55Fragment createGrid55Fragment(boolean isMultiplayer){
+
+        // Create a new Fragment to be placed in the activity layout
+        Grid55Fragment grid55Fragment = new Grid55Fragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean("multiplayer", isMultiplayer);
+        grid55Fragment.setArguments(args);
+
+        setGrid55Fragment(grid55Fragment);
+
+        return grid55Fragment;
+
+    }//createGrid55Fragment
+
+    /**
+     * Sets the 5x5 grid on the screen by placing it in fragment_container
+     * NOT intended to be used to replace fragments in the container!
+     *
+     * By Keegan
+     *
+     * @param fragment - the 5x5 grid fragment to display
+     */
+    public void setGrid55Fragment(Grid55Fragment fragment){
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        androidx.fragment.app.FragmentTransaction fragTrans =
+                getSupportFragmentManager().beginTransaction();
+
+        fragTrans.add(R.id.fragment_container, fragment).commit();
+
+
+    }//setGrid55Fragment
+
+    /**
+     * Sets the initial highlighting of the player scores to indicate
+     * who's turn is first
+     *
+     * By Keegan
+     */
+    public void setScoreButtonColor(){
+
+        if (currentPlayer == currentGame.getPlayer1()){
+
+            p1Score.getBackground().setColorFilter(currentGame.getCurrentPlayer().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p2Score.getBackground().setColorFilter(currentGame.getNonCurrentPlayer().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
+
+        }//if
+
+        else{
+
+            p2Score.getBackground().setColorFilter(currentGame.getCurrentPlayer().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p1Score.getBackground().setColorFilter(currentGame.getNonCurrentPlayer().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
+
+        }//else
+
+    }//setScoreButtonColor
+
+    /**
+     *
+     */
+    public void toggleCurrentGame(){
+
+    }
+
+    /**
      * Intentionally left blank
      *
      * Needs to be "implemented" for fragments to display
-     * and not cause the app to crash
+     * and not cause the app to throw an exception
+     *
+     * By Keegan
      *
      * @param uri - no idea
      */
@@ -208,4 +314,5 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
         //empty
     }
+
 }//MainActivity

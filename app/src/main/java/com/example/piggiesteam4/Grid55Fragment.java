@@ -1,20 +1,34 @@
+/**
+ * AUCSC220
+ * PiggiesTeam4
+ *
+ * Grid55Fragment.java
+ *
+ * Java code for the fragment that holds the 5x5 grid (fragment_grid_55.xml)
+ *
+ * There are a lot of default functions here that i don't know what they do or if I can
+ * safely remove them, so I wont comment on them
+ *
+ * Methods:
+ *  -
+ *
+ * Started November 26, 2019 by Keegan
+ *
+ * Changelog:
+ *  n/a
+ */
 package com.example.piggiesteam4;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +77,14 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         return fragment;
     }
 
+    /**
+     * On creation of the fragment, find out if it is for a multiplayer game or not
+     * so it can point to the correct game inside MainActivity
+     *
+     * By Keegan
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +95,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             isMultiplayer = getArguments().getBoolean("multiplayer");
         }//if
 
-        main = (MainActivity) getActivity(); //get the main activity to share game variable
+        main = (MainActivity) getActivity(); //get the main activity to share game variables
 
         if (isMultiplayer){
             fragmentGame = main.multiPlayer;
@@ -85,7 +107,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
         p1ScoreButton = main.p1Score;
         p2ScoreButton = main.p2Score;
-    }
+
+    }//onCreate
 
     /**
      * Set up the views on creation of the fragment
@@ -93,9 +116,12 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
      * I'm sorry Rosanna, but because everything is done with buttons,
      * this is the way it has to be: I cant use the "onClick" attribute
      * in the XML as that is apparently only able to grab functions
-     * from the view's activity, NOT fragment
+     * from the view's activity, NOT fragment. Every button had to be
+     * manually set for the onClickListener.
      *
-     * Every button had to be manually set for the onClickListener
+     * I also set an onTouchListener for every button: what this does, is when a unplaced
+     * fence/button is pressed and held, a little preview of the fence appears first,
+     * designed to give a little bit of feedback to the player
      *
      * By Keegan
      *
@@ -109,7 +135,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
-
 
         Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
         hfence00.setOnClickListener(this);
@@ -273,6 +298,9 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     /**
      * When a button is pressed (ie fence placement attempted), a check is performed to
      * see if a fence can be placed at the specified location (if it hasn't been placed already)
+     *
+     * I wish there was a way to simplify this (I spent quite a while looking), it has to
+     * be like this. At least it'll be fast?
      *
      * By Keegan
      *
@@ -450,8 +478,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     }
 
     /**
-     * Called when a horizontal button is touched. Takes the button's coordinates on grid
-     * If fence doesn't exist at corresponding spot in the grid, it's placed an the button
+     * Called when a horizontal button is touched. Takes the button's coordinates on grid.
+     * If fence doesn't exist at corresponding spot in the grid, it's placed and the button
      * is updated to reflect this
      *
      * By Keegan
@@ -463,7 +491,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     void setHorizontalFence(View v, int row, int col){
 
         Grid currentGrid = fragmentGame.getGrid();
-        int currentColor = fragmentGame.getCurrentPlayerColor();
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
         Button fence = v.findViewById(v.getId());
 
@@ -505,7 +533,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenAbove(row, col, currentPlayer)) {
 
                         //other players turn
-
                         toggleTurn(currentPlayer);
 
                     }//if
@@ -530,12 +557,9 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                             !currentGrid.checkPenBelow(row, col, currentPlayer)) {
 
                         //other players turn
-
                         toggleTurn(currentPlayer);
 
                     }//if
-
-
 
                 }//if
 
@@ -561,7 +585,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     void setVerticalFence(View v, int row, int col){
 
         Grid currentGrid = fragmentGame.getGrid();
-        int currentColor = fragmentGame.getCurrentPlayerColor();
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
         Button fence = v.findViewById(v.getId());
 
@@ -662,48 +686,46 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     /**
      * Added for fun
      * If a "fence" hasn't been place yet, hovering over it with your finger
-     * will make it slightly visible
+     * will make it slightly visible. works by checking how visible the selected fence
+     * currently is: if alpha = 1, then already placed so don't bother
      *
      * By Keegan
      *
-     * @param v
-     * @param event
+     * @param v - the view being touched
+     * @param event - the event (ACTION_DOWN = finger push down, ACTION_UP = finger lift)
      * @return
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-
         //Button Pressed
-        if(event.getAction() == MotionEvent.ACTION_DOWN && v.findViewById(v.getId()).getAlpha() != 1){
+        if(event.getAction() == MotionEvent.ACTION_DOWN &&
+                v.findViewById(v.getId()).getAlpha() != 1){
             v.findViewById(v.getId()).setAlpha((float)0.15);
         }//if
 
         //button released
-        if(event.getAction() == MotionEvent.ACTION_UP && v.findViewById(v.getId()).getAlpha() != 1){
+        if(event.getAction() == MotionEvent.ACTION_UP &&
+                v.findViewById(v.getId()).getAlpha() != 1){
             v.findViewById(v.getId()).setAlpha((float)(0.0));
         }//if
-
 
         return false;
 
     }//onTouch
 
     /**
+     * Called after a fence is placed. Keeps the visible player scores up to date
      *
-     * @param currentPlayer
+     * By Keegan
+     *
+     * @param currentPlayer - the player who's turn it currently is
      */
     public void updateScoreView(Player currentPlayer){
 
         //update the scoreboard in MainActivity
-        if (currentPlayer == fragmentGame.getPlayer1()){
-            p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
-        }
-
-        else{
-            p2ScoreButton.setText(Integer.toString(fragmentGame.getPlayer2().getScore()));
-        }
-
+        p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
+        p2ScoreButton.setText(Integer.toString(fragmentGame.getPlayer2().getScore()));
 
     }//updateScoreView
 
@@ -723,20 +745,20 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
                     PorterDuff.Mode.MULTIPLY);
 
-            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor()
-                    + 26214, PorterDuff.Mode.MULTIPLY);
+            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            //p1ScoreButton.getBackground().clearColorFilter();
 
         }//if
 
         else{
 
-
-
             p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor(),
                     PorterDuff.Mode.MULTIPLY);
 
-            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor()
-                    + 6710784, PorterDuff.Mode.MULTIPLY);
+            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
 
         }//else
 
@@ -744,9 +766,4 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
     }//toggleTurn
 
-}
-
-
-
-
-
+}//Grid55Fragment
