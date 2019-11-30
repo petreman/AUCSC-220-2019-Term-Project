@@ -1,8 +1,11 @@
 /**
+ * AUCSC 220
+ * PiggiesTeam4
  *
  * AI.java
  *
- *
+ * The AI class will scan through the grid and determines where is the best
+ * placement to place a fence in order to make a pen. Otherwise, it will t
  *
  *
  *
@@ -23,9 +26,6 @@ public class AI extends Player {
     private int score;
     private int xValue;
     private int yValue;
-    private int[][] xCoords;
-    private int[][] yCoords;
-
 
 
 
@@ -33,8 +33,6 @@ public class AI extends Player {
         this.score = 0;
         this.turn = false;
         this.color = Color.BLACK;
-        this.xCoords = new int[xValue][yValue - 1];
-        this.xCoords = new int[xValue - 1][yValue];
     }// end of constructor
 
     Grid grid = new Grid(4, 4);
@@ -51,16 +49,19 @@ public class AI extends Player {
         boolean isPlacementFound = false;
         boolean isGameEnd = false;
 
-        while (!isPlacementFound && !isGameEnd){
+        while (!isPlacementFound){
 
             // check for the rows
 
             if (checkTopRow() == true){
                 isPlacementFound = true;
+                checkForPossibleFencePlacement(grid);
             }else if (checkMiddleRows() == true){
                 isPlacementFound = true;
+                checkForPossibleFencePlacement(grid);
             }else if (checkBottomRow() == true){
                 isPlacementFound = true;
+                checkForPossibleFencePlacement(grid);
             }
 
             //================================================================================
@@ -68,10 +69,12 @@ public class AI extends Player {
 
             if (checkTopCol() == true){
                 isPlacementFound = true;
+                checkForPossibleFencePlacement(grid);
             }else if (checkMiddleCol() == true){
                 isPlacementFound = true;
             }else if (checkBottomCol() == true){
                 isPlacementFound = true;
+                checkForPossibleFencePlacement(grid);
             }
         }// end of while
 

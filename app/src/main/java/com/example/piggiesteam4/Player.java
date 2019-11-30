@@ -4,6 +4,12 @@
  *
  * Player.java
  *
+ * The player class contains all the functions for the AI and Mutliplayer game. It contains
+ * functions that assigns player's turn and gives the player the opportunity to change their
+ * colors.
+ *
+ * ADD THE OPPORTUNITY TO ADD A FENCE IF THE BOARD IS EMPTY!!
+ *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
  * Finished on: November 23, 2019
@@ -39,7 +45,6 @@ public class Player {
      * Default consturctor
      */
     Player() {
-        //this.color = Color.parseColor("ffffff");
         this(0);
     }// default constructor
 
