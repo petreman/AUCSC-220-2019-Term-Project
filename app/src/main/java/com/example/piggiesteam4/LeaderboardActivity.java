@@ -112,7 +112,7 @@ public class LeaderboardActivity extends AppCompatActivity {
      * @param v View.
      */
     public void nextLeaderboard(View v){
-        if (counter == 4){
+        if (counter == 2){
             counter = 0;
             getLeaderboard();
         }//if
@@ -128,7 +128,7 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public void previousLeaderboard(View v){
         if (counter == 0){
-            counter = 4;
+            counter = 2;
             getLeaderboard();
         }//if
         else {
