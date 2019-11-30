@@ -15,12 +15,12 @@ public class Game {
         p1 = new Player();
         if (isMultiplayer){
             p2 = new AI();
-        }
+        }//if
         else{
             p2 = new Player();
-        }
+        }//else
         this.isMultiplayer = isMultiplayer;
-    }
+    }//constructor
 
     /**
      * Checks if the game is over.
@@ -31,9 +31,9 @@ public class Game {
         int totalScore = p1.getScore() + p2.getScore();
         if (totalScore == size){
             return true;
-        }
+        }//if
         return false;
-    }
+    }//isGameover
 
     /**
      * Ends the game.
@@ -44,7 +44,7 @@ public class Game {
         HighScores.Score highscore = getHighscore(name);
         HighScores.addHighScore(highscore, grid);
         resetGame();
-    }
+    }//endGame
 
     /**
      * Resets the game, clearing scores and the grid.
@@ -53,7 +53,7 @@ public class Game {
         p1.clearScore();
         p2.clearScore();
         grid.clearGrid();
-    }
+    }//resetGame
 
     /**
      * Updates the fence colors displayed.
@@ -62,7 +62,7 @@ public class Game {
      */
     public void updateFenceColors(Player player, Grid grid){
         grid.updateColors(player);
-    }
+    }//updateFenceColors
 
     /**
      * Gets the highscore and puts it in Score object.
@@ -74,11 +74,11 @@ public class Game {
         int p2Score = p2.getScore();
         if (p1Score>p2Score){
             return new HighScores.Score(name, p1Score);
-        }
+        }//if
         else{
             return new HighScores.Score(name, p2Score);
-        }
-    }
+        }//else
+    }//getHighscore
 
     /**
      * Saves the current game.
@@ -86,18 +86,18 @@ public class Game {
      */
     public void saveGame(Context context){
         SharedPreferences pref;
-        if (isMultiplayer) {
+        if (isMultiplayer){
             pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-        }
+        }//if
         else{
             pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-        }
+        }//else
         SharedPreferences.Editor editor = pref.edit();
         Gson gson = new Gson();
         String game = gson.toJson(this);
         editor.putString("game", game);
         editor.commit();
-    }
+    }//saveGame
 
     /**
      * Retrieves a saved game.
@@ -108,12 +108,12 @@ public class Game {
         SharedPreferences pref;
         if (isMultiplayer) {
             pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-        }
+        }//if
         else{
             pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-        }
+        }//else
         Gson gson = new Gson();
         String game = pref.getString("game","");
         return gson.fromJson(game, Game.class);
-    }
-}
+    }//retrieveGame
+}//Game

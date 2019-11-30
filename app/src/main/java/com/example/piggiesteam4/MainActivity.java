@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements
             }//onClick
         });
 
-    askForName();
+    //askForName();
+    askForResetConfirmation();
     }//onCreate
 
     /**

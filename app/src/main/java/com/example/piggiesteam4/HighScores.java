@@ -80,10 +80,10 @@ public class HighScores {
     private static List<Score> mediumGrid = new ArrayList<Score>();
     private static List<Score> largeGrid = new ArrayList<Score>();
     private static List<Score> largestGrid = new ArrayList<Score>();
-    private static final int SMALLEST = 1; //change these ints according to grid size later
-    private static final int SMALL = 2;    //possibly change to int[2]. 0 is x and 1 is y instead of using area
-    private static final int MEDIUM = 3;
-    private static final int LARGE = 4;
+    private static final int SMALLEST = 1;
+    private static final int SMALL = 25;    //5x5 dots
+    private static final int MEDIUM = 36;   //6x6 dots
+    private static final int LARGE = 49;    //7x7 dots
     private static final int LARGEST = 5;
 
 //    /**
@@ -209,7 +209,7 @@ public class HighScores {
     }//addHighScore
 
     public static boolean addHighScore(Score highscore, Grid grid){
-        int size = 0;//size via grid getX getY note doesn't get dimensions of box only of points
+        int size = grid.getX() * grid.getY();//size via grid getX getY note doesn't get dimensions of box only of points
         switch (size){
             case SMALLEST:
                 smallestGrid.add(highscore);
