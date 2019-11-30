@@ -8,7 +8,7 @@
  * functions that assigns player's turn and gives the player the opportunity to change their
  * colors.
  *
- * ADD THE OPPORTUNITY TO ADD A FENCE IF THE BOARD IS EMPTY!!
+ * ADD THE OPPORTUNITY TO ADD A FENCE IF THE BOARD IS EMPTY!! (for AI)
  *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
