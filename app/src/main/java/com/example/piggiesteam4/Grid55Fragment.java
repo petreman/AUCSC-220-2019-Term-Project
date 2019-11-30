@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -36,6 +37,9 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     private boolean isMultiplayer;
     private Game fragmentGame;
     private OnFragmentInteractionListener mListener;
+
+    private Button p1ScoreButton;
+    private Button p2ScoreButton;
 
     public Grid55Fragment() {
         // Required empty public constructor
@@ -79,7 +83,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             fragmentGame = main.singlePlayer;
         }//if
 
-
+        p1ScoreButton = main.p1Score;
+        p2ScoreButton = main.p2Score;
     }
 
     /**
@@ -478,7 +483,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenBelow(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+                        toggleTurn(currentPlayer);
 
                     }//if
 
@@ -500,7 +505,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenAbove(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+
+                        toggleTurn(currentPlayer);
 
                     }//if
 
@@ -520,19 +526,24 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
 
                     //if fence placement didn't make pen either above or below
-                    if (!currentGrid.checkPenAbove(row, col, currentPlayer) &&
+                    if (!currentGrid.checkPenAbove(row, col, currentPlayer) &
                             !currentGrid.checkPenBelow(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+
+                        toggleTurn(currentPlayer);
 
                     }//if
+
+
 
                 }//if
 
                 break;
 
         }//switch
+
+        updateScoreView(currentPlayer);
 
     }//setHorizontalFence
 
@@ -570,7 +581,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenRight(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+
+                        toggleTurn(currentPlayer);
 
                     }//if
 
@@ -592,7 +604,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenLeft(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+
+                        toggleTurn(currentPlayer);
 
                     }//if
 
@@ -612,11 +625,12 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
 
                     //if fence placement didn't make pen either above or below
-                    if (!currentGrid.checkPenLeft(row, col, currentPlayer) &&
+                    if (!currentGrid.checkPenLeft(row, col, currentPlayer) &
                             !currentGrid.checkPenRight(row, col, currentPlayer)) {
 
                         //other players turn
-                        fragmentGame.toggleCurrentPlayer();
+
+                        toggleTurn(currentPlayer);
 
                     }//if
 
@@ -625,6 +639,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                 break;
 
         }//switch
+
+        updateScoreView(currentPlayer);
 
     }//setHorizontalFence
 
@@ -673,6 +689,64 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
     }//onTouch
 
+    /**
+     *
+     * @param currentPlayer
+     */
+    public void updateScoreView(Player currentPlayer){
+
+        //update the scoreboard in MainActivity
+        if (currentPlayer == fragmentGame.getPlayer1()){
+            p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
+        }
+
+        else{
+            p2ScoreButton.setText(Integer.toString(fragmentGame.getPlayer2().getScore()));
+        }
+
+
+    }//updateScoreView
+
+    /**
+     * Ends the current players turn, and set's the other players turn to true.
+     * Also updates the color of the player score button to indicate who the new
+     * current player is
+     *
+     * By Keegan
+     *
+     * @param currentPlayer - the player who's turn it currently is
+     */
+    public void toggleTurn(Player currentPlayer) {
+
+        if (currentPlayer == fragmentGame.getPlayer1()) {
+
+            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor()
+                    + 26214, PorterDuff.Mode.MULTIPLY);
+
+        }//if
+
+        else{
+
+
+
+            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor()
+                    + 6710784, PorterDuff.Mode.MULTIPLY);
+
+        }//else
+
+        fragmentGame.toggleCurrentPlayer();
+
+    }//toggleTurn
+
 }
+
+
+
 
 

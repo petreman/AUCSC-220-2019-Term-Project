@@ -10,20 +10,20 @@ package com.example.piggiesteam4;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import android.widget.Button;
+
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements
 
     public Game singlePlayer;
     public Game multiPlayer;
+    public Game currentGame;
+    public Player currentPlayer;
+    public Button p1Score;
+    public Button p2Score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);
         NavigationView menuView = findViewById(R.id.navigationId);
+        p1Score = (Button) findViewById(R.id.p1ScoreButton);
+        p2Score = (Button) findViewById(R.id.p2ScoreButton);
 
         //listens for drawer menu items being selected
         menuView.setNavigationItemSelectedListener(this);
@@ -64,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements
             }//if
 
             singlePlayer = new Game(55, false);
+            multiPlayer = new Game(55, true);
+
+            currentGame = singlePlayer;
 
             // Create a new Fragment to be placed in the activity layout
             Grid55Fragment defaultFragment = new Grid55Fragment();
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements
 
             //args = getIntent().getExtras();
 
-            args.putBoolean("multiplayer", singlePlayer.isMultiplayer());
+            args.putBoolean("multiplayer", currentGame.isMultiplayer());
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -85,15 +94,40 @@ public class MainActivity extends AppCompatActivity implements
 
             fragTrans.add(R.id.fragment_container, defaultFragment).commit();
 
+            p1Score.setText(Integer.toString(currentGame.getPlayer1().getScore()));
+            p2Score.setText(Integer.toString(currentGame.getPlayer2().getScore()));
 
-            TextView p1Score = (TextView) findViewById(R.id.textView);
-            TextView p2Score = (TextView) findViewById(R.id.textView2);
+            p1Score.getBackground().setColorFilter(currentGame.getPlayer1().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
 
-            p1Score.setText(Integer.toString(singlePlayer.getPlayer1().getScore()));
-            p2Score.setText(Integer.toString(singlePlayer.getPlayer2().getScore()));
+            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
 
         }//if
 
+
+        currentPlayer = currentGame.getCurrentPlayer();
+
+
+        //TODO make this a function
+        if (currentPlayer == currentGame.getPlayer1()){
+            p1Score.getBackground().setColorFilter(currentGame.getPlayer1().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor() + 6710784,
+                    PorterDuff.Mode.MULTIPLY);
+        }//if
+
+        else{
+            p2Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor(),
+                    PorterDuff.Mode.MULTIPLY);
+
+            p1Score.getBackground().setColorFilter(currentGame.getPlayer2().getColor() + 26214,
+                    PorterDuff.Mode.MULTIPLY);
+        }
+
+        Player player1 = singlePlayer.getPlayer1();
+        Player player2 = singlePlayer.getPlayer2();
 
     }//onCreate
 

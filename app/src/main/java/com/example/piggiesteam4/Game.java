@@ -2,6 +2,8 @@ package com.example.piggiesteam4;
 
 import android.graphics.Color;
 
+import androidx.core.content.ContextCompat;
+
 public class Game {
 
     private Player player1 = new Player(Color.RED);
