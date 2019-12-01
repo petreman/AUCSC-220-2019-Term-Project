@@ -1,0 +1,155 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * Game.java
+ *
+ * Each game is made up of 2 players and a grid. So the game class is a
+ * container for a game
+ *
+ * Methods:
+ *  - Game(int size, boolean isMulti, int[] p1Color, int[] p2Color) -> Game
+ *      Creates a game with the specified grid size, the type of game, and the
+ *      given player colors
+ *
+ *  - getGrid -> Grid
+ *      Returns the grid for the game
+ *
+ *  - getCurrentPlayer() -> Player
+ *      Returns the player who's turn is set to true
+ *
+ *  - getNonCurrentPlayer() -> Player
+ *      Returns the player who's turn it currently isn't
+ *
+ *  - getPlayer1() -> Player
+ *      Returns player 1
+ *
+ *  - getPlayer2() -> Player
+ *      Returns player 2
+ *
+ *  - isMultiplayer() -> boolean
+ *      Returns if the game is multiplayer or not
+ *
+ *  - toggleCurrentPlayer -> void
+ *      Ends the current players turn, and sets the the other players turn to true
+ *
+ * Started November 29, 2019 by Keegan
+ *
+ * Changelog
+ *  n/a
+ */
+package com.example.piggiesteam4;
+
+public class Game {
+
+    private Player player1, player2, currentPlayer;
+    //private AI AI;
+    private Grid grid;
+    private boolean multiplayer = false;
+
+    /**
+     * Creates a game with the specified grid size, the type of game, and the
+     * given player colors
+     *
+     * @param size - size of the grid (in dots)
+     * @param isMulti - specify if the game is multiplayer or not
+     * @param p1Color - player 1's colors
+     * @param p2Color - player 2's colors
+     */
+    Game(int size, boolean isMulti, int[] p1Color, int[] p2Color){
+
+        player1 = new Player(p1Color);
+        player2 = new Player(p2Color);
+
+        if (isMulti){
+            multiplayer = true;
+            //set ai stuff
+        }//if
+
+        player1.setTurn();
+        currentPlayer = player1;
+
+        switch(size){
+
+            case(55):
+                grid = new Grid(5, 5);
+                break;
+
+            case(66):
+                grid = new Grid(6, 6);
+                break;
+
+        }//switch
+
+    }//constructor
+
+    /**
+     * By Keegan
+     * @return - the grid for the game
+     */
+    public Grid getGrid(){
+        return this.grid;
+    }//getGrid
+
+    /**
+     * By Keegan
+     * @return - the game's current player (player who's turn it currently is)
+     */
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }//getCurrentPlayer
+
+    /**
+     * By Keegan
+     * @return - the game's waiting player (player who's turn it currently isn't)
+     */
+    public Player getNonCurrentPlayer(){
+
+        if (player1 == currentPlayer){
+            return player2;
+        }//if
+
+        return player1;
+
+    }//getNonCurrentPlayer
+
+    /**
+     * By Keegan
+     * @return - the game's first player
+     */
+    public Player getPlayer1(){
+        return player1;
+    }//getPlayer1
+
+    /**
+     * @return - the game's second player
+     */
+    public Player getPlayer2(){
+        return player2;
+    }//getPlayer2
+
+    /**
+     * By Keegan
+     * @return - if the game is multiplayer or not
+     */
+    public boolean isMultiplayer(){
+        return this.multiplayer;
+    }//isMultiplayer
+
+    /**
+     * Swaps who the current player is (ending and starting turns)
+     * By Keegan
+     */
+    void toggleCurrentPlayer(){
+
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        }//if
+
+        else{
+            currentPlayer = player1;
+        }//else
+
+    }//toggleCurrentPlayer
+
+}//Game

@@ -13,19 +13,19 @@
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
  * Finished on: November 23, 2019
+ *
+ * Changelog:
+ *  - 2019/11/30: Keegan
+ *      Changed the color field from int to int[2], so a lighter shade
+ *      color can be stored as well. Lighter color used for indicated
+ *      when player turn is over
  */
-
-
-
-
 package com.example.piggiesteam4;
-
-import android.graphics.Color;
 
 public class Player {
 
-    //private final int playerColor;
     private int color;
+    private int colorLight;
     private boolean turn;
     private int score;
 
@@ -34,11 +34,11 @@ public class Player {
      * Constructor
      * @param playerColor-- the color of the player!
      */
-    Player(int playerColor){
+    Player(int[] playerColor){
         this.turn = false;
         this.score = 0;
-        this.color = Color.WHITE;
-
+        this.color = playerColor[0];
+        this.colorLight = playerColor[1];
     }// end of player
 
     /**
@@ -53,9 +53,8 @@ public class Player {
      * The addScore method will take the current play score and updates the total value.
      * @param playerScore- current playScore
      */
-    public void addScore (int playerScore){
+    void addScore(int playerScore){
         score = score + playerScore;
-
     }// end of addScore
 
     /**
@@ -106,8 +105,18 @@ public class Player {
      */
     public int getColor(){
         return color;
-
     }// end of getColor
+
+    /**
+     * Returns the player't complementatry lighter color
+     *
+     * By Keegan
+     *
+     * @return - returns the light color
+     */
+    public int getColorLight() {
+        return colorLight;
+    }//getColorLight
 
     /**
      * This method will end the current player's turn(set to false)
