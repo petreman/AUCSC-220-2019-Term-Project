@@ -97,7 +97,6 @@ public class Grid {
         //data
         private boolean exists;
         private int color;
-        //private player Player;
 
         /**
          * Constructor for Fences.

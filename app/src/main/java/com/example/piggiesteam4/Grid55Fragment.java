@@ -19,6 +19,7 @@
  */
 package com.example.piggiesteam4;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -29,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -516,7 +518,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     }//if
 
                     else{
-                        //togglePigVisibility(row, col);
+                        togglePigVisibility(getUpdatedPenView(row, col));
                     }
 
                 }//if
@@ -541,12 +543,18 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
                     }//if
 
+                    else{
+                        togglePigVisibility(getUpdatedPenView(row - 1, col));
+                    }
+
                 }//if
 
                 break;
 
             //if fence placed in between top and bottom of grid
             default:
+
+                boolean createdPen = false;
 
                 //if fence is placed
                 if (currentGrid.setFenceX(row, col, currentColor)) {
@@ -555,14 +563,21 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
                     fence.setAlpha((float) 1.0);
 
+                    //check for pen to the left
+                    if (currentGrid.checkPenAbove(row, col, currentPlayer)){
+                        togglePigVisibility(getUpdatedPenView(row - 1, col));
+                        createdPen = true;
+                    }//if
 
-                    //if fence placement didn't make pen either above or below
-                    if (!currentGrid.checkPenAbove(row, col, currentPlayer) &
-                            !currentGrid.checkPenBelow(row, col, currentPlayer)) {
+                    //check for pen to the right
+                    if (currentGrid.checkPenBelow(row, col, currentPlayer)){
+                        togglePigVisibility(getUpdatedPenView(row, col));
+                        createdPen = true;
+                    }//if
 
-                        //other players turn
+                    //other player turn if no pen made
+                    if (!createdPen){
                         toggleTurn(currentPlayer);
-
                     }//if
 
                 }//if
@@ -609,10 +624,13 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenRight(row, col, currentPlayer)) {
 
                         //other players turn
-
                         toggleTurn(currentPlayer);
 
                     }//if
+
+                    else{
+                        togglePigVisibility(getUpdatedPenView(row, col));
+                    }
 
                 }//if
 
@@ -632,10 +650,13 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     if (!currentGrid.checkPenLeft(row, col, currentPlayer)) {
 
                         //other players turn
-
                         toggleTurn(currentPlayer);
 
                     }//if
+
+                    else{
+                        togglePigVisibility(getUpdatedPenView(row, col - 1));
+                    }//else
 
                 }//if
 
@@ -644,6 +665,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             //fences placed between far left and right
             default:
 
+                boolean createdPen = false;
+
                 //if fence is placed
                 if (currentGrid.setFenceY(row, col, currentColor)) {
 
@@ -651,15 +674,21 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                     fence.getBackground().setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
                     fence.setAlpha((float) 1.0);
 
+                    //check for pen to the left
+                    if (currentGrid.checkPenLeft(row, col, currentPlayer)){
+                        togglePigVisibility(getUpdatedPenView(row, col - 1));
+                        createdPen = true;
+                    }//if
 
-                    //if fence placement didn't make pen either above or below
-                    if (!currentGrid.checkPenLeft(row, col, currentPlayer) &
-                            !currentGrid.checkPenRight(row, col, currentPlayer)) {
+                    //check for pen to the right
+                    if (currentGrid.checkPenRight(row, col, currentPlayer)){
+                        togglePigVisibility(getUpdatedPenView(row, col));
+                        createdPen = true;
+                    }//if
 
-                        //other players turn
-
+                    //other player turn if no pen made
+                    if (!createdPen){
                         toggleTurn(currentPlayer);
-
                     }//if
 
                 }//if
@@ -702,7 +731,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        //Button Pressed
+        //button pressed down
         if(event.getAction() == MotionEvent.ACTION_DOWN &&
                 v.findViewById(v.getId()).getAlpha() != 1){
             v.findViewById(v.getId()).setAlpha((float)0.15);
@@ -770,10 +799,129 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
     }//toggleTurn
 
-    public void getPenUpdated(int row, int col){
+    /**
+     * Called when a pen is completed. Gets the corresponding pen's pig image, so it
+     * can be passed to togglePigVisibility to make it visible
+     *
+     * Yes, it is a really ugly nested switch. It's either this, or set a listener for
+     * every single pig image, which would take just as much work if not more (see onCreateView()
+     * above to see what setting a listener for multiple views looks like). If i did do it
+     * that way, then I'd also have to define a custom listener, which I'm still not sure about
+     * doing and would also take more work. So what I'm trying to say is that this nested switch
+     * setup was the more convenient thing to do.
+     *
+     * By Keegan
+     *
+     * @param row - row index for pig
+     * @param col - col index for pig
+     * @return the view of the pig that has been penned
+     */
+     public View getUpdatedPenView(int row, int col){
 
-    }
+        switch (row){
 
+            //first row
+            case 0:
+
+                switch(col){
+
+                    case 0:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_00);
+
+                    case 1:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_01);
+
+                    case 2:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_02);
+
+                    case 3:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_03);
+
+                    default:
+                        break;
+
+                }//switch col
+
+            //second row
+            case 1:
+
+                switch(col) {
+
+                    case 0:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_10);
+
+                    case 1:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_11);
+
+                    case 2:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_12);
+
+                    case 3:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_13);
+
+                    default:
+                        break;
+
+                }//switch col
+
+            case 2:
+
+                switch(col) {
+
+                    case 0:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_20);
+
+                    case 1:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_21);
+
+                    case 2:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_22);
+
+                    case 3:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_23);
+
+                    default:
+                        break;
+
+                }//switch col
+
+            case 3:
+
+                switch(col) {
+
+                    case 0:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_30);
+
+                    case 1:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_31);
+
+                    case 2:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_32);
+
+                    case 3:
+                        return this.getActivity().findViewById(R.id.grid_55_pig_33);
+
+                    default:
+                        break;
+
+                }//switch col
+
+            default:
+                break;
+
+        }//switch row
+
+        return null;
+
+    }//getUpdatedPen
+
+    /**
+     * Called when a pen has been completed. Makes the parameter pig (in the pen) visible
+     *
+     * By Keegan
+     *
+     * @param v - the image view to toggle visibility of
+     */
     public void togglePigVisibility(View v){
 
         if (v.getVisibility() == View.VISIBLE){
@@ -782,8 +930,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
         else{
             v.setVisibility(View.VISIBLE);
-        }
+        }//else
 
-    }
+    }//togglePigVisibility
 
 }//Grid55Fragment

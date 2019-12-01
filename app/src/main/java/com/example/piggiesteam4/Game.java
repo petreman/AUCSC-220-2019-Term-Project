@@ -211,7 +211,7 @@ public class Game {
         int p1Score = player1.getScore();
         int p2Score = player2.getScore();
 
-        if (p1Score>p2Score){
+        if (p1Score > p2Score){
             return new HighScores.Score(name, p1Score);
         }//if
 
