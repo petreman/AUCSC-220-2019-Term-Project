@@ -5,14 +5,15 @@
  * AI.java
  *
  * The AI class will scan through the grid and determines where is the best
- * placement to place a fence in order to make a pen. Otherwise, it will t
+ * placement to place a fence in order to make a pen. Otherwise, it will place the place
+ * at an empty location on the grid
  *
  *
  *
  *
  * Created by Arnold Gihozo
  * Started on: November 23, 2019
- * Finished on:
+ * Finished on: November 30,2019
  */
 
 package com.example.piggiesteam4;
@@ -39,7 +40,7 @@ public class AI extends Player {
         this.isGridEmpty = false;
     }// end of constructor
 
-    Grid grid = new Grid(4, 4);
+
 
     /**
      * This function scans through the entire board in order to check for possible pens it can make.
@@ -52,20 +53,19 @@ public class AI extends Player {
     public void checkForPossibleFencePlacement(Grid grid){
         boolean isPlacementFound = false;
 
-
         while (!isPlacementFound){
 
             // check for the rows
 
             if (isGridEmpty == false) {
 
-                if (checkTopRow() == true) {
+                if (checkTopRow(grid) == true) {
                     isPlacementFound = true;
                     checkForPossibleFencePlacement(grid);
-                } else if (checkMiddleRows() == true) {
+                } else if (checkMiddleRows(grid) == true) {
                     isPlacementFound = true;
                     checkForPossibleFencePlacement(grid);
-                } else if (checkBottomRow() == true) {
+                } else if (checkBottomRow(grid) == true) {
                     isPlacementFound = true;
                     checkForPossibleFencePlacement(grid);
                 }
@@ -73,19 +73,21 @@ public class AI extends Player {
                 //================================================================================
                 // check for columns
 
-                if (checkTopCol() == true) {
+                if (checkTopCol(grid) == true) {
                     isPlacementFound = true;
                     checkForPossibleFencePlacement(grid);
-                } else if (checkMiddleCol() == true) {
+                } else if (checkMiddleCol(grid) == true) {
                     isPlacementFound = true;
-                } else if (checkBottomCol() == true) {
+                } else if (checkBottomCol(grid) == true) {
                     isPlacementFound = true;
                     checkForPossibleFencePlacement(grid);
                 }
-
+            // if the grid is empty
             }else{
-                if(choosePositionEmptyGrid() == true){
+                if(choosePositionEmptyGrid(grid) == true){
                     isGridEmpty = true;
+                    isPlacementFound = true;
+                    break;
                 }else{
                     checkForPossibleFencePlacement(grid);
                 }
@@ -99,10 +101,13 @@ public class AI extends Player {
     }// end of checkForPossibleFencePlacement
 
     /**
+     * This function will be used by the AI to set a fence if the grid is empty or if
+     * no pen can be made based on the fence already placed on the grid. This function
+     * will recursively call itself until an empty spot is found on the grid.
      *
+     * @return -- it will return true if it found a random empty spot and place a fence on it
      */
-
-    public boolean choosePositionEmptyGrid(){
+    public boolean choosePositionEmptyGrid(Grid grid){
         while (isRandomPositionChosen != true) {
             int firstNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
             int secondNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
@@ -110,17 +115,19 @@ public class AI extends Player {
                 isRandomPositionChosen = true;
                 return true;
             }else
-                choosePositionEmptyGrid();
-
+                choosePositionEmptyGrid(grid);
         }// end of while
         return false;
     }// end of choosePositionEmptyGrid
 
     /**
+     * This function will go through each fence at the top of the grid row and checks if there is a
+     * pen that can be made from it. If there exists 3 other fences (at the bottom) it will put
+     * a fence in order to make a pen
      *
-     * @return
+     * @return -- returns true if it found a spot to put a fence on in order to make a pen
      */
-    public boolean checkTopRow(){
+    public boolean checkTopRow(Grid grid){
         while (yValue <= grid.getX() - 1){
             if  (grid.checkPenBelow(xValue,yValue) == true){
                 grid.setFenceX(xValue,yValue,color);
@@ -132,10 +139,12 @@ public class AI extends Player {
     } // end of checkTopRow
 
     /**
+     * This function will go through the rest of the grid  (row)(ie: not the top and not the bottom)
+     * checks if there exists 3 other fences in order to make a pen.
      *
-     * @return
+     * @return-- returns true if it found a spot to put a fence
      */
-    public boolean checkMiddleRows(){
+    public boolean checkMiddleRows(Grid grid){
         yValue = 0;
         xValue ++;
         while (xValue <= grid.getX() - 1){
@@ -154,10 +163,12 @@ public class AI extends Player {
     }// end of checkMiddleRows
 
     /**
+     * This function will go through the bottom row of the grid in order to check if there is
+     * a spot to put a fence in order to create a pen
      *
-     * @return
+     * @return-- returns true if there is a spot to create a penm
      */
-    public boolean checkBottomRow(){
+    public boolean checkBottomRow(Grid grid){
         while (yValue <= grid.getX() - 1){
             if (grid.checkPenAbove(xValue,yValue) == true){
                 grid.setFenceX(xValue,yValue,color);
@@ -172,7 +183,7 @@ public class AI extends Player {
      *
      * @return
      */
-    public boolean checkTopCol(){
+    public boolean checkTopCol(Grid grid){
         xValue = 0;
         yValue = 0;
 
@@ -190,7 +201,7 @@ public class AI extends Player {
      *
      * @return
      */
-    public boolean checkMiddleCol(){
+    public boolean checkMiddleCol(Grid grid){
         yValue ++;
         xValue = 0;
         while (yValue <= grid.getY()){
@@ -212,7 +223,7 @@ public class AI extends Player {
      *
      * @return
      */
-    public boolean checkBottomCol(){
+    public boolean checkBottomCol(Grid grid){
         while (xValue <= grid.getY()){
             if (grid.checkPenLeft(xValue,yValue) == true){
                 grid.setFenceX(xValue,yValue,color);
