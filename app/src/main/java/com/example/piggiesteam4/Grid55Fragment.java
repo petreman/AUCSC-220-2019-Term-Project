@@ -515,6 +515,10 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
                     }//if
 
+                    else{
+                        //togglePigVisibility(row, col);
+                    }
+
                 }//if
 
                 break;
@@ -765,5 +769,21 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         fragmentGame.toggleCurrentPlayer();
 
     }//toggleTurn
+
+    public void getPenUpdated(int row, int col){
+
+    }
+
+    public void togglePigVisibility(View v){
+
+        if (v.getVisibility() == View.VISIBLE){
+            v.setVisibility(View.INVISIBLE);
+        }//if
+
+        else{
+            v.setVisibility(View.VISIBLE);
+        }
+
+    }
 
 }//Grid55Fragment
