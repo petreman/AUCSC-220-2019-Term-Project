@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements
         ResetConfirmationFragment.ResetConfirmationListener listener = new ResetConfirmationFragment.ResetConfirmationListener() {
             @Override
             public void onDialogPositiveClick(Dialog dialog) {
-                game.resetGame();
+                currentGame.resetGame();
             }//onDialogPositiveClick
 
             @Override

@@ -42,13 +42,6 @@ public class Player {
     }// end of player
 
     /**
-     * Default consturctor
-     */
-    Player() {
-        this(0);
-    }// default constructor
-
-    /**
      *
      * The addScore method will take the current play score and updates the total value.
      * @param playerScore- current playScore

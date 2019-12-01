@@ -407,4 +407,8 @@ public class Grid {
 
     }//checkPenRight
 
+    void updateColors(int color, Player player){
+
+    }
+
 }//Grid
