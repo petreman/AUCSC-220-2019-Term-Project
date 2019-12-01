@@ -916,7 +916,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     }//getUpdatedPen
 
     /**
-     * Called when a pen has been completed. Makes the parameter pig (in the pen) visible
+     * Called when a pen has been completed. Makes the parameter pig (in the pen) visible,
+     * ands give the pig a color filter based on who created the pen
      *
      * By Keegan
      *
@@ -924,12 +925,17 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
      */
     public void togglePigVisibility(View v){
 
-        if (v.getVisibility() == View.VISIBLE){
-            v.setVisibility(View.INVISIBLE);
+        ImageView pig = (ImageView) v;
+
+        if (pig.getVisibility() == View.VISIBLE){
+            pig.setVisibility(View.INVISIBLE);
+            pig.clearColorFilter();
         }//if
 
         else{
-            v.setVisibility(View.VISIBLE);
+            pig.setColorFilter(fragmentGame.getCurrentPlayer().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
+            pig.setVisibility(View.VISIBLE);
         }//else
 
     }//togglePigVisibility
