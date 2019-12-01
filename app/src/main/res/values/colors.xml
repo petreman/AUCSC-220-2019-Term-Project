@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="blue">#0000ff</color>
+    <color name="lightBlue">#6666ff</color>
+
+    <color name="red">#ff0000</color>
+    <color name="lightRed">#FF6666</color>
+
+    <color name ="ai">#522900</color>
+    <color name ="aiLight">#B88F66</color>
+
 </resources>

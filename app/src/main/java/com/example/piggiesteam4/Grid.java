@@ -79,7 +79,7 @@
  * First push to master on
  *
  * Changelog:
- *  n/a
+ *  11/28/19 - Added getters for fence existence
  */
 
 package com.example.piggiesteam4;
@@ -145,6 +145,7 @@ public class Grid {
     private Fence[][] xCoords; //all horizontal fences
     private Fence[][] yCoords; //all vertical fences
     private int x, y; //dimensions of dots for grid
+    private boolean[][] pens;
 
     /**
      * Grid constructor. Creates data structure for the grid of dots
@@ -155,41 +156,48 @@ public class Grid {
      */
     Grid(int x, int y){
 
-        this.xCoords = new Fence[x - 1][y];
-        this.yCoords = new Fence[x][y - 1];
-
+        this.xCoords = new Fence[x][y - 1];
+        this.yCoords = new Fence[x - 1][y];
+        this.pens = new boolean[x - 1][y - 1];
         this.x = x;
         this.y = y;
 
         //initialize xCoords
-        for (int i = 0 ; i < x - 1 ; i++){
-            for (int j = 0 ; j < y ; j++){
+        for (int i = 0 ; i < x ; i++){
+            for (int j = 0 ; j < y - 1 ; j++){
                 this.xCoords[i][j] = new Fence();
             }//for
         }//for
 
         //initialize yCoords
-        for (int i = 0 ; i < x ; i++){
-            for (int j = 0 ; j < y - 1 ; j++){
+        for (int i = 0 ; i < x - 1 ; i++){
+            for (int j = 0 ; j < y ; j++){
                 this.yCoords[i][j] = new Fence();
+            }//for
+        }//for
+
+        //initialize pens
+        for (int i = 0 ; i < x - 1 ; i++){
+            for (int j = 0 ; j < y - 1 ; j++){
+                this.pens[i][j] = false;
             }//for
         }//for
 
     }//constructor
 
     /**
-     * Sets every fence's existence int the grid to false
+     * Sets every fence's existence in the grid to false
      */
     void clearGrid(){
 
-        for (int i = 0 ; i < this.x - 1 ; i++){
-            for (int j = 0 ; j < y ; j++){
+        for (int i = 0 ; i < this.x ; i++){
+            for (int j = 0 ; j < y - 1; j++){
                 this.xCoords[i][j].setExistence(false);
             }//for
         }//for
 
-        for (int i = 0 ; i < this.x ; i++){
-            for (int j = 0 ; j < y - 1 ; j++){
+        for (int i = 0 ; i < this.x - 1 ; i++){
+            for (int j = 0 ; j < y ; j++){
                 this.yCoords[i][j].setExistence(false);
             }//for
         }//for
@@ -211,15 +219,38 @@ public class Grid {
     }//yDimension
 
     /**
-     * Called whenever a player changes their color. Scans the grid for fences placed
-     * by the provided player and updates their color
+     * Returns if a horizontal fence at the specified location has been place.
+     * Needed for button listeners on grid fragments for fences placed by the
+     * AI: if a fences existence changes without a button press, the buttons
+     * visibility and color still need to be changed
      *
-     * @param player - the players whose color ahs been updated
-     * TODO actually write this when Player class finished
+     * @param row - row coord into xCoords
+     * @param col - column coord into xCoords
+     * @return - true if fence is placed at coordinates,
+     *           false otherwise
      */
-    void updateColors(Player player){
+    boolean getExistenceX(int row, int col){
+        return this.xCoords[row][col].exists();
+    }//getExistenceX
 
-    }//updateColor
+    /**
+     * Returns if a vertical fence at the specified location has been place.
+     * Needed for button listeners on grid fragments for fences placed by the
+     * AI: if a fences existence changes without a button press, the buttons
+     * visibility and color still need to be changed
+     *
+     * @param row - row coord into yCoords
+     * @param col - column coord into yCoords
+     * @return - true if fence is placed at coordinates,
+     *           false otherwise
+     */
+    boolean getExistenceY(int row, int col){
+        return this.yCoords[row][col].exists();
+    }//getExistenceY
+
+    boolean getPen(int row, int col){
+        return this.pens[row][col];
+    }
 
     /**
      * Tries to place a horizontal fence at the specified grid location
@@ -230,13 +261,12 @@ public class Grid {
      * @param color - color to set the fence to
      * @return - true if placed successfully,
      *           false if fence already exits at that spot
-     * TODO add player as a parameter!
      */
     boolean setFenceX(int row, int col, int color){
 
         if (this.xCoords[row][col].exists() == false){
             this.xCoords[row][col].setExistence(true);
-            //this.xCoords[x][y].setColor(color);
+            this.xCoords[row][col].setColor(color);
             return true;
         }//if
 
@@ -250,16 +280,15 @@ public class Grid {
      *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
-     * @param color - color to set the fence to
+     * @param color - color to set the fence to (player.getCurrentPlayerColor())
      * @return - true if placed successfully,
      *           false if fence already exits at that spot
-     * TODO add player as a parameter!
      */
     boolean setFenceY(int row, int col, int color){
 
         if (this.yCoords[row][col].exists() == false){
             this.yCoords[row][col].setExistence(true);
-            //this.yCoords[x][y].setColor(color);
+            this.yCoords[row][col].setColor(color);
             return true;
         }//if
 
@@ -278,12 +307,17 @@ public class Grid {
      * @param col - column coord into xCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenBelow(int row, int col){
+    boolean checkPenBelow(int row, int col, Player player){
 
         if (this.xCoords[row+1][col].exists() &&
                 this.yCoords[row][col].exists() &&
                 this.yCoords[row][col + 1].exists()){
+
+            player.addScore(1);
+            this.pens[row][col] = true;
+
             return true;
+
         }//if
 
         return false;
@@ -301,12 +335,16 @@ public class Grid {
      * @param col - column coord into xCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenAbove(int row, int col){
+    boolean checkPenAbove(int row, int col, Player player){
 
         if (this.xCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col + 1].exists()){
+
+            player.addScore(1);
+            this.pens[row - 1][col] = true;
             return true;
+
         }//if
 
         return false;
@@ -324,12 +362,17 @@ public class Grid {
      * @param col - column coord into yCoords
      * @return - true if a pen is completed, false otherwise
      */
-    boolean checkPenLeft(int row, int col){
+    boolean checkPenLeft(int row, int col, Player player){
 
         if (this.yCoords[row][col - 1].exists() &&
                 this.xCoords[row][col - 1].exists() &&
                 this.xCoords[row + 1][col - 1].exists()){
+
+            player.addScore(1);
+            this.pens[row][col - 1] = true;
+
             return true;
+
         }//if
 
         return false;
@@ -347,12 +390,17 @@ public class Grid {
      * @param col - column coord into yCoords
      * @return - true if a pen is completed , false otherwise
      */
-    boolean checkPenRight(int row, int col){
+    boolean checkPenRight(int row, int col, Player player){
 
         if (this.yCoords[row][col + 1].exists() &&
                 this.xCoords[row][col].exists() &&
                 this.xCoords[row + 1][col].exists()){
+
+            player.addScore(1);
+            this.pens[row][col] = true;
+
             return true;
+
         }//if
 
         return false;

@@ -4,55 +4,57 @@
  *
  * Player.java
  *
+ * The player class contains all the functions for the AI and Mutliplayer game. It contains
+ * functions that assigns player's turn and gives the player the opportunity to change their
+ * colors.
  *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
+ * ADD THE OPPORTUNITY TO ADD A FENCE IF THE BOARD IS EMPTY!! (for AI)
  *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
  * Finished on: November 23, 2019
+ *
+ * Changelog:
+ *  - 2019/11/30: Keegan
+ *      Changed the color field from int to int[2], so a lighter shade
+ *      color can be stored as well. Lighter color used for indicated
+ *      when player turn is over
  */
-
-
-
-
 package com.example.piggiesteam4;
-
-import android.graphics.Color;
 
 public class Player {
 
     private int color;
+    private int colorLight;
     private boolean turn;
     private int score;
 
 
-
-
-    Player(int playerColor){
+    /**
+     * Constructor
+     * @param playerColor-- the color of the player!
+     */
+    Player(int[] playerColor){
         this.turn = false;
         this.score = 0;
-
+        this.color = playerColor[0];
+        this.colorLight = playerColor[1];
     }// end of player
+
+    /**
+     * Default consturctor
+     */
+    Player() {
+        this(0);
+    }// default constructor
 
     /**
      *
      * The addScore method will take the current play score and updates the total value.
      * @param playerScore- current playScore
      */
-    public void addScore (int playerScore){
+    void addScore(int playerScore){
         score = score + playerScore;
-
     }// end of addScore
 
     /**
@@ -103,8 +105,18 @@ public class Player {
      */
     public int getColor(){
         return color;
-
     }// end of getColor
+
+    /**
+     * Returns the player't complementatry lighter color
+     *
+     * By Keegan
+     *
+     * @return - returns the light color
+     */
+    public int getColorLight() {
+        return colorLight;
+    }//getColorLight
 
     /**
      * This method will end the current player's turn(set to false)

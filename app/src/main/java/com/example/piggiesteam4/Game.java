@@ -1,39 +1,156 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * Game.java
+ *
+ * Each game is made up of 2 players and a grid. So the game class is a
+ * container for a game
+ *
+ * Methods:
+ *  - Game(int size, boolean isMulti, int[] p1Color, int[] p2Color) -> Game
+ *      Creates a game with the specified grid size, the type of game, and the
+ *      given player colors
+ *
+ *  - getGrid -> Grid
+ *      Returns the grid for the game
+ *
+ *  - getCurrentPlayer() -> Player
+ *      Returns the player who's turn is set to true
+ *
+ *  - getNonCurrentPlayer() -> Player
+ *      Returns the player who's turn it currently isn't
+ *
+ *  - getPlayer1() -> Player
+ *      Returns player 1
+ *
+ *  - getPlayer2() -> Player
+ *      Returns player 2
+ *
+ *  - isMultiplayer() -> boolean
+ *      Returns if the game is multiplayer or not
+ *
+ *  - toggleCurrentPlayer -> void
+ *      Ends the current players turn, and sets the the other players turn to true
+ *
+ * Started November 29, 2019 by Keegan
+ *
+ * Changelog
+ *  n/a
+ */
 package com.example.piggiesteam4;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.google.gson.Gson;
-
 public class Game {
-    Player p1;
-    Player p2;
-    Grid grid;
-    boolean isMultiplayer;
 
-    Game(boolean isMultiplayer){
-        p1 = new Player();
-        if (isMultiplayer){
-            p2 = new AI();
+    private Player player1, player2, currentPlayer;
+    //private AI AI;
+    private Grid grid;
+    private boolean multiplayer = false;
+
+    /**
+     * Creates a game with the specified grid size, the type of game, and the
+     * given player colors
+     *
+     * @param size - size of the grid (in dots)
+     * @param isMulti - specify if the game is multiplayer or not
+     * @param p1Color - player 1's colors
+     * @param p2Color - player 2's colors
+     */
+    Game(int size, boolean isMulti, int[] p1Color, int[] p2Color){
+
+        player1 = new Player(p1Color);
+        player2 = new Player(p2Color);
+
+        if (isMulti){
+            multiplayer = true;
+            //set ai stuff
         }//if
-        else{
-            p2 = new Player();
-        }//else
-        this.isMultiplayer = isMultiplayer;
-        grid = new Grid(5,5);
+
+        player1.setTurn();
+        currentPlayer = player1;
+
+        switch(size){
+
+            case(55):
+                grid = new Grid(5, 5);
+                break;
+
+            case(66):
+                grid = new Grid(6, 6);
+                break;
+
+        }//switch
+
     }//constructor
 
-    Game(boolean isMultiplayer, int size){
-        p1 = new Player();
-        if (isMultiplayer){
-            p2 = new AI();
+    /**
+     * By Keegan
+     * @return - the grid for the game
+     */
+    public Grid getGrid(){
+        return this.grid;
+    }//getGrid
+
+    /**
+     * By Keegan
+     * @return - the game's current player (player who's turn it currently is)
+     */
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }//getCurrentPlayer
+
+    /**
+     * By Keegan
+     * @return - the game's waiting player (player who's turn it currently isn't)
+     */
+    public Player getNonCurrentPlayer(){
+
+        if (player1 == currentPlayer){
+            return player2;
         }//if
+
+        return player1;
+
+    }//getNonCurrentPlayer
+
+    /**
+     * By Keegan
+     * @return - the game's first player
+     */
+    public Player getPlayer1(){
+        return player1;
+    }//getPlayer1
+
+    /**
+     * @return - the game's second player
+     */
+    public Player getPlayer2(){
+        return player2;
+    }//getPlayer2
+
+    /**
+     * By Keegan
+     * @return - if the game is multiplayer or not
+     */
+    public boolean isMultiplayer(){
+        return this.multiplayer;
+    }//isMultiplayer
+
+    /**
+     * Swaps who the current player is (ending and starting turns)
+     * By Keegan
+     */
+    void toggleCurrentPlayer(){
+
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        }//if
+
         else{
-            p2 = new Player();
+            currentPlayer = player1;
         }//else
-        this.isMultiplayer = isMultiplayer;
-        grid = new Grid(size,size);
-    }//constructor
+
+    }//toggleCurrentPlayer
 
     /**
      * Checks if the game is over.
@@ -92,41 +209,4 @@ public class Game {
             return new HighScores.Score(name, p2Score);
         }//else
     }//getHighscore
-
-    /**
-     * Saves the current game.
-     * @param context from getApplicationContext() called inside activity class.
-     */
-    public void saveGame(Context context){
-        SharedPreferences pref;
-        if (isMultiplayer){
-            pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-        }//if
-        else{
-            pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-        }//else
-        SharedPreferences.Editor editor = pref.edit();
-        Gson gson = new Gson();
-        String game = gson.toJson(this);
-        editor.putString("game", game);
-        editor.commit();
-    }//saveGame
-
-    /**
-     * Retrieves a saved game.
-     * @param context from getApplicationContext() called inside activity class.
-     * @return Game object, should be used to replace the old instance if necessary.
-     */
-    public Game retrieveGame(Context context){  //possible change the saving. moveout of the class.
-        SharedPreferences pref;
-        if (isMultiplayer) {
-            pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-        }//if
-        else{
-            pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-        }//else
-        Gson gson = new Gson();
-        String game = pref.getString("game","");
-        return gson.fromJson(game, Game.class);
-    }//retrieveGame
 }//Game

@@ -18,9 +18,7 @@
         android:fitsSystemWindows="true"
         app:menu="@menu/nav_menu_layout" >
 
-
     </com.google.android.material.navigation.NavigationView>
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
