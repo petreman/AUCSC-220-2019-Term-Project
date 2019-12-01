@@ -20,6 +20,19 @@ public class Game {
             p2 = new Player();
         }//else
         this.isMultiplayer = isMultiplayer;
+        grid = new Grid(5,5);
+    }//constructor
+
+    Game(boolean isMultiplayer, int size){
+        p1 = new Player();
+        if (isMultiplayer){
+            p2 = new AI();
+        }//if
+        else{
+            p2 = new Player();
+        }//else
+        this.isMultiplayer = isMultiplayer;
+        grid = new Grid(size,size);
     }//constructor
 
     /**
@@ -102,9 +115,9 @@ public class Game {
     /**
      * Retrieves a saved game.
      * @param context from getApplicationContext() called inside activity class.
-     * @return Game object, should be used to replace the old instance.
+     * @return Game object, should be used to replace the old instance if necessary.
      */
-    public Game retrieveGame(Context context){
+    public Game retrieveGame(Context context){  //possible change the saving. moveout of the class.
         SharedPreferences pref;
         if (isMultiplayer) {
             pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);

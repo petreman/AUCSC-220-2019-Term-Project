@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,10 +26,14 @@ import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
 
+import static java.lang.Math.sqrt;
+
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    private Game game;
+    private Game singlePlayer;
+    private Game multiPlayer;
+    private Game currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,5 +167,24 @@ public class MainActivity extends AppCompatActivity implements
         };//ResetConfirmationListener
         confirmation.setListener(listener);
     }//askForResetConfirmation
+
+    public void changeSize(){
+        Intent intent = getIntent();
+        int size = intent.getIntExtra("size", 0);
+        if (size != 0) {
+            size = (int) sqrt((double) size);
+            boolean isMultiplayer = currentGame.isMultiplayer;
+            currentGame = new Game(isMultiplayer, size);
+        }
+        else{
+            //try to retrieve saved games
+            //if that fails from no saved game then create
+        }
+    }
+
+    public void retrieveGames(){
+        Context context = getApplicationContext();
+
+    }
 
 }//MainActivity
