@@ -26,9 +26,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -40,8 +38,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.google.android.material.navigation.NavigationView;
-
-import static java.lang.Math.sqrt;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
@@ -167,32 +163,47 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onNavigationItemSelected
 
+    //Maybe change variable away from class variable.
+    String receivedName;
     /**
      * Shows a popup asking for the name of the winner.
      * To be called on game end.
-     * @return the name of the winner, or anonymous.
+     * Will end the game and get the winner's score and name. May be displayed on leaderboard.
      */
-    public String askForName(){
+    public void askForName(final Game game){
         NameQueryFragment nameQuery = new NameQueryFragment();
         nameQuery.show(getSupportFragmentManager(), "nameQuery");
-        final String[] name = new String[1];
 
         NameQueryFragment.QueryDialogListener listener = new NameQueryFragment.QueryDialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
                 NameQueryFragment query = (NameQueryFragment) dialog;
-                name[0] = query.getName();
+                receivedName = query.getName().trim();
+                game.endGame(receivedName);
             }//onDialogPositiveClick
 
             @Override
             public void onDialogNegativeClick(DialogFragment dialog) {
-                name[0] = "Anonymous";
+                receivedName = "Anonymous";
+                game.endGame(receivedName);
             }//OnDialogNegativeClick
         };//QueryDialogListener
         nameQuery.setListener(listener);
-        return name[0];
     }//askForName
 
+    //This method is probably not needed.
+    //The variable might be better off as not a class variable.
+    /**
+     * Gets the name of the winner.
+     * @return
+     */
+    public String getName(){
+        return receivedName;
+    }
+
+    /**
+     * Asks for confirmation to reset the game.
+     */
     public void askForResetConfirmation(){
         ResetConfirmationFragment confirmation = new ResetConfirmationFragment();
         confirmation.show(getSupportFragmentManager(), "resetConfirmation");
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements
         ResetConfirmationFragment.ResetConfirmationListener listener = new ResetConfirmationFragment.ResetConfirmationListener() {
             @Override
             public void onDialogPositiveClick(Dialog dialog) {
-                game.resetGame();
+                currentGame.resetGame();
             }//onDialogPositiveClick
 
             @Override
@@ -210,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements
         };//ResetConfirmationListener
         confirmation.setListener(listener);
     }//askForResetConfirmation
+
     /**
      * Sets player 1's color locally
      * Also takes it's color's lighter version for un-highlighting
@@ -283,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Create a new Fragment to be placed in the activity layout
         Grid55Fragment grid55Fragment = new Grid55Fragment();
+        setGrid55FragmentListener(grid55Fragment);
 
         Bundle args = new Bundle();
         args.putBoolean("multiplayer", isMultiplayer);
@@ -363,6 +376,24 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
         //empty
+    }
+
+    Grid55Fragment.endGameListener listener = new Grid55Fragment.endGameListener() {
+        @Override
+        public void endGame(Game game) {
+            if (game.isGameOver()){
+                askForName(game);
+                HighScores.save(getApplicationContext());
+            }
+        }
+    };
+
+    /**
+     * Sets the listener in Grid55Fragment
+     * @param grid the Grid55Fragment.
+     */
+    public void setGrid55FragmentListener(Grid55Fragment grid){
+        grid.setListener(listener);
     }
 
 }//MainActivity

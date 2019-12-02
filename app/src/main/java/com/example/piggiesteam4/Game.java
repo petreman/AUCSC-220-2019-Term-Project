@@ -158,7 +158,7 @@ public class Game {
      */
     public boolean isGameOver(){
         int size = (grid.getX() - 1) * (grid.getY() - 1);
-        int totalScore = p1.getScore() + p2.getScore();
+        int totalScore = player1.getScore() + player2.getScore();
         if (totalScore == size){
             return true;
         }//if
@@ -168,9 +168,7 @@ public class Game {
     /**
      * Ends the game.
      */
-    public void endGame(){
-        //get name from popup
-        String name = "";
+    public void endGame(String name){
         HighScores.Score highscore = getHighscore(name);
         HighScores.addHighScore(highscore, grid);
         resetGame();
@@ -180,8 +178,8 @@ public class Game {
      * Resets the game, clearing scores and the grid.
      */
     public void resetGame(){
-        p1.clearScore();
-        p2.clearScore();
+        player1.clearScore();
+        player2.clearScore();
         grid.clearGrid();
     }//resetGame
 
@@ -190,9 +188,9 @@ public class Game {
      * @param player the player whose color was just changed.
      * @param grid the grid of the game.
      */
-    public void updateFenceColors(Player player, Grid grid){
-        grid.updateColors(player);
-    }//updateFenceColors
+//    public void updateFenceColors(Player player, Grid grid){
+//        grid.updateColors();
+//    }//updateFenceColors
 
     /**
      * Gets the highscore and puts it in Score object.
@@ -200,8 +198,8 @@ public class Game {
      * @return the Score object.
      */
     public HighScores.Score getHighscore(String name){
-        int p1Score = p1.getScore();
-        int p2Score = p2.getScore();
+        int p1Score = player1.getScore();
+        int p2Score = player2.getScore();
         if (p1Score>p2Score){
             return new HighScores.Score(name, p1Score);
         }//if

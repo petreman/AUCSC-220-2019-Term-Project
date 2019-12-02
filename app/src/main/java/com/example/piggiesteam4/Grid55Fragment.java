@@ -20,6 +20,7 @@
 package com.example.piggiesteam4;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.gson.Gson;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -475,6 +478,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                 break;
 
         }//switch
+        listener.endGame(fragmentGame);
     }
 
     /**
@@ -785,5 +789,16 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         }
 
     }
+    endGameListener listener;
+    public interface endGameListener{
+        void endGame(Game game);
+    }
 
+    /**
+     * Sets the listener.
+     * @param listener the listener.
+     */
+    public void setListener(endGameListener listener){
+        this.listener = listener;
+    }
 }//Grid55Fragment

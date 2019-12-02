@@ -17,10 +17,14 @@ public class GridSizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grid_size);
     }
 
+    /**
+     * Sets what size to switch to.
+     * @param v View
+     */
     public void switchSize(View v){
         Button button = (Button) v;
         Button confirm = (Button) findViewById(R.id.confirmButtonSize);
-        String text = button.getText().toString();
+        String text = button.getText().toString().trim();
         switch (text){
             case "5x5":
                 selectedSize = 25;
@@ -34,9 +38,14 @@ public class GridSizeActivity extends AppCompatActivity {
         confirm.setEnabled(true);
     }//switchSize
 
+    //TODO rename the method
+    /**
+     * Starts the game with the selected size, will replace the current game.
+     * @param v View
+     */
     public void pending(View v){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("size", selectedSize);
         startActivity(intent);
-    }
+    }//pending
 }//GridSizeActivity
