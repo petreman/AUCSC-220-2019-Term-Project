@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements
         ResetConfirmationFragment.ResetConfirmationListener listener = new ResetConfirmationFragment.ResetConfirmationListener() {
             @Override
             public void onDialogPositiveClick(Dialog dialog) {
-                game.resetGame();
+                currentGame.resetGame();
             }//onDialogPositiveClick
 
             @Override
@@ -290,7 +290,6 @@ public class MainActivity extends AppCompatActivity implements
 
         setGrid55Fragment(grid55Fragment);
 
-        int i = 0;
         return grid55Fragment;
 
 

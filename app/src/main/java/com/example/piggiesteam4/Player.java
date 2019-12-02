@@ -41,12 +41,12 @@ public class Player {
         this.colorLight = playerColor[1];
     }// end of player
 
-    /**
-     * Default consturctor
-     */
-    Player() {
-        this(0);
-    }// default constructor
+//    /**
+//     * Default consturctor
+//     */
+//    Player() {
+//        this(0);
+//    }// default constructor
 
     /**
      *
