@@ -290,7 +290,9 @@ public class MainActivity extends AppCompatActivity implements
 
         setGrid55Fragment(grid55Fragment);
 
+        int i = 0;
         return grid55Fragment;
+
 
     }//createGrid55Fragment
 
