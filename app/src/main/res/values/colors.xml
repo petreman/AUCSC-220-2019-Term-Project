@@ -10,7 +10,10 @@
     <color name="red">#ff0000</color>
     <color name="lightRed">#FF6666</color>
 
-    <color name ="ai">#522900</color>
-    <color name ="aiLight">#B88F66</color>
+    <color name ="ai">#808080</color>
+    <color name ="aiLight">#B3B3B3</color>
+
+    <color name ="brown">#522900</color>
+    <color name ="brownLight">#B88F66</color>
 
 </resources>
