@@ -92,7 +92,7 @@ public class Grid {
      * Each grid is made up of arrays of fences.
      * Each fence has a color, status of placement, and record of what player placed it
      */
-    private class Fence {
+    public class Fence {
 
         //data
         private boolean exists;
@@ -139,6 +139,13 @@ public class Grid {
             this.exists = existence;
         }//setExistence
 
+        /**
+         * Gets color of the fence.
+         * @return the color.
+         */
+        public int getColor() {
+            return color;
+        }//getColor
     }//fence
 
     //data
@@ -407,4 +414,19 @@ public class Grid {
 
     }//checkPenRight
 
+    /**
+     * Gets xCoords array.
+     * @return xCoords array.
+     */
+    public Fence[][] getxCoords() {
+        return xCoords;
+    }//getxCoords
+
+    /**
+     * Gets yCoords array.
+     * @return yCoordsArray
+     */
+    public Fence[][] getyCoords() {
+        return yCoords;
+    }//getyCoords
 }//Grid

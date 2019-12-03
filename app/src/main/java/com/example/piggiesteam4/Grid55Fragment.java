@@ -20,7 +20,6 @@
 package com.example.piggiesteam4;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,8 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -41,22 +38,22 @@ import com.google.gson.Gson;
  * Use the {@link Grid55Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Grid55Fragment extends Fragment implements View.OnTouchListener, View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private MainActivity main;
-    private boolean isMultiplayer;
-    private Game fragmentGame;
-    private OnFragmentInteractionListener mListener;
-
-    private Button p1ScoreButton;
-    private Button p2ScoreButton;
+public class Grid55Fragment extends GridParent implements View.OnTouchListener, View.OnClickListener{
+//    // TODO: Rename parameter arguments, choose names that match
+//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
+//
+//    // TODO: Rename and change types of parameters
+//    private String mParam1;
+//    private String mParam2;
+//    private MainActivity main;
+//    private boolean isMultiplayer;
+//    private Game fragmentGame;
+//    private OnFragmentInteractionListener mListener;
+//
+//    private Button p1ScoreButton;
+//    private Button p2ScoreButton;
 
     public Grid55Fragment() {
         // Required empty public constructor
@@ -111,6 +108,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         p1ScoreButton = main.p1Score;
         p2ScoreButton = main.p2Score;
 
+        size = 5;
+
     }//onCreate
 
     /**
@@ -136,8 +135,9 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
+        fragmentView = v;
+        loadGame();
 
         Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
         hfence00.setOnClickListener(this);
@@ -478,7 +478,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
                 break;
 
         }//switch
-        listener.endGame(fragmentGame);
+        listener.endGame(fragmentGame, this);
     }
 
     /**
@@ -676,20 +676,20 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
     }//setHorizontalFence
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    /**
+//     * This interface must be implemented by activities that contain this
+//     * fragment to allow an interaction in this fragment to be communicated
+//     * to the activity and potentially other fragments contained in that
+//     * activity.
+//     * <p>
+//     * See the Android Training lesson <a href=
+//     * "http://developer.android.com/training/basics/fragments/communicating.html"
+//     * >Communicating with Other Fragments</a> for more information.
+//     */
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 
     /**
      * Added for fun
@@ -788,17 +788,5 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             v.setVisibility(View.VISIBLE);
         }
 
-    }
-    endGameListener listener;
-    public interface endGameListener{
-        void endGame(Game game);
-    }
-
-    /**
-     * Sets the listener.
-     * @param listener the listener.
-     */
-    public void setListener(endGameListener listener){
-        this.listener = listener;
     }
 }//Grid55Fragment

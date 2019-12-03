@@ -30,50 +30,110 @@
         app:layout_constraintTop_toTopOf="@+id/nextScores" />
 
     <TextView
-        android:id="@+id/leaderboardP1Name"
+        android:id="@+id/firstPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:text="1. "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/previousScores"
+        app:layout_constraintTop_toBottomOf="@id/previousScores" />
+
+    <TextView
+        android:id="@+id/secondPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2. "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/firstPlace"
+        app:layout_constraintTop_toBottomOf="@id/firstPlace" />
+
+    <TextView
+        android:id="@+id/thirdPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3. "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/firstPlace"
+        app:layout_constraintTop_toBottomOf="@id/secondPlace" />
+
+    <TextView
+        android:id="@+id/fourthPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/firstPlace"
+        app:layout_constraintTop_toBottomOf="@id/thirdPlace" />
+
+    <TextView
+        android:id="@+id/fifthPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5. "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/firstPlace"
+        app:layout_constraintTop_toBottomOf="@id/fourthPlace" />
+
+    <TextView
+        android:id="@+id/leaderboardP1Name"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
         android:text="@string/scoreplaceholder"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@+id/previousScores"
-        app:layout_constraintTop_toBottomOf="@+id/previousScores" />
+        app:layout_constraintStart_toEndOf="@+id/firstPlace"
+        app:layout_constraintTop_toTopOf="@+id/firstPlace"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/leaderboardP2Name"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:text="@string/scoreplaceholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP1Name"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardP1Name" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP1Name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/leaderboardP3Name"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:text="@string/scoreplaceholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP2Name"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardP2Name" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP2Name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/leaderboardP4Name"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:text="@string/scoreplaceholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP3Name"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardP3Name" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP3Name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/leaderboardP5Name"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:text="@string/scoreplaceholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP4Name"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardP4Name" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardP4Name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/P1HighScore"
@@ -162,5 +222,15 @@
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/leaderboardGridSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@id/nextScores"
+        app:layout_constraintStart_toEndOf="@id/previousScores"
+        app:layout_constraintTop_toTopOf="@id/nextScores"
+        app:layout_constraintBottom_toBottomOf="@id/nextScores"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

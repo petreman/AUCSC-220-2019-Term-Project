@@ -78,5 +78,5 @@ public class NameQueryFragment extends DialogFragment {
      */
     public String getName(){
         return name;
-    }
+    }//getName
 }//NameQueryFragment
