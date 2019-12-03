@@ -18,7 +18,6 @@
  * Changelog
  *  - n/a
  */
-
 package com.example.piggiesteam4;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +25,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,7 +40,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import com.google.android.material.navigation.NavigationView;
 
-import static java.lang.Math.sqrt;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
@@ -146,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_sound:
                 navIntent = new Intent(this, SoundActivity.class);
+                navIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 this.startActivity(navIntent);
                 break;
 
@@ -167,32 +167,50 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onNavigationItemSelected
 
+    //Maybe change variable away from class variable.
+    String receivedName;
     /**
      * Shows a popup asking for the name of the winner.
      * To be called on game end.
-     * @return the name of the winner, or anonymous.
+     * Will end the game and get the winner's score and name. May be displayed on leaderboard.
      */
-    public String askForName(){
+    public void askForName(final Game game){
         NameQueryFragment nameQuery = new NameQueryFragment();
         nameQuery.show(getSupportFragmentManager(), "nameQuery");
-        final String[] name = new String[1];
 
         NameQueryFragment.QueryDialogListener listener = new NameQueryFragment.QueryDialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
                 NameQueryFragment query = (NameQueryFragment) dialog;
-                name[0] = query.getName();
+                receivedName = query.getName().trim();
+                if (receivedName.equals("")){
+                    receivedName = getString(R.string.anonymous);
+                }
+                game.endGame(receivedName);
             }//onDialogPositiveClick
 
             @Override
             public void onDialogNegativeClick(DialogFragment dialog) {
-                name[0] = "Anonymous";
+                receivedName = getString(R.string.anonymous);
+                game.endGame(receivedName);
             }//OnDialogNegativeClick
         };//QueryDialogListener
         nameQuery.setListener(listener);
-        return name[0];
     }//askForName
 
+    //This method is probably not needed.
+    //The variable might be better off as not a class variable.
+    /**
+     * Gets the name of the winner.
+     * @return
+     */
+    public String getName(){
+        return receivedName;
+    }
+
+    /**
+     * Asks for confirmation to reset the game.
+     */
     public void askForResetConfirmation(){
         ResetConfirmationFragment confirmation = new ResetConfirmationFragment();
         confirmation.show(getSupportFragmentManager(), "resetConfirmation");
@@ -210,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements
         };//ResetConfirmationListener
         confirmation.setListener(listener);
     }//askForResetConfirmation
+
     /**
      * Sets player 1's color locally
      * Also takes it's color's lighter version for un-highlighting
@@ -283,6 +302,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Create a new Fragment to be placed in the activity layout
         Grid55Fragment grid55Fragment = new Grid55Fragment();
+        setGridFragmentListener(grid55Fragment);
 
         Bundle args = new Bundle();
         args.putBoolean("multiplayer", isMultiplayer);
@@ -365,5 +385,89 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
         //empty
     }
+
+    GridParent.gameStateListener listener = new GridParent.gameStateListener() {
+
+        /**
+         * Ends the game, showing a popup asking for the winner's name.
+         * @param game the game being ended.
+         * @param frag the fragment.
+         */
+        @Override
+        public void endGame(Game game, GridParent frag) {
+            if (game.isGameOver()){
+                askForName(game);
+                HighScores.save(getApplicationContext());
+                saveGame(frag);
+                frag.resetFences();
+            }//if
+        }//endGame
+
+        /**
+         * Saves the game.
+         * @param frag the fragment.
+         */
+        @Override
+        public void saveGame(GridParent frag) {
+            Context context = getApplicationContext();
+            SharedPreferences pref;
+            Gson gson = new Gson();
+            if (frag.isMultiplayer){
+                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("game", gson.toJson(multiPlayer));
+                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
+                editor.commit();
+            }//if
+            else{
+                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("game", gson.toJson(singlePlayer));
+                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
+                editor.commit();
+            }//else
+        }//saveGame
+
+        /**
+         * Retrieves a saved game.
+         * @param frag the fragment.
+         * @return whether a game has been retrieved.
+         */
+        @Override
+        public boolean retrieveGame(GridParent frag) {
+            Context context = getApplicationContext();
+            SharedPreferences pref;
+            Gson gson = new Gson();
+            if (frag.isMultiplayer){
+                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
+            }//if
+            else{
+                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
+            }//else
+            String game = pref.getString("game", "");
+            String fragGame = pref.getString("fragGame", "");
+            if (game.equals("") && fragGame.equals("")){
+                return false;
+            }//if
+            if (frag.isMultiplayer){
+                multiPlayer = gson.fromJson(game, Game.class);
+            }//if
+            else{
+                singlePlayer = gson.fromJson(game,Game.class);
+            }//else
+            frag.fragmentGame = gson.fromJson(fragGame, Game.class);
+            frag.p1ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer1().getScore()).toString());
+            frag.p2ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer2().getScore()).toString());
+            return true;
+        }//retrieveGame
+    };//gameStateListener
+
+    /**
+     * Sets the listener in a grid fragment.
+     * @param grid the grid fragment.
+     */
+    public void setGridFragmentListener(GridParent grid){
+        grid.setListener(listener);
+    }//setGridFragmentListener
 
 }//MainActivity

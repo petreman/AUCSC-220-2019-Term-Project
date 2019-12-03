@@ -80,10 +80,10 @@ public class HighScores {
     private static List<Score> mediumGrid = new ArrayList<Score>();
     private static List<Score> largeGrid = new ArrayList<Score>();
     private static List<Score> largestGrid = new ArrayList<Score>();
-    private static final int SMALLEST = 1;
-    private static final int SMALL = 25;    //5x5 dots
-    private static final int MEDIUM = 36;   //6x6 dots
-    private static final int LARGE = 49;    //7x7 dots
+    private static final int SMALLEST = 25;
+    private static final int SMALL = 36;    //5x5 dots
+    private static final int MEDIUM = 49;   //6x6 dots
+    private static final int LARGE = 4;    //7x7 dots
     private static final int LARGEST = 5;
 
 //    /**
@@ -208,6 +208,12 @@ public class HighScores {
         return addHighScore(highscore, grid);
     }//addHighScore
 
+    /**
+     * This adds a new high score to the corresponding leaderboard for the grid size.
+     * @param highscore the Score of the player.
+     * @param grid the grid they played on.
+     * @return success.
+     */
     public static boolean addHighScore(Score highscore, Grid grid){
         int size = grid.getX() * grid.getY();//size via grid getX getY note doesn't get dimensions of box only of points
         switch (size){
@@ -243,27 +249,27 @@ public class HighScores {
         if (smallestGrid.size() >= 6){
             smallestGrid.remove(5);
             tooLarge = smallestGrid.size() >= 6;
-        }
+        }//if
         if (smallGrid.size() >= 6){
             smallGrid.remove(5);
             tooLarge = tooLarge || smallGrid.size() >= 6;
-        }
+        }//if
         if (mediumGrid.size() >= 6){
             mediumGrid.remove(5);
             tooLarge = tooLarge || mediumGrid.size() >= 6;
-        }
+        }//if
         if (largeGrid.size() >= 6){
             largeGrid.remove(5);
             tooLarge = tooLarge || largeGrid.size() >= 6;
-        }
+        }//if
         if (largestGrid.size() >= 6){
             largestGrid.remove(5);
             tooLarge = tooLarge || largestGrid.size() >= 6;
-        }
+        }//if
         if (tooLarge){
             reduceSize();
-        }
-    }
+        }//if
+    }//reduceSize
 
     /**
      * Saves the high score lists.

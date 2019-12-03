@@ -47,7 +47,7 @@
 //     * If a pen can be made, it call place fence function, which places a fence in the area that
 //     * the pen can be made
 //     *
-//     * @param grid-- takes in the Grid as the paremeter, as it scans through the entire grid.
+//     * @param grid-- takes in the Grid as the parameter, as it scans through the entire grid.
 //     */
 //
 //    public void checkForPossibleFencePlacement(Grid grid){
@@ -129,7 +129,7 @@
 //     */
 //    public boolean checkTopRow(Grid grid){
 //        while (yValue <= grid.getX() - 1){
-//            if  (grid.checkPenBelow(xValue,yValue) == true){
+//            if  (grid.checkPenBelow(xValue, yValue) == true){
 //                grid.setFenceX(xValue,yValue,color);
 //                return true;
 //            }else

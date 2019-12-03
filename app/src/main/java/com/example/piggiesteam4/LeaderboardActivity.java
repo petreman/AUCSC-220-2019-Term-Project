@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,8 +28,11 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public void getLeaderboard(){
         List<HighScores.Score> scores = HighScores.getHighScores(counter);
+        resetText();
         setPlayerNames(scores);
         setPlayerScores(scores);
+        swapGridSize();
+        selectText();
     }//getLeaderboard
 
     /**
@@ -46,19 +50,19 @@ public class LeaderboardActivity extends AppCompatActivity {
             default:
             case 5:
                 String nameP5 = scores.get(4).getName();
-                player5.setText("5. " + nameP5);
+                player5.setText(nameP5);
             case 4:
                 String nameP4 = scores.get(3).getName();
-                player4.setText("4. " + nameP4);
+                player4.setText(nameP4);
             case 3:
                 String nameP3 = scores.get(2).getName();
-                player3.setText("3. " + nameP3);
+                player3.setText(nameP3);
             case 2:
                 String nameP2 = scores.get(1).getName();
-                player2.setText("2. " + nameP2);
+                player2.setText(nameP2);
             case 1:
                 String nameP1 = scores.get(0).getName();
-                player1.setText("1. " + nameP1);
+                player1.setText(nameP1);
                 break;
             case 0:
                 player1.setText(R.string.scoreplaceholder);
@@ -164,13 +168,30 @@ public class LeaderboardActivity extends AppCompatActivity {
     }//resetText
 
     /**
+     * Swaps the text specifying which scores are being viewed.
+     */
+    private void swapGridSize() {
+        TextView gridSize = (TextView) findViewById(R.id.leaderboardGridSize);
+        switch (counter){
+            case 0:
+                gridSize.setText("5x5");
+                break;
+            case 1:
+                gridSize.setText("6x6");
+                break;
+            case 2:
+                gridSize.setText("7x7");
+        }//switch
+    }//swapGridSize
+
+    /**
      * Resets the current scores being viewed. It does not save the reset, and must be confirmed.
      * @param v
      */
     public void resetCurrentScores(View v){
         HighScores.resetScores(counter);
         resetText();
-    }
+    }//resetCurrentScores
 
     /**
      * Confirms the resetting of scores.
@@ -181,6 +202,31 @@ public class LeaderboardActivity extends AppCompatActivity {
         HighScores.save(context);
         getLeaderboard();
     }//confirm
+
+    /**
+     * Selects the text after a short delay to enable marquee effect.
+     */
+    public void selectText(){
+        Handler handler = new Handler();
+
+        ((TextView) findViewById(R.id.leaderboardP1Name)).setSelected(false);
+        ((TextView) findViewById(R.id.leaderboardP2Name)).setSelected(false);
+        ((TextView) findViewById(R.id.leaderboardP3Name)).setSelected(false);
+        ((TextView) findViewById(R.id.leaderboardP4Name)).setSelected(false);
+        ((TextView) findViewById(R.id.leaderboardP5Name)).setSelected(false);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView) findViewById(R.id.leaderboardP1Name)).setSelected(true);
+                ((TextView) findViewById(R.id.leaderboardP2Name)).setSelected(true);
+                ((TextView) findViewById(R.id.leaderboardP3Name)).setSelected(true);
+                ((TextView) findViewById(R.id.leaderboardP4Name)).setSelected(true);
+                ((TextView) findViewById(R.id.leaderboardP5Name)).setSelected(true);
+            }//run
+        }, 500);//Runnable
+
+    }//selectText
 
     /**
      * Method for testing, remove later.

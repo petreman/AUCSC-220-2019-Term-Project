@@ -18,4 +18,5 @@
     <string name="name">Name</string>
     <string name="confirmreset">Are you sure you want to reset the current game?</string>
     <string name="cancel">Cancel</string>
+    <string name="anonymous">Anonymous</string>
 </resources>
