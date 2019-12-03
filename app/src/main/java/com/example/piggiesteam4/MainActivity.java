@@ -229,6 +229,11 @@ public class MainActivity extends AppCompatActivity implements
         confirmation.setListener(listener);
     }//askForResetConfirmation
 
+    public void showTieAlert(){
+        TieAlertFragment alert = new TieAlertFragment();
+        alert.show(getSupportFragmentManager(), "tieAlert");
+    }
+
     /**
      * Sets player 1's color locally
      * Also takes it's color's lighter version for un-highlighting
@@ -395,10 +400,17 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public void endGame(Game game, GridParent frag) {
             if (game.isGameOver()){
-                askForName(game);
+                if (frag.fragmentGame.getPlayer1().getScore() == frag.fragmentGame.getPlayer2().getScore()){
+                    game.endGame();
+                    showTieAlert();
+                }
+                else {
+                    askForName(game);
+                }
                 HighScores.save(getApplicationContext());
                 saveGame(frag);
                 frag.resetFences();
+                frag.setP1Current();
             }//if
         }//endGame
 

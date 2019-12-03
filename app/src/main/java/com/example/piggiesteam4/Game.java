@@ -178,6 +178,13 @@ public class Game {
     }//endGame
 
     /**
+     * Same as above, only for ties.
+     */
+    public void endGame(){
+        resetGame();
+    }
+
+    /**
      * Resets the game, clearing scores and the grid.
      *
      * By Alvin

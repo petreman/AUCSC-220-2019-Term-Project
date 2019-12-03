@@ -769,41 +769,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
     }//updateScoreView
 
-    /**
-     * Ends the current players turn, and set's the other players turn to true.
-     * Also updates the color of the player score button to indicate who the new
-     * current player is
-     *
-     * By Keegan
-     *
-     * @param currentPlayer - the player who's turn it currently is
-     */
-    public void toggleTurn(Player currentPlayer) {
-
-        if (currentPlayer == fragmentGame.getPlayer1()) {
-
-            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
-
-            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColorLight(),
-                    PorterDuff.Mode.MULTIPLY);
-
-
-        }//if
-
-        else{
-
-            p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor(),
-                    PorterDuff.Mode.MULTIPLY);
-
-            p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColorLight(),
-                    PorterDuff.Mode.MULTIPLY);
-
-        }//else
-
-        fragmentGame.toggleCurrentPlayer();
-
-    }//toggleTurn
+    //toggle turn moved to parent
 
     /**
      * Called when a pen is completed. Gets the corresponding pen's pig image, so it
