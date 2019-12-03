@@ -110,6 +110,8 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
         p1ScoreButton = main.p1Score;
         p2ScoreButton = main.p2Score;
 
+        setRetainInstance(true);
+
     }//onCreate
 
     /**
@@ -519,7 +521,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
                     else{
                         togglePigVisibility(getUpdatedPenView(row, col));
-                    }
+                    }//else
 
                 }//if
 
@@ -545,7 +547,7 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
 
                     else{
                         togglePigVisibility(getUpdatedPenView(row - 1, col));
-                    }
+                    }//else
 
                 }//if
 
@@ -781,7 +783,6 @@ public class Grid55Fragment extends Fragment implements View.OnTouchListener, Vi
             p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColorLight(),
                     PorterDuff.Mode.MULTIPLY);
 
-            //p1ScoreButton.getBackground().clearColorFilter();
 
         }//if
 

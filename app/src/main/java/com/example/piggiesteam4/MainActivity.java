@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {
-                return;
+                //load instance... ugh
             }//if
 
             defaultSinglePlayer();
@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_sound:
                 navIntent = new Intent(this, SoundActivity.class);
+                navIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 this.startActivity(navIntent);
                 break;
 
@@ -359,4 +360,10 @@ public class MainActivity extends AppCompatActivity implements
         //empty
     }
 
-}//MainActivity
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    }//MainActivity
