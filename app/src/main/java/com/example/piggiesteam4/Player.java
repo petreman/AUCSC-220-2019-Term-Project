@@ -33,7 +33,7 @@ public class Player {
 
     /**
      * Constructor
-     * @param playerColor-- the color of the player!
+     * @param playerColor-- the color of the player
      */
     Player(int[] playerColor){
         this.turn = false;
@@ -44,7 +44,6 @@ public class Player {
     }// end of player
 
     /**
-     *
      * The addScore method will take the current play score and updates the total value.
      * @param playerScore- current playScore
      */
@@ -61,7 +60,7 @@ public class Player {
 
     /**
      * This method would return whether it is the player's turn or not.
-     * @return- returns whether it is the player's turn (true or false)
+     * @return- returns boolean whether it is the player's turn (true or false)
      */
     public boolean getTurn(){
        return turn;
@@ -88,7 +87,7 @@ public class Player {
 
     /**
      * This function will set the player's color
-     * @param colorWanted-- it will take the colorwanted and updates the player's color
+     * @param colorWanted-- it will take the color wanted and updates the player's color
      */
     public void setColor(int colorWanted){
         color = colorWanted;
@@ -116,6 +115,7 @@ public class Player {
     /**
      * This method will end the current player's turn(set to false)
      * and set's the other player's turn to True
+     *
      * @param otherPlayer-- next player
      */
     public void endTurn(Player otherPlayer){
@@ -214,8 +214,8 @@ public class Player {
 
             timeoutCounter++;
 
-        }//while
+        }//end of while loop
 
-    }//choosePositionEmptyGrid
+    }//end of choosePositionEmptyGrid
 
-}//Player
+}// end of Player
