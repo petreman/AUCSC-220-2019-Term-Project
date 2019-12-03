@@ -36,7 +36,7 @@
  * Started November 29, 2019 by Keegan
  *
  * Changelog
- *  n/a
+ *  2019/11/30: merged Keegan's and Alvin's differing instantance of Game.java
  */
 package com.example.piggiesteam4;
 
@@ -166,7 +166,10 @@ public class Game {
     }//isGameover
 
     /**
-     * Ends the game.
+     * Indicates if the game is over or not.
+     * If it is, then then next event needed can happen
+     *
+     * By Alvin
      */
     public void endGame(String name){
         HighScores.Score highscore = getHighscore(name);
@@ -176,6 +179,8 @@ public class Game {
 
     /**
      * Resets the game, clearing scores and the grid.
+     *
+     * By Alvin
      */
     public void resetGame(){
         player1.clearScore();
@@ -186,25 +191,32 @@ public class Game {
     /**
      * Updates the fence colors displayed.
      * @param player the player whose color was just changed.
-     * @param grid the grid of the game.
+     *
+     * By Alvin
      */
-//    public void updateFenceColors(Player player, Grid grid){
-//        grid.updateColors();
-//    }//updateFenceColors
+    public void updateFenceColors(int color, Player player){
+        this.getGrid().updateColors(color, player);
+    }//updateFenceColors
 
     /**
      * Gets the highscore and puts it in Score object.
      * @param name the name of the winner;
      * @return the Score object.
+     *
+     * By Alvin
      */
     public HighScores.Score getHighscore(String name){
         int p1Score = player1.getScore();
         int p2Score = player2.getScore();
-        if (p1Score>p2Score){
+
+        if (p1Score > p2Score){
             return new HighScores.Score(name, p1Score);
         }//if
+
         else{
             return new HighScores.Score(name, p2Score);
         }//else
+
     }//getHighscore
+
 }//Game

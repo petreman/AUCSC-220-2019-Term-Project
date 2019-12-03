@@ -97,7 +97,6 @@ public class Grid {
         //data
         private boolean exists;
         private int color;
-        //private player Player;
 
         /**
          * Constructor for Fences.
@@ -259,6 +258,10 @@ public class Grid {
         return this.pens[row][col];
     }
 
+    void setPen(int row, int col, boolean state){
+         this.pens[row][col] = false;
+    }//setPen
+
     /**
      * Tries to place a horizontal fence at the specified grid location
      * Need to index into xCoords to get correct location
@@ -320,6 +323,7 @@ public class Grid {
                 this.yCoords[row][col].exists() &&
                 this.yCoords[row][col + 1].exists()){
 
+            setFenceX(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col] = true;
 
@@ -348,6 +352,7 @@ public class Grid {
                 this.yCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col + 1].exists()){
 
+            setFenceX(row, col, player.getColor());
             player.addScore(1);
             this.pens[row - 1][col] = true;
             return true;
@@ -375,6 +380,7 @@ public class Grid {
                 this.xCoords[row][col - 1].exists() &&
                 this.xCoords[row + 1][col - 1].exists()){
 
+            setFenceY(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col - 1] = true;
 
@@ -403,6 +409,7 @@ public class Grid {
                 this.xCoords[row][col].exists() &&
                 this.xCoords[row + 1][col].exists()){
 
+            setFenceY(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col] = true;
 
@@ -413,6 +420,10 @@ public class Grid {
         return false;
 
     }//checkPenRight
+
+    void updateColors(int color, Player player){
+
+    }
 
     /**
      * Gets xCoords array.

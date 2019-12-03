@@ -28,6 +28,7 @@ public class Player {
     private int colorLight;
     private boolean turn;
     private int score;
+    private boolean isCPU;
 
 
     /**
@@ -39,14 +40,8 @@ public class Player {
         this.score = 0;
         this.color = playerColor[0];
         this.colorLight = playerColor[1];
-    }// end of player
 
-    /**
-     * Default consturctor
-     */
-    Player() {
-        this(0);
-    }// default constructor
+    }// end of player
 
     /**
      *
@@ -128,5 +123,99 @@ public class Player {
         otherPlayer.setTurn();
     }// end of endTurn
 
+    public void makeCPU(){
+        this.isCPU = true;
+    }//makeCPU
 
-}// end of player
+    /**
+     *
+     * @param game
+     */
+    public boolean placeFenceCPU(Game game){
+
+        if (checkForPossiblePen(game.getGrid()) == false){
+            choosePositionEmptyGrid(game.getGrid());
+            game.toggleCurrentPlayer();
+            return false;
+        }//if
+
+        return true;
+
+    }//placeFenceCPU
+
+    /**
+     * This function scans through the entire board in order to check for possible pens it can make.
+     * If a pen can be made, it call place fence function, which places a fence in the area that
+     * the pen can be made
+     *
+     * @param grid-- takes in the Grid as the parameter, as it scans through the entire grid.
+     */
+    public boolean checkForPossiblePen(Grid grid){
+
+        //check horizontal fences
+        for (int i = 0 ; i < grid.getX() ; i++){
+
+            for (int j = 0 ; j < grid.getY() - 1 ; j++){
+
+                if (i != 0 && grid.checkPenAbove(i, j, this)){
+                    return true;
+                }//else
+
+                else if (i != grid.getX() && grid.checkPenBelow(i, j, this)){
+                    return true;
+                }//else if
+
+            }//for
+
+        }//for
+
+        //check vertical fences
+        for (int i = 0 ; i < grid.getX() -1 ; i++){
+
+            for (int j = 0 ; j < grid.getY() ; j++){
+
+                if (i != 0 && grid.checkPenLeft(i, j, this)){
+                    return true;
+                }//else
+
+                else if (i != grid.getX() && grid.checkPenRight(i, j, this)){
+                    return true;
+                }//else if
+
+            }//for
+
+        }//for
+
+        return false;
+
+    }//checkForPossibleFencePlacement
+
+    /**
+     * This function will be used by the AI to set a fence if the grid is empty or if
+     * no pen can be made based on the fence already placed on the grid. This function
+     * will recursively call itself until an empty spot is found on the grid.
+     *
+     * @return -- it will return true if it found a random empty spot and place a fence on it
+     */
+    public void choosePositionEmptyGrid(Grid grid){
+
+        int firstNumber;
+        int secondNumber;
+        int timeoutCounter = 0;
+
+        while (timeoutCounter < 999) {
+
+            firstNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
+            secondNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
+
+            if (grid.setFenceX(firstNumber, secondNumber, color) == true) {
+                return;
+            }//if
+
+            timeoutCounter++;
+
+        }//while
+
+    }//choosePositionEmptyGrid
+
+}//Player

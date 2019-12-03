@@ -178,8 +178,11 @@
         android:layout_height="25dp"
         android:alpha="0.0"
         android:translationZ="0dp"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="97dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_02"
+        app:layout_constraintStart_toStartOf="@+id/grid_55_post_01"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.454" /> />
 
     <Button
         android:id="@+id/grid_55_hfence_02"
@@ -490,8 +493,11 @@
         android:layout_height="25dp"
         android:alpha="0.0"
         android:translationZ="0dp"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="207dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="@+id/grid_55_post_12"
+        app:layout_constraintStart_toStartOf="@+id/grid_55_post_11"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.454" />
 
     <Button
         android:id="@+id/grid_55_hfence_12"

@@ -18,7 +18,6 @@
  * Changelog
  *  - n/a
  */
-
 package com.example.piggiesteam4;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +39,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.google.android.material.navigation.NavigationView;
+
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_sound:
                 navIntent = new Intent(this, SoundActivity.class);
+                navIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 this.startActivity(navIntent);
                 break;
 
