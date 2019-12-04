@@ -6,7 +6,7 @@
  *
  * The player class contains all the functions for the AI and Mutliplayer game. It contains
  * functions that assigns player's turn and gives the player the opportunity to change their
- * colors.
+ * colors
  *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
