@@ -1,4 +1,4 @@
-/**
+ /**
  * AUCSC 220
  * PiggiesTeam4
  *
@@ -16,7 +16,7 @@
  * Started forever ago by Keegan
  *
  * Changelog
- *  - n/a
+ *  - Arnold Gihozo- December 3rd--> to add pop up message
  */
 package com.example.piggiesteam4;
 
@@ -25,8 +25,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -67,6 +69,15 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Pop up message
+
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
+
+        if (isFirstTime) {
+            popUpMenu();
+        }
+
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);
         NavigationView menuView = findViewById(R.id.navigationId);
@@ -100,6 +111,29 @@ public class MainActivity extends AppCompatActivity implements
         }//if
 
     }//onCreate
+
+    /**
+     * This function will display a pop up message the very first time the game is opened. Afterwards
+     * the message will stop displaying.
+     *
+     * By Arnold
+     */
+    private void popUpMenu(){
+        new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
+                .setMessage ("For more information on how this game works, please refer to the help menu  ")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                    .create().show();
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isFirstTime", false);
+        editor.apply();
+    }// end of showStartDialog
+
 
     /**
      * This basically tells the main activity that is has an options menu
@@ -311,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements
         setGrid55Fragment(grid55Fragment);
 
         return grid55Fragment;
+
 
     }//createGrid55Fragment
 

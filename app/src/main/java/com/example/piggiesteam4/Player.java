@@ -8,8 +8,6 @@
  * functions that assigns player's turn and gives the player the opportunity to change their
  * colors.
  *
- * ADD THE OPPORTUNITY TO ADD A FENCE IF THE BOARD IS EMPTY!! (for AI)
- *
  * Created by Arnold Gihozo
  * Started on: November 14, 2019
  * Finished on: November 23, 2019
@@ -32,7 +30,7 @@ public class Player {
 
     /**
      * Constructor
-     * @param playerColor-- the color of the player!
+     * @param playerColor-- the color of the player
      */
     Player(int[] playerColor){
         this.turn = false;
@@ -42,9 +40,10 @@ public class Player {
 
     }// end of player
 
+
     /**
+     * Updates the current player score from a given value.
      *
-     * The addScore method will take the current play score and updates the total value.
      * @param playerScore- current playScore
      */
     void addScore(int playerScore){
@@ -52,22 +51,23 @@ public class Player {
     }// end of addScore
 
     /**
-     * This method will clear the score of the player in the current game
+     * Clears the score of the player in the current game
      */
     public void clearScore (){
         score = 0;
     }// end of clearScore
 
     /**
-     * This method would return whether it is the player's turn or not.
-     * @return- returns whether it is the player's turn (true or false)
+     * Returns whether it is the player's turn or not.
+     *
+     * @return- returns boolean whether it is the player's turn (true or false)
      */
     public boolean getTurn(){
        return turn;
     }// end of myTurn
 
     /**
-     * This method will set the player's turn.
+     * Sets the player's turn.
      */
     public void setTurn(){
         if (turn == false)
@@ -77,7 +77,8 @@ public class Player {
     }// end of setTurn
 
     /**
-     * This function will get the player's score
+     * Gets the player's score
+     *
      * @return-- it will return the player's score
      */
     public int getScore(){
@@ -86,17 +87,16 @@ public class Player {
     }// end of getScore
 
     /**
-     * This function will set the player's color
-     * @param colorWanted-- it will take the colorwanted and updates the player's color
+     * Sets the new player's color to the color wanted
+     *
+     * @param colorWanted-- it will take the color wanted and updates the player's color
      */
     public void setColor(int colorWanted){
         color = colorWanted;
     }// end of setColor
 
     /**
-     * This function will return the player's color
-     *
-     * By Arnold
+     * Returns the player's color
      *
      * @return -- will return the current color of the player
      */
@@ -116,8 +116,8 @@ public class Player {
     }//getColorLight
 
     /**
-     * This method will end the current player's turn(set to false)
-     * and set's the other player's turn to True
+     * Ends the current player's turn(set to false) and set's the other player's turn to True
+     *
      * @param otherPlayer-- next player
      */
     public void endTurn(Player otherPlayer){
@@ -154,63 +154,50 @@ public class Player {
 
     }//placeFenceCPU
 
+
     /**
-     * This function scans through the entire board in order to check for possible pens it can make.
+     * Scans through the entire board in order to check for possible pens it can make.
      * If a pen can be made, it call place fence function, which places a fence in the area that
-     * the pen can be made
-     *
-     * By Arnold
+     * the pen can be made.
      *
      * @param grid-- takes in the Grid as the parameter, as it scans through the entire grid.
+     * @return -- function returns true if a pen was made, otherwise false if no pen was made.
      */
     public boolean checkForPossiblePen(Grid grid){
 
         //check horizontal fences
         for (int i = 0 ; i < grid.getX() ; i++){
-
             for (int j = 0 ; j < grid.getY() - 1 ; j++){
-
                 if (i != 0 && grid.checkPenAbove(i, j, this)){
                     return true;
                 }//else
-
-                else if (i != grid.getX() && grid.checkPenBelow(i, j, this)){
+                 else if (i != grid.getX() && grid.checkPenBelow(i, j, this)){
                     return true;
                 }//else if
-
             }//for
-
         }//for
 
         //check vertical fences
         for (int i = 0 ; i < grid.getX() -1 ; i++){
-
             for (int j = 0 ; j < grid.getY() ; j++){
-
                 if (i != 0 && grid.checkPenLeft(i, j, this)){
                     return true;
                 }//else
-
                 else if (i != grid.getX() && grid.checkPenRight(i, j, this)){
                     return true;
                 }//else if
-
             }//for
-
         }//for
-
         return false;
 
     }//checkForPossibleFencePlacement
 
     /**
-     * This function will be used by the AI to set a fence if the grid is empty or if
-     * no pen can be made based on the fence already placed on the grid. This function
-     * will recursively call itself until an empty spot is found on the grid.
+     * Sets a fence if the grid is empty or if no pen can be made based on the fence already
+     * placed on the grid. This function will recursively call itself until an empty spot is
+     * found on the grid.
      *
-     * By Arnold
-     *
-     * @return -- it will return true if it found a random empty spot and place a fence on it
+     * @param grid-- takes in a grid as a parameter
      */
     public void choosePositionEmptyGrid(Grid grid){
 
@@ -219,18 +206,15 @@ public class Player {
         int timeoutCounter = 0;
 
         while (timeoutCounter < 999) {
-
             firstNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
             secondNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
 
             if (grid.setFenceX(firstNumber, secondNumber, color) == true) {
                 return;
             }//if
-
             timeoutCounter++;
 
-        }//while
+        }//end of while loop
+    }//end of choosePositionEmptyGrid
 
-    }//choosePositionEmptyGrid
-
-}//Player
+}// end of Player
