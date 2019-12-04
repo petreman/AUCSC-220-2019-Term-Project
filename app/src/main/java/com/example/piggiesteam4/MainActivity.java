@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements
      * This function will display a pop up message the very first time the game is opened. Afterwards
      * the message will stop displaying.
      *
-     * By Arnopld
+     * By Arnold
      */
     private void popUpMenu(){
         new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
