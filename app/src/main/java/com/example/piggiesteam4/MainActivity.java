@@ -1,4 +1,4 @@
-/**
+ /**
  * AUCSC 220
  * PiggiesTeam4
  *
@@ -71,11 +71,11 @@ public class MainActivity extends AppCompatActivity implements
 
         // Pop up message
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStart", true);
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
 
-        if (firstStart) {
-            showStartDialog();
+        if (isFirstTime) {
+            popUpMenu();
         }
 
         //Initializations
@@ -112,8 +112,15 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onCreate
 
-    private void showStartDialog(){
-        new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game").setMessage ("For more information on how this game works, please refer to the help menu  ")
+    /**
+     * This function will display a pop up message the very first time the game is opened. Afterwards
+     * the message will stop displaying.
+     *
+     * By Arnopld
+     */
+    private void popUpMenu(){
+        new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
+                .setMessage ("For more information on how this game works, please refer to the help menu  ")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -121,9 +128,9 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 })
                     .create().show();
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isFirstTime", false);
         editor.apply();
     }// end of showStartDialog
 
