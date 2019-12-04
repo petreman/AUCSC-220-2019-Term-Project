@@ -30,7 +30,6 @@ public class Player {
     private int score;
     private boolean isCPU;
 
-
     /**
      * Constructor
      * @param playerColor-- the color of the player!
@@ -96,6 +95,9 @@ public class Player {
 
     /**
      * This function will return the player's color
+     *
+     * By Arnold
+     *
      * @return -- will return the current color of the player
      */
     public int getColor(){
@@ -103,7 +105,7 @@ public class Player {
     }// end of getColor
 
     /**
-     * Returns the player't complementatry lighter color
+     * Returns the player's complementatry lighter color
      *
      * By Keegan
      *
@@ -123,13 +125,22 @@ public class Player {
         otherPlayer.setTurn();
     }// end of endTurn
 
+    /**
+     * Marks the provided player as a CPU player
+     *
+     * By Keegan
+     */
     public void makeCPU(){
         this.isCPU = true;
     }//makeCPU
 
     /**
+     * The function the CPU uses to place fences. If it makes a pen, true is returned
      *
-     * @param game
+     * By Keegan
+     *
+     * @param game - the game the CPU is playing in
+     * @return true if a pen was made, false otherwise
      */
     public boolean placeFenceCPU(Game game){
 
@@ -147,6 +158,8 @@ public class Player {
      * This function scans through the entire board in order to check for possible pens it can make.
      * If a pen can be made, it call place fence function, which places a fence in the area that
      * the pen can be made
+     *
+     * By Arnold
      *
      * @param grid-- takes in the Grid as the parameter, as it scans through the entire grid.
      */
@@ -194,6 +207,8 @@ public class Player {
      * This function will be used by the AI to set a fence if the grid is empty or if
      * no pen can be made based on the fence already placed on the grid. This function
      * will recursively call itself until an empty spot is found on the grid.
+     *
+     * By Arnold
      *
      * @return -- it will return true if it found a random empty spot and place a fence on it
      */

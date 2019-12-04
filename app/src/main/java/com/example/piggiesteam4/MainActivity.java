@@ -399,6 +399,7 @@ public class MainActivity extends AppCompatActivity implements
                 HighScores.save(getApplicationContext());
                 saveGame(frag);
                 frag.resetFences();
+                frag.resetPens();
             }//if
         }//endGame
 

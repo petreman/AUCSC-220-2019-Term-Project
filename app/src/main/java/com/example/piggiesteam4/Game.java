@@ -33,10 +33,17 @@
  *  - toggleCurrentPlayer -> void
  *      Ends the current players turn, and sets the the other players turn to true
  *
+ *  - isGameOver() -> boolean
+ *      Checks if the game is over or not
+ *
+ *  - resetGame() -> void
+ *      Clears the gird and the player's scores
+ *
  * Started November 29, 2019 by Keegan
  *
  * Changelog
- *  2019/11/30: merged Keegan's and Alvin's differing instantance of Game.java
+ *  2019/11/30: Keegan
+ *      Merged Keegan's and Alvin's differing instances of Game.java
  */
 package com.example.piggiesteam4;
 
@@ -122,6 +129,7 @@ public class Game {
     }//getPlayer1
 
     /**
+     * By Keegan
      * @return - the game's second player
      */
     public Player getPlayer2(){
@@ -149,6 +157,9 @@ public class Game {
         else{
             currentPlayer = player1;
         }//else
+
+        player1.setTurn();
+        player2.setTurn();
 
     }//toggleCurrentPlayer
 
@@ -190,16 +201,20 @@ public class Game {
 
     /**
      * Updates the fence colors displayed.
-     * @param player the player whose color was just changed.
+     * @param newColor - the new color
+     * @param oldColor - the color to be replaced
      *
      * By Alvin
      */
-    public void updateFenceColors(int color, Player player){
-        this.getGrid().updateColors(color, player);
+    public void updateFenceColors(int newColor, int oldColor){
+        this.getGrid().updateColors(newColor, oldColor);
     }//updateFenceColors
 
     /**
      * Gets the highscore and puts it in Score object.
+     *
+     * By Alvin
+     *
      * @param name the name of the winner;
      * @return the Score object.
      *

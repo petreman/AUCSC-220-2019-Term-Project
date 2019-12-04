@@ -19,7 +19,6 @@
  */
 package com.example.piggiesteam4;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -112,18 +111,10 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
         size = 5;
 
-        setRetainInstance(true);
-
     }//onCreate
 
     /**
-     * Set up the views on creation of the fragment
-     *
-     * I'm sorry Rosanna, but because everything is done with buttons,
-     * this is the way it has to be: I cant use the "onClick" attribute
-     * in the XML as that is apparently only able to grab functions
-     * from the view's activity, NOT fragment. Every button had to be
-     * manually set for the onClickListener.
+     * Set up the buttons on creation of the fragment
      *
      * I also set an onTouchListener for every button: what this does, is when a unplaced
      * fence/button is pressed and held, a little preview of the fence appears first,
@@ -144,135 +135,38 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         fragmentView = v;
         loadGame();
 
-        Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
-        hfence00.setOnClickListener(this);
-        hfence00.setOnTouchListener(this);
-        Button hfence01 = (Button) v.findViewById(R.id.grid_55_hfence_01);
-        hfence01.setOnClickListener(this);
-        hfence01.setOnTouchListener(this);
-        Button hfence02 = (Button) v.findViewById(R.id.grid_55_hfence_02);
-        hfence02.setOnClickListener(this);
-        hfence02.setOnTouchListener(this);
-        Button hfence03 = (Button) v.findViewById(R.id.grid_55_hfence_03);
-        hfence03.setOnClickListener(this);
-        hfence03.setOnTouchListener(this);
+        int sizeX = fragmentGame.getGrid().getX();
+        int sizeY = fragmentGame.getGrid().getY();
 
-        Button hfence10 = (Button) v.findViewById(R.id.grid_55_hfence_10);
-        hfence10.setOnClickListener(this);
-        hfence10.setOnTouchListener(this);
-        Button hfence11 = (Button) v.findViewById(R.id.grid_55_hfence_11);
-        hfence11.setOnClickListener(this);
-        hfence11.setOnTouchListener(this);
-        Button hfence12 = (Button) v.findViewById(R.id.grid_55_hfence_12);
-        hfence12.setOnClickListener(this);
-        hfence12.setOnTouchListener(this);
-        Button hfence13 = (Button) v.findViewById(R.id.grid_55_hfence_13);
-        hfence13.setOnClickListener(this);
-        hfence13.setOnTouchListener(this);
+        for(int i = 0; i < sizeX ; i++) {
 
-        Button hfence20 = (Button) v.findViewById(R.id.grid_55_hfence_20);
-        hfence20.setOnClickListener(this);
-        hfence20.setOnTouchListener(this);
-        Button hfence21 = (Button) v.findViewById(R.id.grid_55_hfence_21);
-        hfence21.setOnClickListener(this);
-        hfence21.setOnTouchListener(this);
-        Button hfence22 = (Button) v.findViewById(R.id.grid_55_hfence_22);
-        hfence22.setOnClickListener(this);
-        hfence22.setOnTouchListener(this);
-        Button hfence23 = (Button) v.findViewById(R.id.grid_55_hfence_23);
-        hfence23.setOnClickListener(this);
-        hfence23.setOnTouchListener(this);
+            for(int j = 0 ; j < sizeY - 1 ; j++) {
 
-        Button hfence30 = (Button) v.findViewById(R.id.grid_55_hfence_30);
-        hfence30.setOnClickListener(this);
-        hfence30.setOnTouchListener(this);
-        Button hfence31 = (Button) v.findViewById(R.id.grid_55_hfence_31);
-        hfence31.setOnClickListener(this);
-        hfence31.setOnTouchListener(this);
-        Button hfence32 = (Button) v.findViewById(R.id.grid_55_hfence_32);
-        hfence32.setOnClickListener(this);
-        hfence32.setOnTouchListener(this);
-        Button hfence33 = (Button) v.findViewById(R.id.grid_55_hfence_33);
-        hfence33.setOnClickListener(this);
-        hfence33.setOnTouchListener(this);
+                String buttonID = "grid_" + sizeX + sizeY +"_hfence_" + i + j;
+                int resID = getResources().getIdentifier(buttonID, "id", main.getPackageName());
 
-        Button hfence40 = (Button) v.findViewById(R.id.grid_55_hfence_40);
-        hfence40.setOnClickListener(this);
-        hfence40.setOnTouchListener(this);
-        Button hfence41 = (Button) v.findViewById(R.id.grid_55_hfence_41);
-        hfence41.setOnClickListener(this);
-        hfence41.setOnTouchListener(this);
-        Button hfence42 = (Button) v.findViewById(R.id.grid_55_hfence_42);
-        hfence42.setOnClickListener(this);
-        hfence42.setOnTouchListener(this);
-        Button hfence43 = (Button) v.findViewById(R.id.grid_55_hfence_43);
-        hfence43.setOnClickListener(this);
-        hfence43.setOnTouchListener(this);
+                Button button = ((Button) v.findViewById(resID));
+                button.setOnClickListener(this);
+                button.setOnTouchListener(this);
 
-        Button vfence00 = (Button) v.findViewById(R.id.grid_55_vfence_00);
-        vfence00.setOnClickListener(this);
-        vfence00.setOnTouchListener(this);
-        Button vfence01 = (Button) v.findViewById(R.id.grid_55_vfence_01);
-        vfence01.setOnClickListener(this);
-        vfence01.setOnTouchListener(this);
-        Button vfence02 = (Button) v.findViewById(R.id.grid_55_vfence_02);
-        vfence02.setOnClickListener(this);
-        vfence02.setOnTouchListener(this);
-        Button vfence03 = (Button) v.findViewById(R.id.grid_55_vfence_03);
-        vfence03.setOnClickListener(this);
-        vfence03.setOnTouchListener(this);
+            }//for
 
-        Button vfence10 = (Button) v.findViewById(R.id.grid_55_vfence_10);
-        vfence10.setOnClickListener(this);
-        vfence10.setOnTouchListener(this);
-        Button vfence11 = (Button) v.findViewById(R.id.grid_55_vfence_11);
-        vfence11.setOnClickListener(this);
-        vfence11.setOnTouchListener(this);
-        Button vfence12 = (Button) v.findViewById(R.id.grid_55_vfence_12);
-        vfence12.setOnClickListener(this);
-        vfence12.setOnTouchListener(this);
-        Button vfence13 = (Button) v.findViewById(R.id.grid_55_vfence_13);
-        vfence13.setOnClickListener(this);
-        vfence13.setOnTouchListener(this);
+        }//for
 
-        Button vfence20 = (Button) v.findViewById(R.id.grid_55_vfence_20);
-        vfence20.setOnClickListener(this);
-        vfence20.setOnTouchListener(this);
-        Button vfence21 = (Button) v.findViewById(R.id.grid_55_vfence_21);
-        vfence21.setOnClickListener(this);
-        vfence21.setOnTouchListener(this);
-        Button vfence22 = (Button) v.findViewById(R.id.grid_55_vfence_22);
-        vfence22.setOnClickListener(this);
-        vfence22.setOnTouchListener(this);
-        Button vfence23 = (Button) v.findViewById(R.id.grid_55_vfence_23);
-        vfence23.setOnClickListener(this);
-        vfence23.setOnTouchListener(this);
+        for(int i = 0; i < sizeX - 1 ; i++) {
 
-        Button vfence30 = (Button) v.findViewById(R.id.grid_55_vfence_30);
-        vfence30.setOnClickListener(this);
-        vfence30.setOnTouchListener(this);
-        Button vfence31 = (Button) v.findViewById(R.id.grid_55_vfence_31);
-        vfence31.setOnClickListener(this);
-        vfence31.setOnTouchListener(this);
-        Button vfence32 = (Button) v.findViewById(R.id.grid_55_vfence_32);
-        vfence32.setOnClickListener(this);
-        vfence32.setOnTouchListener(this);
-        Button vfence33 = (Button) v.findViewById(R.id.grid_55_vfence_33);
-        vfence33.setOnClickListener(this);
-        vfence33.setOnTouchListener(this);
+            for(int j = 0 ; j < sizeY ; j++) {
 
-        Button vfence04 = (Button) v.findViewById(R.id.grid_55_vfence_04);
-        vfence04.setOnClickListener(this);
-        vfence04.setOnTouchListener(this);
-        Button vfence14 = (Button) v.findViewById(R.id.grid_55_vfence_14);
-        vfence14.setOnClickListener(this);
-        vfence14.setOnTouchListener(this);
-        Button vfence24 = (Button) v.findViewById(R.id.grid_55_vfence_24);
-        vfence24.setOnClickListener(this);
-        vfence24.setOnTouchListener(this);
-        Button vfence34 = (Button) v.findViewById(R.id.grid_55_vfence_34);
-        vfence34.setOnClickListener(this);
-        vfence34.setOnTouchListener(this);
+                String buttonID = "grid_" + sizeX + sizeY +"_vfence_" + i + j;
+                int resID = getResources().getIdentifier(buttonID, "id", main.getPackageName());
+
+                Button button = ((Button) v.findViewById(resID));
+                button.setOnClickListener(this);
+                button.setOnTouchListener(this);
+
+            }//for
+
+        }//for
 
         // Inflate the layout for this fragment
         return v;
@@ -295,13 +189,13 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }//onAttach
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }//onDetach
 
     /**
      * When a button is pressed (ie fence placement attempted), a check is performed to
@@ -483,8 +377,10 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
                 break;
 
         }//switch
+
         listener.endGame(fragmentGame, this);
-    }
+
+    }//onClick
 
     /**
      * Called when a horizontal button is touched. Takes the button's coordinates on grid.
@@ -870,6 +766,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
                 }//switch col
 
+                //third row
             case 2:
 
                 switch(col) {
@@ -891,6 +788,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
                 }//switch col
 
+            //third row
             case 3:
 
                 switch(col) {
@@ -920,30 +818,5 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         return null;
 
     }//getUpdatedPen
-
-    /**
-     * Called when a pen has been completed. Makes the parameter pig (in the pen) visible,
-     * ands give the pig a color filter based on who created the pen
-     *
-     * By Keegan
-     *
-     * @param v - the image view to toggle visibility of
-     */
-    public void togglePigVisibility(View v){
-
-        ImageView pig = (ImageView) v;
-
-        if (pig.getVisibility() == View.VISIBLE){
-            pig.setVisibility(View.INVISIBLE);
-            pig.clearColorFilter();
-        }//if
-
-        else{
-            pig.setColorFilter(fragmentGame.getCurrentPlayer().getColorLight(),
-                    PorterDuff.Mode.MULTIPLY);
-            pig.setVisibility(View.VISIBLE);
-        }//else
-
-    }//togglePigVisibility
 
 }//Grid55Fragment

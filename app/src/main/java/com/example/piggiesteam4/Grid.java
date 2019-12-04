@@ -7,7 +7,7 @@
  * Used to store the state of the game and update it as appropriate
  *
  * Has an inner class Fence, which is just the data need to represent a fence on
- * the gameboard. Every grid is made up of Fence objects
+ * the game board. Every grid is made up of Fence objects
  *
  * Fence Methods:
  *  - Fence() -> Fence
@@ -57,29 +57,36 @@
  *      the provided playerReturns true if successful, false if fence already
  *      exists at location.
  *
- *  - checkPenBelow(int row, int col) -> boolean
+ *  - checkPenBelow(int row, int col, Player player) -> boolean
  *      Checks for a potentially completed pen below the provided xCoords horizontal
- *      fence coordinate. Returns true pen is completed, false otherwise
+ *      fence coordinate. If a pen can be made, places the fence and updates the
+ *      current players score. Returns true if pen is completed, false otherwise
  *
- *  - checkPenAbove(int row, int col) -> boolean
+ *  - checkPenAbove(int row, int col, Player player) -> boolean
  *      Checks for a potentially completed pen above the provided xCoords horizontal
- *      fence coordinate. Returns true pen is completed, false otherwise
+ *      fence coordinate. If a pen can be made, places the fence and updates the
+ *      current players score. Returns true if pen is completed, false otherwise
  *
- *  - checkPenLeft(int row, int col) -> boolean
+ *  - checkPenLeft(int row, int col, Player player) -> boolean
  *      Checks for a potentially completed pen to the left of the provided
- *      yCoords vertical fence coordinate.
- *      Returns true pen is completed, false otherwise
+ *      yCoords vertical fence coordinate. If a pen can be made, places the fence
+ *      and updates the current players score. Returns true if pen is completed,
+ *      false otherwise
  *
- *  - checkPenRight(int row, int col) -> boolean
+ *  - checkPenRight(int row, int col, Player player) -> boolean
  *      Checks for a potentially completed pen to the right of the provided
- *      yCoords vertical fence coordinate.
- *      Returns true pen is completed, false otherwise
+ *      yCoords vertical fence coordinate. If a pen can be made, places the fence
+ *      and updates the current players score. Returns true if pen is completed,
+ *      false otherwise
  *
  * Started November 17, 2019 by Keegan
- * First push to master on
  *
  * Changelog:
- *  11/28/19 - Added getters for fence existence
+ *  - 12/02/19: Alvin
+ *      Added getters for xCoords and yCoords
+ *
+ *  - 11/28/19: Keegan
+ *      Added getters for fence existence
  */
 
 package com.example.piggiesteam4;
@@ -193,6 +200,8 @@ public class Grid {
 
     /**
      * Sets every fence's existence in the grid to false
+     *
+     * By Keegan
      */
     void clearGrid(){
 
@@ -230,6 +239,8 @@ public class Grid {
      * AI: if a fences existence changes without a button press, the buttons
      * visibility and color still need to be changed
      *
+     * By Keegan
+     *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
      * @return - true if fence is placed at coordinates,
@@ -245,6 +256,8 @@ public class Grid {
      * AI: if a fences existence changes without a button press, the buttons
      * visibility and color still need to be changed
      *
+     * By Keegan
+     *
      * @param row - row coord into yCoords
      * @param col - column coord into yCoords
      * @return - true if fence is placed at coordinates,
@@ -254,10 +267,28 @@ public class Grid {
         return this.yCoords[row][col].exists();
     }//getExistenceY
 
+    /**
+     * Gets the state of the pen (completed or not)
+     *
+     * By Keegan
+     *
+     * @param row - row index into pens
+     * @param col - col index into pens
+     * @return the state of the pen
+     */
     boolean getPen(int row, int col){
         return this.pens[row][col];
-    }
+    }//getPen
 
+    /**
+     * Sets the state of the pen
+     *
+     * By Keegan
+     *
+     * @param row - row index into pens
+     * @param col - col index into pens
+     * @param state - the state to set the pen to
+     */
     void setPen(int row, int col, boolean state){
          this.pens[row][col] = false;
     }//setPen
@@ -265,6 +296,8 @@ public class Grid {
     /**
      * Tries to place a horizontal fence at the specified grid location
      * Need to index into xCoords to get correct location
+     *
+     * By Keegan
      *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
@@ -288,6 +321,8 @@ public class Grid {
      * Tries to place a vertical fence at the specified grid location in game class
      * Need to index into yCoords to get correct location
      *
+     * By Keegan
+     *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
      * @param color - color to set the fence to (player.getCurrentPlayerColor())
@@ -308,10 +343,12 @@ public class Grid {
 
     /**
      * Checks for a potentially completed pen below the provided horizontal
-     * fence coordinate
+     * fence coordinate. If a pen can be completed, places the fence and awards
+     * a point to the current player (the player who placed the fence)
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
-     * However the AI may use this function to help find potential pens
+     * The AI uses this function to find potential pens
+     *
+     * By Keegan
      *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
@@ -337,10 +374,12 @@ public class Grid {
 
     /**
      * Checks for a potentially completed pen above the provided horizontal
-     * fence coordinate
+     * fence coordinate. If a pen can be completed, places the fence and awards
+     * a point to the current player (the player who placed the fence)
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
-     * However the AI may use this function to help find potential pens
+     * The AI uses this function to find potential pens
+     *
+     * By Keegan
      *
      * @param row - row coord into xCoords
      * @param col - column coord into xCoords
@@ -365,10 +404,12 @@ public class Grid {
 
     /**
      * Checks for a potentially completed pen to the left of the provided vertical
-     * fence coordinate
+     * fence coordinate. If a pen can be completed, places the fence and awards
+     * a point to the current player (the player who placed the fence)
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
-     * However the AI may use this function to help find potential pens
+     * The AI uses this function to find potential pens
+     *
+     * By Keegan
      *
      * @param row - row coord into yCoords
      * @param col - column coord into yCoords
@@ -394,10 +435,12 @@ public class Grid {
 
     /**
      * Checks for a potentially completed pen to the right of the provided vertical
-     * fence coordinate
+     * fence coordinate. If a pen can be completed, places the fence and awards
+     * a point to the current player (the player who placed the fence)
      *
-     * The fence at the coordinates into xCoords are assumed to be for a fence that exists.
-     * However the AI may use this function to help find potential pens
+     * The AI uses this function to find potential pens
+     *
+     * By Keegan
      *
      * @param row - row coord into yCoords
      * @param col - column coord into yCoords
@@ -421,12 +464,20 @@ public class Grid {
 
     }//checkPenRight
 
-    void updateColors(int color, Player player){
+    /**
+     * Changes the colors of the fences
+     * @param newColor - the new color of the fences
+     * @param oldColor - used to identify the fences to be replaced
+     */
+    void updateColors(int newColor, int oldColor){
 
-    }
+    }//updateColors
 
     /**
      * Gets xCoords array.
+     *
+     * By Alvin
+     *
      * @return xCoords array.
      */
     public Fence[][] getxCoords() {
@@ -435,9 +486,13 @@ public class Grid {
 
     /**
      * Gets yCoords array.
+     *
+     * By Alvin
+     *
      * @return yCoordsArray
      */
     public Fence[][] getyCoords() {
         return yCoords;
     }//getyCoords
+
 }//Grid
