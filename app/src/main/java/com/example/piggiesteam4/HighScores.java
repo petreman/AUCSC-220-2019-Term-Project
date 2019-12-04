@@ -108,10 +108,8 @@ public class HighScores {
      * @param counter determines which grid size's high scores the user is looking at.
      * @return success.
      */
-    public static boolean resetScores(int counter){ //counter in leaderboard activity class. should start at 0 each time and after
-                                             //calling any method with it as a parameter, it should be incremented by 1
-        //int size = grid.getSize(); //change later based on how size specified || this should no longer be used
-        //switch statement
+    public static boolean resetScores(int counter){ //counter in leaderboard activity class. should start at 0 each time
+                                                    //and will increase or decrease based on what grid size scores are viewed
         switch (counter){
             case 0:
                 smallestGrid.clear();
@@ -128,6 +126,9 @@ public class HighScores {
             case 4:
                 largestGrid.clear();
                 break;
+            default:
+                throw new AssertionError("Invalid counter value");
+                //return false;
         }//switch
         return true;
     }//resetScores
@@ -178,9 +179,10 @@ public class HighScores {
                 return largeGrid.get(0);
             case LARGEST:
                 return largestGrid.get(0);
-
+            default:
+                throw new AssertionError("Invalid grid size");
+                //return null; //this should never happen
         }//switch
-        return null; //this should never happen
     }//getHighScores
 
     //this method scrolls through the high scores for showing on the leaderboard screen
@@ -247,8 +249,10 @@ public class HighScores {
                 largestGrid.add(highscore);
                 sort(largestGrid);
                 return true;
+            default:
+                throw new AssertionError("Invalid grid size");
+                //return false; //this should never happen
         }//switch
-        return false; //this should never happen
     }
 
     /**
@@ -332,7 +336,8 @@ public class HighScores {
             return true;
         }//try
         catch (Exception e){
-            return false; //shouldn't happen
+            throw new AssertionError("No scores retrieved");
+            //return false; //shouldn't happen
         }//catch
     }//retrieveScores
 }//HighScore

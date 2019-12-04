@@ -84,6 +84,7 @@ public class GridParent extends Fragment {
     public void showSaved(){
         Grid.Fence[][] xCoords = fragmentGame.getGrid().getxCoords();
         Grid.Fence[][] yCoords = fragmentGame.getGrid().getyCoords();
+
         for (int row = 0; row < size; row++){
             for (int col = 0; col < size; col++){
                 if (col < size - 1){
@@ -99,6 +100,7 @@ public class GridParent extends Fragment {
                         fence.setAlpha((float) 1.0);
                     }//if
                 }//if
+
                 if (row < size - 1){
                     Grid.Fence currentYFence = yCoords[row][col];
                     if (currentYFence.exists()) {
@@ -132,6 +134,7 @@ public class GridParent extends Fragment {
 
                     fence.setAlpha((float) 0.0);
                 }//if
+
                 if (row < size - 1){
                     Button fence = (Button) fragmentView.findViewById(getResources()
                             .getIdentifier("grid_" + size + size + "_vfence_" + row + col,

@@ -174,7 +174,7 @@ public class Game {
             return true;
         }//if
         return false;
-    }//isGameover
+    }//isGameOver
 
     /**
      * Indicates if the game is over or not.

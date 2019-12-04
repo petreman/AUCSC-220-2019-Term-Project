@@ -38,14 +38,13 @@ public class GridSizeActivity extends AppCompatActivity {
         confirm.setEnabled(true);
     }//switchSize
 
-    //TODO rename the method
     /**
      * Starts the game with the selected size, will replace the current game.
      * @param v View
      */
-    public void pending(View v){
+    public void confirmNewGridSize(View v){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("size", selectedSize);
         startActivity(intent);
-    }//pending
+    }//confirmNewGridSize
 }//GridSizeActivity

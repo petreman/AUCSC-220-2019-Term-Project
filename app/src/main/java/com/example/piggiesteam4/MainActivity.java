@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements
 
         if (isFirstTime) {
             popUpMenu();
+            HighScores.save(getApplicationContext());
         }
 
         //Initializations
@@ -233,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements
                     receivedName = getString(R.string.anonymous);
                 }
                 game.endGame(receivedName);
+                HighScores.save(getApplicationContext());
             }//onDialogPositiveClick
 
             @Override
@@ -447,13 +449,15 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public void endGame(Game game, GridParent frag) {
             if (game.isGameOver()){
+
                 if (frag.fragmentGame.getPlayer1().getScore() == frag.fragmentGame.getPlayer2().getScore()){
                     game.endGame();
                     showTieAlert();
-                }
+                }//if
                 else {
                     askForName(game);
-                }
+                }//else
+
                 HighScores.save(getApplicationContext());
                 saveGame(frag);
                 frag.resetFences();
@@ -471,6 +475,7 @@ public class MainActivity extends AppCompatActivity implements
             Context context = getApplicationContext();
             SharedPreferences pref;
             Gson gson = new Gson();
+
             if (frag.isMultiplayer){
                 pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
@@ -497,23 +502,28 @@ public class MainActivity extends AppCompatActivity implements
             Context context = getApplicationContext();
             SharedPreferences pref;
             Gson gson = new Gson();
+
             if (frag.isMultiplayer){
                 pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
             }//if
             else{
                 pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
             }//else
+
             String game = pref.getString("game", "");
             String fragGame = pref.getString("fragGame", "");
+
             if (game.equals("") && fragGame.equals("")){
                 return false;
             }//if
+
             if (frag.isMultiplayer){
                 multiPlayer = gson.fromJson(game, Game.class);
             }//if
             else{
                 singlePlayer = gson.fromJson(game,Game.class);
             }//else
+
             frag.fragmentGame = gson.fromJson(fragGame, Game.class);
             frag.p1ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer1().getScore()).toString());
             frag.p2ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer2().getScore()).toString());

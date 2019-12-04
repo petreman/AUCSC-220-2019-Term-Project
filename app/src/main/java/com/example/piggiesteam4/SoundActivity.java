@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ import com.example.piggiesteam4.Settings;
 
 public class SoundActivity extends AppCompatActivity {
 
+    boolean sfxOn;
+    boolean musicOn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +33,14 @@ public class SoundActivity extends AppCompatActivity {
         getSettings();
     }
 
-    public void setListeners(){
+    public void setListeners() {
         Switch music = (Switch) findViewById(R.id.music);
         music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Settings.setMusicOn(isChecked);
                 testSet();
+                enableConfirm();
             }
         });
 
@@ -45,28 +50,52 @@ public class SoundActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Settings.setSfxOn(isChecked);
                 testSet();
+                enableConfirm();
             }
         });
-        }
+    }
 
-        public void getSettings(){
-            Settings.retrieve(getApplicationContext());
-            Switch sfx = (Switch) findViewById(R.id.soundfx);
-            Switch music = (Switch) findViewById(R.id.music);
-            sfx.setChecked(Settings.getSfxOn());
-            music.setChecked(Settings.getMusicOn());
-        }
+    /**
+     * Retrieves saved settings values and sets class variables and view switches.
+     */
+    public void getSettings(){
+        Settings.retrieve(getApplicationContext());
+        Switch sfx = (Switch) findViewById(R.id.soundfx);
+        Switch music = (Switch) findViewById(R.id.music);
+        sfxOn = Settings.getSfxOn();
+        musicOn = Settings.getMusicOn();
+        sfx.setChecked(sfxOn);
+        music.setChecked(musicOn);
+    }
 
-        public void confirm(View v){
-            Settings.save(getApplicationContext());
-        }
+    /**
+     * Confirms and saves settings.
+     * @param v View
+     */
+    public void confirm(View v){
+        Settings.save(getApplicationContext());
+    }
 
-        public void testSet(){
-            TextView sound = (TextView) findViewById(R.id.textsfx);
-            TextView music = (TextView) findViewById(R.id.textMusic);
-            Boolean sfx = Settings.isSfxOn();
-            Boolean mus = Settings.isMusicOn();
-            sound.setText(sfx.toString());
-            music.setText(mus.toString());
+    public void testSet(){
+        TextView sound = (TextView) findViewById(R.id.textsfx);
+        TextView music = (TextView) findViewById(R.id.textMusic);
+        Boolean sfx = Settings.isSfxOn();
+        Boolean mus = Settings.isMusicOn();
+        sound.setText(sfx.toString());
+        music.setText(mus.toString());
+    }
+
+    /**
+     * Enables the confirmation button when settings have been changed.
+     */
+    public void enableConfirm(){
+        Button confirm = (Button) findViewById(R.id.confirmButtonSound);
+
+        if ((sfxOn != Settings.getSfxOn()) || (musicOn != Settings.getMusicOn())) {
+            confirm.setEnabled(true);
+        }
+        else{
+            confirm.setEnabled(false);
+        }
     }
 }

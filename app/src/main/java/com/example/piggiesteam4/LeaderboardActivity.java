@@ -15,13 +15,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
-    int counter;
+    int counter = 0;
     boolean scoresReset = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +160,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         HighScores.clear();
         getLeaderboard();
         resetText();
+        enableConfirm();
     }//resetAllScores
 
     /**
@@ -191,6 +193,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                 break;
             case 2:
                 gridSize.setText("7x7");
+                break;
+            default:
+                throw new AssertionError("Counter error");
         }//switch
     }//swapGridSize
 
@@ -201,6 +206,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     public void resetCurrentScores(View v){
         HighScores.resetScores(counter);
         resetText();
+        enableConfirm();
     }//resetCurrentScores
 
     /**
@@ -239,6 +245,14 @@ public class LeaderboardActivity extends AppCompatActivity {
     }//selectText
 
     /**
+     * Enables the confirm button for saving changes.
+     */
+    public void enableConfirm(){
+        Button confirm = (Button) findViewById(R.id.confirmButtonScores);
+        confirm.setEnabled(true);
+    }
+
+    /**
      * Method for testing, remove later.
      */
     public void testset(View v){
@@ -263,4 +277,4 @@ public class LeaderboardActivity extends AppCompatActivity {
         HighScores.sort(d);
         HighScores.sort(e);
     }//testset
-}
+}//LeaderboardActivity
