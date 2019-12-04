@@ -166,18 +166,33 @@ public class HighScores {
     public static Score getHighScore(Grid grid){ //this method for getting highest score to show on main screen
         //may change based on how getting grid size works
         //via getX and getY !warning! this does not get the box dimensions, it gets the fence dimensions.
-        int size = 0;
+        int size = grid.getX() * grid.getY();
         //switch to get highscores for a grid
         switch (size){
             case SMALLEST:
+                if (smallestGrid.isEmpty()){
+                    return null;
+                }
                 return smallestGrid.get(0);
             case SMALL:
+                if (smallGrid.isEmpty()){
+                    return null;
+                }
                 return smallGrid.get(0);
             case MEDIUM:
+                if (mediumGrid.isEmpty()){
+                    return null;
+                }
                 return mediumGrid.get(0);
             case LARGE:
+                if (largestGrid.isEmpty()){
+                    return null;
+                }
                 return largeGrid.get(0);
             case LARGEST:
+                if (largestGrid.isEmpty()){
+                    return null;
+                }
                 return largestGrid.get(0);
             default:
                 throw new AssertionError("Invalid grid size");
@@ -294,14 +309,15 @@ public class HighScores {
      */
     public static boolean save(Context context){
         SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
-        //Possibly move these strings such as the one above to string resource folder?
         SharedPreferences.Editor editor = pref.edit();
-        Gson gson = new Gson(); //added implementation 'com.google.code.gson:gson:2.8.5' to gradle
+        Gson gson = new Gson();
+
         String smallest = gson.toJson(smallestGrid);
         String small = gson.toJson(smallGrid);
         String medium = gson.toJson(mediumGrid);
         String large = gson.toJson(largeGrid);
         String largest = gson.toJson(largestGrid);
+
         editor.putString("smallest", smallest);
         editor.putString("small", small);
         editor.putString("medium", medium);
@@ -309,8 +325,6 @@ public class HighScores {
         editor.putString("largest", largest);
         editor.commit();
         return true;
-        //may need commit after each putString? also move strings to string resource
-        //after tests, it doesn't appear to require multiple commits.
     }//save
 
     /**
@@ -320,24 +334,20 @@ public class HighScores {
      * @return whether saved scores have been retrieved.
      */
     public static boolean retrieveScores(Context context){
-        try{
-            SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String pendingSmallest = pref.getString("smallest", "");
-            String pendingSmall = pref.getString("small", "");
-            String pendingMedium = pref.getString("medium", "");
-            String pendingLarge = pref.getString("large", "");
-            String pendingLargest = pref.getString("largest", "");
-            smallestGrid = gson.fromJson(pendingSmallest, new TypeToken<ArrayList<Score>>(){}.getType());
-            smallGrid = gson.fromJson(pendingSmall, new TypeToken<ArrayList<Score>>(){}.getType());
-            mediumGrid = gson.fromJson(pendingMedium, new TypeToken<ArrayList<Score>>(){}.getType());
-            largeGrid = gson.fromJson(pendingLarge, new TypeToken<ArrayList<Score>>(){}.getType());
-            largestGrid = gson.fromJson(pendingLargest, new TypeToken<ArrayList<Score>>(){}.getType());
-            return true;
-        }//try
-        catch (Exception e){
-            throw new AssertionError("No scores retrieved");
-            //return false; //shouldn't happen
-        }//catch
+        SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        String pendingSmallest = pref.getString("smallest", "");
+        String pendingSmall = pref.getString("small", "");
+        String pendingMedium = pref.getString("medium", "");
+        String pendingLarge = pref.getString("large", "");
+        String pendingLargest = pref.getString("largest", "");
+
+        smallestGrid = gson.fromJson(pendingSmallest, new TypeToken<ArrayList<Score>>(){}.getType());
+        smallGrid = gson.fromJson(pendingSmall, new TypeToken<ArrayList<Score>>(){}.getType());
+        mediumGrid = gson.fromJson(pendingMedium, new TypeToken<ArrayList<Score>>(){}.getType());
+        largeGrid = gson.fromJson(pendingLarge, new TypeToken<ArrayList<Score>>(){}.getType());
+        largestGrid = gson.fromJson(pendingLargest, new TypeToken<ArrayList<Score>>(){}.getType());
+        return true;
     }//retrieveScores
 }//HighScore

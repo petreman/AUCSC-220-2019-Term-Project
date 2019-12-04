@@ -38,8 +38,9 @@ public class SoundActivity extends AppCompatActivity {
         music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.setMusicOn(isChecked);
-                testSet();
+                //Settings.setMusicOn(isChecked);
+                musicOn = isChecked;
+                //testSet();
                 enableConfirm();
             }
         });
@@ -48,8 +49,9 @@ public class SoundActivity extends AppCompatActivity {
         sfx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.setSfxOn(isChecked);
-                testSet();
+                //Settings.setSfxOn(isChecked);
+                sfxOn = isChecked;
+                //testSet();
                 enableConfirm();
             }
         });
@@ -73,17 +75,21 @@ public class SoundActivity extends AppCompatActivity {
      * @param v View
      */
     public void confirm(View v){
+        Settings.setMusicOn(musicOn);
+        Settings.setSfxOn(sfxOn);
         Settings.save(getApplicationContext());
+        enableConfirm();
     }
 
-    public void testSet(){
-        TextView sound = (TextView) findViewById(R.id.textsfx);
-        TextView music = (TextView) findViewById(R.id.textMusic);
-        Boolean sfx = Settings.isSfxOn();
-        Boolean mus = Settings.isMusicOn();
-        sound.setText(sfx.toString());
-        music.setText(mus.toString());
-    }
+//    //no longer displays accurate info
+//    public void testSet(){
+//        TextView sound = (TextView) findViewById(R.id.textsfx);
+//        TextView music = (TextView) findViewById(R.id.textMusic);
+//        Boolean sfx = Settings.isSfxOn();
+//        Boolean mus = Settings.isMusicOn();
+//        sound.setText(sfx.toString());
+//        music.setText(mus.toString());
+//    }
 
     /**
      * Enables the confirmation button when settings have been changed.

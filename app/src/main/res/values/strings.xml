@@ -22,4 +22,6 @@
     <string name="tie">You tied!</string>
     <string name="exit">Exit</string>
     <string name="here_is_how_to_play_the_game">Here is how to play the game</string>
+    <string name="mainHighscore">High Score\n</string>
+    <string name="mainHighscoreDefault">High Score\n0</string>
 </resources>
