@@ -21,4 +21,5 @@
     <string name="anonymous">Anonymous</string>
     <string name="tie">You tied!</string>
     <string name="exit">Exit</string>
+    <string name="here_is_how_to_play_the_game">Here is how to play the game</string>
 </resources>

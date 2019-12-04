@@ -162,7 +162,7 @@ public class HighScores {
      * @param grid the grid size whose score are being retrieved.
      * @return the Score.
      */
-    public static Score getHighScores(Grid grid){ //this method for getting highest score to show on main screen
+    public static Score getHighScore(Grid grid){ //this method for getting highest score to show on main screen
         //may change based on how getting grid size works
         //via getX and getY !warning! this does not get the box dimensions, it gets the fence dimensions.
         int size = 0;

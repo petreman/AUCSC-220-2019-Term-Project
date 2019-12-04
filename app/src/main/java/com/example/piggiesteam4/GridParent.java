@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -225,4 +226,60 @@ public class GridParent extends Fragment {
     public void setMainCurrentPlayer(Player currentPlayer){
         main.currentPlayer = currentPlayer;
     }
+
+    public void resetPens() {
+
+        int sizeX = fragmentGame.getGrid().getX();
+        int sizeY = fragmentGame.getGrid().getY();
+
+        for (int i = 0; i < sizeX - 1; i++) {
+
+            for (int j = 0; j < sizeY - 1; j++) {
+
+                String penID = "grid_" + sizeX + sizeY + "_pig_" + i + j;
+                int resID = getResources().getIdentifier(penID, "id", main.getPackageName());
+
+                ImageView pig = ((ImageView) fragmentView.findViewById(resID));
+                resetPigVisibility(pig);
+
+            }//for
+
+        }//for
+
+    }//resetPens
+
+    /**
+     * Called when a pen has been completed. Makes the parameter pig (in the pen) visible,
+     * ands give the pig a color filter based on who created the pen
+     *
+     * By Keegan
+     *
+     * @param v - the image view to toggle visibility of
+     */
+    public void togglePigVisibility(View v){
+
+        ImageView pig = (ImageView) v;
+
+        if (pig.getVisibility() == View.VISIBLE){
+            resetPigVisibility(pig);
+        }//if
+
+        else{
+            pig.setColorFilter(fragmentGame.getCurrentPlayer().getColorLight(),
+                    PorterDuff.Mode.MULTIPLY);
+            pig.setVisibility(View.VISIBLE);
+        }//else
+
+    }//togglePigVisibility
+
+    /**
+     * Sets the provided image view to be invisible
+     * @param pig - the image view (of a pig) to make invisible
+     */
+    public void resetPigVisibility(ImageView pig){
+
+        pig.setVisibility(View.INVISIBLE);
+        pig.clearColorFilter();
+
+    }//resetPigVisibility
 }//GridParent
