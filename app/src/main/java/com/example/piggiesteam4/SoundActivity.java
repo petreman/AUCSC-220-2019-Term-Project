@@ -38,7 +38,8 @@ public class SoundActivity extends AppCompatActivity {
         music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.setMusicOn(isChecked);
+                //Settings.setMusicOn(isChecked);
+                musicOn = isChecked;
                 testSet();
                 enableConfirm();
             }
@@ -48,7 +49,8 @@ public class SoundActivity extends AppCompatActivity {
         sfx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.setSfxOn(isChecked);
+                //Settings.setSfxOn(isChecked);
+                sfxOn = isChecked;
                 testSet();
                 enableConfirm();
             }
@@ -73,9 +75,13 @@ public class SoundActivity extends AppCompatActivity {
      * @param v View
      */
     public void confirm(View v){
+        Settings.setMusicOn(musicOn);
+        Settings.setSfxOn(sfxOn);
         Settings.save(getApplicationContext());
+        enableConfirm();
     }
 
+    //no longer displays accurate info
     public void testSet(){
         TextView sound = (TextView) findViewById(R.id.textsfx);
         TextView music = (TextView) findViewById(R.id.textMusic);
