@@ -1,3 +1,12 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * NameQueryFragment.java
+ *
+ * To be used upon the game ending.
+ * The winner may then enter their name to be stored in the leaderboard.
+ */
 package com.example.piggiesteam4;
 
 import android.app.AlertDialog;
@@ -12,6 +21,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.piggiesteam4.R;
 
 public class NameQueryFragment extends DialogFragment {
 

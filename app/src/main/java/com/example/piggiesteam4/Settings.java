@@ -1,3 +1,11 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * Settings.java
+ *
+ * Stores the players settings.
+ */
 package com.example.piggiesteam4;
 
 import android.content.Context;

@@ -1,3 +1,12 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * LeaderboardActivity.java
+ *
+ * Shows the highscores of previous winners on different grid sizes.
+ * Allows for the resetting of scores.
+ */
 package com.example.piggiesteam4;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +29,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
         resetText();
         //testset();
+        HighScores.retrieveScores(getApplicationContext());
         getLeaderboard();
     }//onCreate
 

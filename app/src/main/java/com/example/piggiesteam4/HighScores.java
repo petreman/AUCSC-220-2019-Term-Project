@@ -1,3 +1,12 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * HighScores.java
+ *
+ * Contains the scores.
+ * Handles adding and getting saved scores.
+ */
 package com.example.piggiesteam4;
 
 import android.content.Context;
@@ -6,6 +15,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,15 +85,15 @@ public class HighScores {
         }
     }//Score
 
-    private static List<Score> smallestGrid = new ArrayList<Score>(); //change names when specific size finalized
-    private static List<Score> smallGrid = new ArrayList<Score>();
-    private static List<Score> mediumGrid = new ArrayList<Score>();
-    private static List<Score> largeGrid = new ArrayList<Score>();
-    private static List<Score> largestGrid = new ArrayList<Score>();
-    private static final int SMALLEST = 25;
-    private static final int SMALL = 36;    //5x5 dots
-    private static final int MEDIUM = 49;   //6x6 dots
-    private static final int LARGE = 4;    //7x7 dots
+    private static List<Score> smallestGrid = new ArrayList(); //change names when specific size finalized
+    private static List<Score> smallGrid = new ArrayList();
+    private static List<Score> mediumGrid = new ArrayList();
+    private static List<Score> largeGrid = new ArrayList();
+    private static List<Score> largestGrid = new ArrayList();
+    private static final int SMALLEST = 25; //5x5 dots
+    private static final int SMALL = 36;    //6x6 dots
+    private static final int MEDIUM = 49;   //7x7 dots
+    private static final int LARGE = 4;
     private static final int LARGEST = 5;
 
 //    /**
@@ -314,11 +324,11 @@ public class HighScores {
             String pendingMedium = pref.getString("medium", "");
             String pendingLarge = pref.getString("large", "");
             String pendingLargest = pref.getString("largest", "");
-            smallestGrid = gson.fromJson(pendingSmallest, List.class);
-            smallGrid = gson.fromJson(pendingSmall, List.class);
-            mediumGrid = gson.fromJson(pendingMedium, List.class);
-            largeGrid = gson.fromJson(pendingLarge, List.class);
-            largestGrid = gson.fromJson(pendingLargest, List.class);
+            smallestGrid = gson.fromJson(pendingSmallest, new TypeToken<ArrayList<Score>>(){}.getType());
+            smallGrid = gson.fromJson(pendingSmall, new TypeToken<ArrayList<Score>>(){}.getType());
+            mediumGrid = gson.fromJson(pendingMedium, new TypeToken<ArrayList<Score>>(){}.getType());
+            largeGrid = gson.fromJson(pendingLarge, new TypeToken<ArrayList<Score>>(){}.getType());
+            largestGrid = gson.fromJson(pendingLargest, new TypeToken<ArrayList<Score>>(){}.getType());
             return true;
         }//try
         catch (Exception e){

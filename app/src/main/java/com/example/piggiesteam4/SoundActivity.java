@@ -1,3 +1,11 @@
+/**
+ * AUCSC 220
+ * PiggiesTeam4
+ *
+ * SoundActivity.Java
+ *
+ * Page for changing the sound settings.
+ */
 package com.example.piggiesteam4;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +15,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.piggiesteam4.R;
+import com.example.piggiesteam4.Settings;
 
 public class SoundActivity extends AppCompatActivity {
 

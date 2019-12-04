@@ -13,8 +13,8 @@ import androidx.fragment.app.DialogFragment;
 public class ResetConfirmationFragment extends DialogFragment {
 
     public interface ResetConfirmationListener{
-        public void onDialogPositiveClick(Dialog dialog);
-        public void onDialogNegativeClick(Dialog dialog);
+        public void onDialogPositiveClick(DialogFragment dialog);
+        public void onDialogNegativeClick(DialogFragment dialog);
     }
 
     ResetConfirmationListener listener;
@@ -27,7 +27,7 @@ public class ResetConfirmationFragment extends DialogFragment {
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                listener.onDialogPositiveClick(ResetConfirmationFragment.this);
             }//onClick
         });//setPositiveButton
 

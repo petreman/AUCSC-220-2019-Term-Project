@@ -178,12 +178,51 @@ public class GridParent extends Fragment {
         }//else
 
         fragmentGame.toggleCurrentPlayer();
+        setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
     }//toggleTurn
 
+    /**
+     * Sets player 1 to be the current player.
+     */
     public void setP1Current(){
         if(fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()){
             toggleTurn(fragmentGame.getCurrentPlayer());
         }
+    }
+    protected MainActivity.resetListener resetListener = new MainActivity.resetListener() {
+        /**
+         * Resets the game.
+         */
+        @Override
+        public void reset() {
+            fragmentGame.endGame();
+            resetFences();
+            System.out.println("AAAAAAA");
+        }
+    };
+
+    /**
+     * Sets the resetListener in the main activity.
+     */
+    public void setReset(){
+        ((MainActivity) getActivity()).setResetListener(resetListener);
+    }
+
+    /**
+     * Sets the currentGame in the main activity to the currently active game.
+     * @param isMultiplayer
+     */
+    public void setMainCurrentGame(boolean isMultiplayer){
+        if (isMultiplayer){
+            main.currentGame = main.multiPlayer;
+        }
+        else{
+            main.currentGame = main.singlePlayer;
+        }
+    }
+
+    public void setMainCurrentPlayer(Player currentPlayer){
+        main.currentPlayer = currentPlayer;
     }
 }//GridParent

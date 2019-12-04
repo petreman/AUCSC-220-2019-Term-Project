@@ -46,6 +46,15 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
         Grid66Fragment.OnFragmentInteractionListener{
 
+    public interface resetListener{
+        void reset();
+    }
+    public resetListener resetListener;
+    public void setResetListener(resetListener reset){
+        resetListener = reset;
+    }
+
+
     //Class Variables
     public Game singlePlayer;
     public Game multiPlayer;
@@ -158,6 +167,9 @@ public class MainActivity extends AppCompatActivity implements
                 navIntent = new Intent(this, AboutActivity.class);
                 this.startActivity(navIntent);
                 break;
+            case R.id.nav_reset:
+                askForResetConfirmation();
+                break;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -217,12 +229,12 @@ public class MainActivity extends AppCompatActivity implements
 
         ResetConfirmationFragment.ResetConfirmationListener listener = new ResetConfirmationFragment.ResetConfirmationListener() {
             @Override
-            public void onDialogPositiveClick(Dialog dialog) {
-                currentGame.resetGame();
+            public void onDialogPositiveClick(DialogFragment dialog) {
+                resetListener.reset();
             }//onDialogPositiveClick
 
             @Override
-            public void onDialogNegativeClick(Dialog dialog) {
+            public void onDialogNegativeClick(DialogFragment dialog) {
                 ;
             }//onDialogNegativeClick
         };//ResetConfirmationListener

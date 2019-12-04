@@ -7,7 +7,7 @@
  * Java code for the fragment that holds the 5x5 grid (fragment_grid_55.xml)
  *
  * There are a lot of default functions here that i don't know what they do or if I can
- * safely remove them, so I wont comment on them
+ * safely remove them, so I won't comment on them
  *
  * Methods:
  *  -
@@ -111,7 +111,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         p2ScoreButton = main.p2Score;
 
         size = 5;
-
+        setMainCurrentGame(isMultiplayer);
         setRetainInstance(true);
 
     }//onCreate
@@ -143,6 +143,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
         fragmentView = v;
         loadGame();
+        setReset();
 
         Button hfence00 = (Button) v.findViewById(R.id.grid_55_hfence_00);
         hfence00.setOnClickListener(this);
