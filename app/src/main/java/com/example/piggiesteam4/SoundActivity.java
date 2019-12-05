@@ -40,7 +40,7 @@ public class SoundActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //Settings.setMusicOn(isChecked);
                 musicOn = isChecked;
-                testSet();
+                //testSet();
                 enableConfirm();
             }
         });
@@ -51,7 +51,7 @@ public class SoundActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //Settings.setSfxOn(isChecked);
                 sfxOn = isChecked;
-                testSet();
+                //testSet();
                 enableConfirm();
             }
         });
@@ -81,15 +81,15 @@ public class SoundActivity extends AppCompatActivity {
         enableConfirm();
     }
 
-    //no longer displays accurate info
-    public void testSet(){
-        TextView sound = (TextView) findViewById(R.id.textsfx);
-        TextView music = (TextView) findViewById(R.id.textMusic);
-        Boolean sfx = Settings.isSfxOn();
-        Boolean mus = Settings.isMusicOn();
-        sound.setText(sfx.toString());
-        music.setText(mus.toString());
-    }
+//    //no longer displays accurate info
+//    public void testSet(){
+//        TextView sound = (TextView) findViewById(R.id.textsfx);
+//        TextView music = (TextView) findViewById(R.id.textMusic);
+//        Boolean sfx = Settings.isSfxOn();
+//        Boolean mus = Settings.isMusicOn();
+//        sound.setText(sfx.toString());
+//        music.setText(mus.toString());
+//    }
 
     /**
      * Enables the confirmation button when settings have been changed.
