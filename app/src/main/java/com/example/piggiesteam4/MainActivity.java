@@ -267,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
                 resetListener.reset();
+                p1Score.setText("0");
+                p2Score.setText("0");
             }//onDialogPositiveClick
 
             @Override
@@ -463,6 +465,9 @@ public class MainActivity extends AppCompatActivity implements
                 frag.resetFences();
                 frag.setP1Current();
                 frag.resetPens();
+                frag.resetPens();
+                p1Score.setText("0");
+                p2Score.setText("0");
             }//if
         }//endGame
 

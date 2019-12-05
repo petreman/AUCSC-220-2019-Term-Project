@@ -202,7 +202,8 @@ public class GridParent extends Fragment {
         public void reset() {
             fragmentGame.endGame();
             resetFences();
-            System.out.println("AAAAAAA");
+            setP1Current();
+            resetPens();
         }
     };
 
