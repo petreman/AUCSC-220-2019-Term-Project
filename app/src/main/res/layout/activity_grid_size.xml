@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:onClick="switchSize"
         android:text="5x5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gridSize6x6"
+        app:layout_constraintEnd_toEndOf="@+id/gridSize6x6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/gridSize6x6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.20999998" />
 
@@ -25,8 +26,10 @@
         android:layout_marginTop="16dp"
         android:onClick="switchSize"
         android:text="6x6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gridSize7x7"
+        app:layout_constraintEnd_toEndOf="@+id/gridSize7x7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/gridSize7x7"
         app:layout_constraintTop_toBottomOf="@+id/gridSize5x5" />
 
     <Button
@@ -36,7 +39,9 @@
         android:layout_marginTop="16dp"
         android:onClick="switchSize"
         android:text="7x7"
+        app:layout_constraintBottom_toTopOf="@+id/confirmButtonSize"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridSize6x6" />
 
@@ -44,7 +49,7 @@
         android:id="@+id/confirmButtonSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="78dp"
+        android:layout_marginBottom="50dp"
         android:enabled="false"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
