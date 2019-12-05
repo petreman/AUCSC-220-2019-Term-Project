@@ -224,8 +224,6 @@ public class Game {
      *
      * @param name the name of the winner;
      * @return the Score object.
-     *
-     * By Alvin
      */
     public HighScores.Score getHighscore(String name){
         int p1Score = player1.getScore();

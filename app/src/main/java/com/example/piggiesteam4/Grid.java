@@ -470,7 +470,7 @@ public class Grid {
      * @param oldColor - used to identify the fences to be replaced
      */
     void updateColors(int newColor, int oldColor){
-
+        //unimplemented
     }//updateColors
 
     /**

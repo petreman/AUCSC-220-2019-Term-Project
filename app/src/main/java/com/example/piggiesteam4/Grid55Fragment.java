@@ -123,10 +123,10 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
      *
      * By Keegan
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater - inflater to set up the layout
+     * @param container - where the fragament will be contained
+     * @param savedInstanceState - the saved instance if recreating the fragment
+     * @return the created view
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,6 +140,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         int sizeX = fragmentGame.getGrid().getX();
         int sizeY = fragmentGame.getGrid().getY();
 
+        //set listeners for the horizontal fences
         for(int i = 0; i < sizeX ; i++) {
 
             for(int j = 0 ; j < sizeY - 1 ; j++) {
@@ -155,6 +156,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
         }//for
 
+        //set listeners for the vertical fences
         for(int i = 0; i < sizeX - 1 ; i++) {
 
             for(int j = 0 ; j < sizeY ; j++) {
