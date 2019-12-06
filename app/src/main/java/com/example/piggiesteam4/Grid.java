@@ -160,6 +160,10 @@ public class Grid {
     private int x, y; //dimensions of dots for grid
     private boolean[][] pens;
 
+    public static final int GRID_5x5 = 5;
+    public static final int GRID_6x6 = 6;
+    public static final int GRID_7x7 = 7;
+
     /**
      * Grid constructor. Creates data structure for the grid of dots
      * provided by the x and y values

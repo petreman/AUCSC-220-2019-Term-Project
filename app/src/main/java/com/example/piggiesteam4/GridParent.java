@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
-public class GridParent extends Fragment {
+public abstract class GridParent extends Fragment {
 
     /**
      * This interface must be implemented by activities that contain this
@@ -49,8 +49,9 @@ public class GridParent extends Fragment {
     protected Button p2ScoreButton;
 
     protected gameStateListener listener;
-    protected int size;
     protected View fragmentView;
+
+    protected int gridSize;
 
     /**
      * Sets the listener.
@@ -85,13 +86,13 @@ public class GridParent extends Fragment {
         Grid.Fence[][] xCoords = fragmentGame.getGrid().getxCoords();
         Grid.Fence[][] yCoords = fragmentGame.getGrid().getyCoords();
 
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
-                if (col < size - 1){
+        for (int row = 0; row < gridSize; row++){
+            for (int col = 0; col < gridSize; col++){
+                if (col < gridSize - 1){
                     Grid.Fence currentXFence = xCoords[row][col];
                     if (currentXFence.exists()) {
                         Button fence = (Button) fragmentView.findViewById(getResources()
-                                .getIdentifier("grid_" + size + size + "_hfence_" + row + col,
+                                .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" + row + col,
                                         "id", this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -101,11 +102,11 @@ public class GridParent extends Fragment {
                     }//if
                 }//if
 
-                if (row < size - 1){
+                if (row < gridSize - 1){
                     Grid.Fence currentYFence = yCoords[row][col];
                     if (currentYFence.exists()) {
                         Button fence = (Button) fragmentView.findViewById(getResources()
-                                .getIdentifier("grid_" + size + size + "_vfence_" + row + col,
+                                .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" + row + col,
                                         "id", this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -122,11 +123,11 @@ public class GridParent extends Fragment {
      * Resets the fence UI.
      */
     public void resetFences(){
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
-                if (col < (size - 1)){
+        for (int row = 0; row < gridSize; row++){
+            for (int col = 0; col < gridSize; col++){
+                if (col < (gridSize - 1)){
                     Button fence = (Button) fragmentView.findViewById(getResources()
-                            .getIdentifier("grid_" + size + size + "_hfence_" + row + col,
+                            .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" + row + col,
                                     "id", this.getActivity().getPackageName()));
 
                     fence.getBackground()
@@ -135,9 +136,9 @@ public class GridParent extends Fragment {
                     fence.setAlpha((float) 0.0);
                 }//if
 
-                if (row < size - 1){
+                if (row < gridSize - 1){
                     Button fence = (Button) fragmentView.findViewById(getResources()
-                            .getIdentifier("grid_" + size + size + "_vfence_" + row + col,
+                            .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" + row + col,
                                     "id", this.getActivity().getPackageName()));
 
                     fence.getBackground()

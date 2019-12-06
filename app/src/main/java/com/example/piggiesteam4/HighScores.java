@@ -74,7 +74,7 @@ public class HighScores {
          */
         @Override
         public int compareTo(Object otherPlayer) {
-            int otherScore = ((Score)otherPlayer).getScore();
+            int otherScore = ((Score) otherPlayer).getScore();
             return otherScore - this.score;
         }//compareTo
 
@@ -90,11 +90,11 @@ public class HighScores {
     private static List<Score> mediumGrid = new ArrayList();
     private static List<Score> largeGrid = new ArrayList();
     private static List<Score> largestGrid = new ArrayList();
-    private static final int SMALLEST = 25; //5x5 dots
-    private static final int SMALL = 36;    //6x6 dots
-    private static final int MEDIUM = 49;   //7x7 dots
-    private static final int LARGE = 4;
-    private static final int LARGEST = 5;
+    private static final int SMALLEST = Grid.GRID_5x5; //5x5 dots
+    private static final int SMALL = Grid.GRID_6x6;    //6x6 dots
+    private static final int MEDIUM = Grid.GRID_7x7;   //7x7 dots
+    private static final int LARGE = -1;
+    private static final int LARGEST = -2;
 
 //    /**
 //     * Constructor.
@@ -164,9 +164,7 @@ public class HighScores {
      * @return the Score.
      */
     public static Score getHighScore(Grid grid){ //this method for getting highest score to show on main screen
-        //may change based on how getting grid size works
-        //via getX and getY !warning! this does not get the box dimensions, it gets the fence dimensions.
-        int size = grid.getX() * grid.getY();
+        int size = grid.getX();
         //switch to get highscores for a grid
         switch (size){
             case SMALLEST:
@@ -200,7 +198,6 @@ public class HighScores {
         }//switch
     }//getHighScores
 
-    //this method scrolls through the high scores for showing on the leaderboard screen
     /**
      * Gets the list of scores to be displayed on the leaderboard screen.
      * @param counter which grid size's scores are to be displayed.
@@ -242,7 +239,7 @@ public class HighScores {
      * @return success.
      */
     public static boolean addHighScore(Score highscore, Grid grid){
-        int size = grid.getX() * grid.getY();//size via grid getX getY note doesn't get dimensions of box only of points
+        int size = grid.getX();
         switch (size){
             case SMALLEST:
                 smallestGrid.add(highscore);
