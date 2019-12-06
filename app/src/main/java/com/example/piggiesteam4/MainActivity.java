@@ -20,13 +20,13 @@
  */
 package com.example.piggiesteam4;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +40,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.gson.Gson;
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements
     public Button p2Score;
     public int[] p1Color;
     public int[] p2Color;
+    private final int GRID_SIZE_REQUEST = 1;
+    private final int DEFAULT_GRID_SIZE = 5;
+    private int requestedGridSize;
 
     /**
      * On creation, creates a defualt single player game (5x5 grid)
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_grid_size:
                 navIntent = new Intent(this, GridSizeActivity.class);
-                this.startActivity(navIntent);
+                this.startActivityForResult(navIntent, GRID_SIZE_REQUEST);
                 break;
 
             case R.id.nav_sound:
@@ -213,6 +218,19 @@ public class MainActivity extends AppCompatActivity implements
         return true;
 
     }//onNavigationItemSelected
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GRID_SIZE_REQUEST){
+            if (resultCode == RESULT_OK){
+                requestedGridSize = data.getIntExtra("size", DEFAULT_GRID_SIZE);
+
+                //Toast for testing purposes, to show what was selected.
+                Toast.makeText(getApplicationContext(), ((Integer) requestedGridSize).toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
     //Maybe change variable away from class variable.
     String receivedName;
@@ -250,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements
     //The variable might be better off as not a class variable.
     /**
      * Gets the name of the winner.
-     * @return
+     * @return player's name
      */
     public String getName(){
         return receivedName;

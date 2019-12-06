@@ -8,20 +8,20 @@
     <string name="music">Music</string>
     <string name="menu">Menu</string>
     <string name="player">Player</string>
-    <string name="scoreplaceholder">Your name here</string>
+    <string name="score_placeholder">Your name here</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
-    <string name="resetleaderboard">Reset all scores</string>
-    <string name="resetcurrent">Reset current scores.</string>
+    <string name="reset_leaderboard">Reset all scores</string>
+    <string name="reset_current_scores">Reset current scores.</string>
     <string name="confirm">Confirm</string>
-    <string name="askwinnername">You won! Enter your name.</string>
+    <string name="ask_winner_name">You won! Enter your name.</string>
     <string name="name">Name</string>
-    <string name="confirmreset">Are you sure you want to reset the current game?</string>
+    <string name="confirm_reset_game">Are you sure you want to reset the current game?</string>
     <string name="cancel">Cancel</string>
     <string name="anonymous">Anonymous</string>
     <string name="tie">You tied!</string>
     <string name="exit">Exit</string>
     <string name="here_is_how_to_play_the_game">Here is how to play the game</string>
-    <string name="mainHighscore">High Score\n</string>
-    <string name="mainHighscoreDefault">High Score\n0</string>
+    <string name="main_highscore">High Score\n</string>
+    <string name="main_highscore_default">High Score\n0</string>
 </resources>

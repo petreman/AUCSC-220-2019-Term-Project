@@ -27,13 +27,16 @@ public class GridSizeActivity extends AppCompatActivity {
         String text = button.getText().toString().trim();
         switch (text){
             case "5x5":
-                selectedSize = 25;
+                selectedSize = 5;
                 break;
             case "6x6":
-                selectedSize = 36;
+                selectedSize = 6;
                 break;
             case "7x7":
-                selectedSize =49;
+                selectedSize =7;
+                break;
+            default:
+                throw new AssertionError("Unexpected size");
         }//switch
         confirm.setEnabled(true);
     }//switchSize
@@ -45,6 +48,6 @@ public class GridSizeActivity extends AppCompatActivity {
     public void confirmNewGridSize(View v){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("size", selectedSize);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
     }//confirmNewGridSize
 }//GridSizeActivity

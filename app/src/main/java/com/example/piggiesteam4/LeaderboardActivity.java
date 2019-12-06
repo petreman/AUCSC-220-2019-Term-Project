@@ -76,11 +76,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                 player1.setText(nameP1);
                 break;
             case 0:
-                player1.setText(R.string.scoreplaceholder);
-                player2.setText(R.string.scoreplaceholder);
-                player3.setText(R.string.scoreplaceholder);
-                player4.setText(R.string.scoreplaceholder);
-                player5.setText(R.string.scoreplaceholder);
+                player1.setText(R.string.score_placeholder);
+                player2.setText(R.string.score_placeholder);
+                player3.setText(R.string.score_placeholder);
+                player4.setText(R.string.score_placeholder);
+                player5.setText(R.string.score_placeholder);
         }//switch
     }//setPlayerNames
 
@@ -167,11 +167,11 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Resets the text showing player names and scores.
      */
     public void resetText(){
-        ((TextView) findViewById(R.id.leaderboardP1Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP2Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP3Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP4Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP5Name)).setText(R.string.scoreplaceholder);
+        ((TextView) findViewById(R.id.leaderboardP1Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP2Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP3Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP4Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP5Name)).setText(R.string.score_placeholder);
         ((TextView) findViewById(R.id.P1HighScore)).setText("0");
         ((TextView) findViewById(R.id.P2HighScore)).setText("0");
         ((TextView) findViewById(R.id.P3HighScore)).setText("0");

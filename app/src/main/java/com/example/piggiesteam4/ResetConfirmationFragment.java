@@ -23,7 +23,7 @@ public class ResetConfirmationFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.confirmreset);
+        builder.setTitle(R.string.confirm_reset_game);
 
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
