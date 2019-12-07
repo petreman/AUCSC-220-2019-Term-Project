@@ -24,6 +24,8 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -111,6 +113,17 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         gridSize = Grid.GRID_5x5;
         setMainCurrentGame(isMultiplayer);
 
+        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
+        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
+        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
+        Log.d("inFragment", "Scores of the current game are "
+                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
+        Log.d("inFragment", "Scores of the fragment game are "
+                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
+
+        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
+            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
+        }
     }//onCreate
 
     /**
@@ -133,7 +146,8 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
         View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
         fragmentView = v;
-        loadGame();
+//        loadGame();
+        showSaved();
         setReset();
 
         int sizeX = fragmentGame.getGrid().getX();
@@ -220,7 +234,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         final int COL_INDEX = 16;
 
         String idName = main.getResources().getResourceEntryName(v.getId());
-
+        Log.d("onClick", "Current player instance is " + fragmentGame.getCurrentPlayer());
         int row = Integer.parseInt((idName.charAt(ROW_INDEX) + "").trim());
         int col = Integer.parseInt((idName.charAt(COL_INDEX) + "").trim());
         char orientation = idName.charAt(ORIENTATION_INDEX);

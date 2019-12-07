@@ -20,6 +20,8 @@
  */
 package com.example.piggiesteam4;
 
+import android.util.Log;
+
 public class Player {
 
     private int color;
@@ -48,6 +50,7 @@ public class Player {
      */
     void addScore(int playerScore){
         score = score + playerScore;
+        Log.d("addScore", "Score added to player " + whichplayer);
     }// end of addScore
 
     /**
@@ -70,10 +73,12 @@ public class Player {
      * Sets the player's turn.
      */
     public void setTurn(){
-        if (turn == false)
-             turn = true;
-        turn = false;
-
+        if (turn == false){
+            turn = true;
+        }
+        else if (turn == true){
+            turn = false;
+        }
     }// end of setTurn
 
     /**
@@ -217,4 +222,18 @@ public class Player {
         }//end of while loop
     }//end of choosePositionEmptyGrid
 
+    private int whichplayer;
+
+    public void setWhichplayer(int whichplayer){
+        if((this.whichplayer == 0) || this.whichplayer == whichplayer){
+            this.whichplayer = whichplayer;
+        }
+        else{
+            throw new AssertionError("whichplayer has already been set, it cannot be altered to a different value");
+        }
+    }
+
+    public int getWhichplayer() {
+        return whichplayer;
+    }
 }// end of Player

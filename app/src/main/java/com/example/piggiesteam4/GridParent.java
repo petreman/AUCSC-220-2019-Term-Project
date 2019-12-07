@@ -3,6 +3,7 @@ package com.example.piggiesteam4;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,8 +29,8 @@ public abstract class GridParent extends Fragment {
 
     public interface gameStateListener {
         void endGame(Game game, GridParent frag);
-        void saveGame(GridParent frag);
-        boolean retrieveGame(GridParent frag);
+//        void saveGame(GridParent frag);
+//        boolean retrieveGame(GridParent frag);
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -67,17 +68,17 @@ public abstract class GridParent extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        listener.saveGame(this);
+        //listener.saveGame(this);
     }//onPause
 
-    /**
-     * Loads the game.
-     */
-    public void loadGame(){
-        if (listener.retrieveGame(this)){
-            showSaved();
-        }//if
-    }//load
+//    /**
+//     * Loads the game.
+//     */
+//    public void loadGame(){
+//        if (listener.retrieveGame(this)){
+//            showSaved();
+//        }//if
+//    }//load
 
     /**
      * Shows the fences previously selected in a saved game.
@@ -160,7 +161,18 @@ public abstract class GridParent extends Fragment {
      * @param currentPlayer - the player who's turn it currently is
      */
     public void toggleTurn(Player currentPlayer) {
-
+        int currentTurn;
+        if (currentPlayer.getWhichplayer() == 1){
+            currentTurn = 2;
+        }
+        else if(currentPlayer.getWhichplayer() == 2){
+            currentTurn = 1;
+        }
+        else{
+            throw new AssertionError("current player has no player turn value???");
+        }
+        Log.d("newFencePlaced", "Player turn has been swapped, now turn of player " + currentTurn);
+        Log.d("newFencePlaced", "Was turn of player " + currentPlayer.getWhichplayer());
         if (currentPlayer == fragmentGame.getPlayer1()) {
 
             p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
@@ -181,8 +193,9 @@ public abstract class GridParent extends Fragment {
                     PorterDuff.Mode.MULTIPLY);
 
         }//else
-
+        Log.d("newFencePlaced", "Before fragGame.togglecurrentplayer, current player " + fragmentGame.getCurrentPlayer().getWhichplayer());
         fragmentGame.toggleCurrentPlayer();
+        Log.d("newFencePlaced", "After fragGame.togglecurrentplayer, current is now player " + fragmentGame.getCurrentPlayer().getWhichplayer());
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
     }//toggleTurn
