@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements
     private final int GRID_SIZE_REQUEST = 1;
     private final int DEFAULT_GRID_SIZE = 5;
     private int requestedGridSize;
+
+    private Fragment activeFragment;
 
     /**
      * On creation, creates a defualt single player game (5x5 grid)
@@ -203,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_grid_size:
                 navIntent = new Intent(this, GridSizeActivity.class);
+                navIntent.putExtra("currentSize", currentGame.getGrid().getX());
                 this.startActivityForResult(navIntent, GRID_SIZE_REQUEST);
                 break;
 
@@ -236,12 +240,19 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == GRID_SIZE_REQUEST){
             if (resultCode == RESULT_OK){
                 requestedGridSize = data.getIntExtra("size", DEFAULT_GRID_SIZE);
 
                 //Toast for testing purposes, to show what was selected.
                 Toast.makeText(getApplicationContext(), ((Integer) requestedGridSize).toString(), Toast.LENGTH_LONG).show();
+                getSupportFragmentManager().beginTransaction().remove(activeFragment).commit();
+
+                switch (requestedGridSize){
+                    case Grid.GRID_5x5:
+                        temp5x5(currentGame.isMultiplayer());
+                }
             }
         }
     }
@@ -378,6 +389,23 @@ public class MainActivity extends AppCompatActivity implements
 
     }//defaultSinglePlayer
 
+    public void temp5x5(boolean isMulti){
+        setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
+        setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
+
+        currentGame = new Game(55, isMulti, p1Color, p2Color);
+        if (isMulti){
+            multiPlayer = currentGame;
+        }
+        else{
+            singlePlayer = currentGame;
+        }
+        currentPlayer = currentGame.getCurrentPlayer();
+
+        Grid55Fragment frag55 = createGrid55Fragment(isMulti);
+
+    }
+
     /**
      * Creates a fragment for a 5x5 grid, then inflates it to fragment_container with call
      * to setGrid55Fragment()
@@ -398,6 +426,7 @@ public class MainActivity extends AppCompatActivity implements
         grid55Fragment.setArguments(args);
 
         setGrid55Fragment(grid55Fragment);
+        activeFragment = grid55Fragment;
 
         return grid55Fragment;
 
@@ -489,6 +518,7 @@ public class MainActivity extends AppCompatActivity implements
         editor.putString("singleplayer", gson.toJson(singlePlayer));
         editor.putString("multiplayer", gson.toJson(multiPlayer));
         editor.putBoolean("isMulti", currentGame.isMultiplayer());
+        editor.putInt("gridSize", currentGame.getGrid().getX());
         //editor.putString("currentPlayer", gson.toJson(currentPlayer));
         editor.commit();
 
@@ -542,6 +572,8 @@ public class MainActivity extends AppCompatActivity implements
         else{
             currentGame = singlePlayer;
         }//else
+
+        requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
 
 //        if (currentPlayerString != null){
 //            currentPlayer = gson.fromJson(currentPlayerString, Player.class);

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,6 +16,8 @@ public class GridSizeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_size);
+        int currentSize = getIntent().getIntExtra("currentSize", 0);
+        disableCurrentSize(currentSize);
     }
 
     /**
@@ -36,7 +39,7 @@ public class GridSizeActivity extends AppCompatActivity {
                 selectedSize =7;
                 break;
             default:
-                throw new AssertionError("Unexpected size");
+                Log.d("GridSizeActivity", "Unexpected current size");
         }//switch
         confirm.setEnabled(true);
     }//switchSize
@@ -50,4 +53,20 @@ public class GridSizeActivity extends AppCompatActivity {
         intent.putExtra("size", selectedSize);
         setResult(RESULT_OK, intent);
     }//confirmNewGridSize
+
+    public void disableCurrentSize(int size){
+        switch (size){
+            case Grid.GRID_5x5:
+                findViewById(R.id.gridSize5x5).setEnabled(false);
+                break;
+            case Grid.GRID_6x6:
+                findViewById(R.id.gridSize6x6).setEnabled(false);
+                break;
+            case Grid.GRID_7x7:
+                findViewById(R.id.gridSize7x7).setEnabled(false);
+                break;
+            default:
+                throw new AssertionError("Error with size of current grid");
+        }
+    }
 }//GridSizeActivity
