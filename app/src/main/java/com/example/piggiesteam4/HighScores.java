@@ -11,6 +11,7 @@ package com.example.piggiesteam4;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -165,12 +166,16 @@ public class HighScores {
      */
     public static Score getHighScore(Grid grid){ //this method for getting highest score to show on main screen
         int size = grid.getX();
+        Log.d("getHighScoreGRID", "Size from getx is: " + size);
         //switch to get highscores for a grid
         switch (size){
             case SMALLEST:
                 if (smallestGrid.isEmpty()){
+                    Log.d("getHighScoreGRID", "smallestGrid EMPTY");
+                    System.out.println(smallestGrid);
                     return null;
                 }
+                Log.d("getHighScoreGRID", "GOTTEN: "+ smallestGrid.get(0).toString());
                 return smallestGrid.get(0);
             case SMALL:
                 if (smallGrid.isEmpty()){

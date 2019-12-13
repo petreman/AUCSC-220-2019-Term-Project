@@ -42,13 +42,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.gson.Gson;
 
-public class MainActivity extends AppCompatActivity implements
+import java.util.List;
+
+ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
         Grid66Fragment.OnFragmentInteractionListener{
 
@@ -116,17 +119,18 @@ public class MainActivity extends AppCompatActivity implements
             }//onClick
         });
         retrieveGame();
-        int p1sc = currentGame.getPlayer1().getScore();
-        int p2sc = currentGame.getPlayer2().getScore();
-        currentGame.getPlayer1().setWhichplayer(1);
-        currentGame.getPlayer2().setWhichplayer(2);
-        currentPlayer = currentGame.getCurrentPlayer();
-
-        Log.d("AfterRetrieval", "P1 Score " + p1sc);
-        Log.d("AfterRetrieval", "P2 Score " + p2sc);
-        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
-        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
-        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
+//        int p1sc = currentGame.getPlayer1().getScore();
+//        int p2sc = currentGame.getPlayer2().getScore();
+//        currentGame.getPlayer1().setWhichplayer(1);
+//        currentGame.getPlayer2().setWhichplayer(2);
+//        currentPlayer = currentGame.getCurrentPlayer();
+        showTopScore();
+//
+//        Log.d("AfterRetrieval", "P1 Score " + p1sc);
+//        Log.d("AfterRetrieval", "P2 Score " + p2sc);
+//        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
+//        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
+//        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -542,38 +546,42 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public boolean retrieveGame(){
-        Context context = getApplicationContext();
-        SharedPreferences pref;
-        pref = context.getSharedPreferences("games", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
+        try {
+            Context context = getApplicationContext();
+            SharedPreferences pref;
+            pref = context.getSharedPreferences("games", Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            boolean isNull = false;
 
-        boolean isMulti = pref.getBoolean("isMulti", true);
-        String singlePlayerString = pref.getString("singleplayer",null);
-        String multiPlayerString = pref.getString("multiplayer", null);
-        String currentPlayerString = pref.getString("currentPlayer", null);
+            boolean isMulti = pref.getBoolean("isMulti", true);
+            String singlePlayerString = pref.getString("singleplayer", null);
+            String multiPlayerString = pref.getString("multiplayer", null);
+            String currentPlayerString = pref.getString("currentPlayer", null);
 
-        if (singlePlayerString != null){
-            singlePlayer = gson.fromJson(singlePlayerString, Game.class);
-            if (singlePlayer != null){
-                singlePlayer.cyclePlayers();
-            }
-        }//if
+            if (singlePlayerString != null) {
+                singlePlayer = gson.fromJson(singlePlayerString, Game.class);
+                if (singlePlayer != null) {
+                    singlePlayer.cyclePlayers();
+                    isNull = true;
+                }
+            }//if
 
-        if (multiPlayerString != null){
-            multiPlayer = gson.fromJson(multiPlayerString, Game.class);
-            if (multiPlayer != null){
-                multiPlayer.cyclePlayers();
-            }
-        }//if
+            if (multiPlayerString != null) {
+                multiPlayer = gson.fromJson(multiPlayerString, Game.class);
+                if (multiPlayer != null) {
+                    multiPlayer.cyclePlayers();
+                    isNull = true;
+                }
+            }//if
 
-        if (isMulti){
-            currentGame = multiPlayer;
-        }//if
-        else{
-            currentGame = singlePlayer;
-        }//else
+            if (isMulti && !isNull) {
+                currentGame = multiPlayer;
+            }//if
+            else if (!isNull){
+                currentGame = singlePlayer;
+            }//else
 
-        requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
+            requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
 
 //        if (currentPlayerString != null){
 //            currentPlayer = gson.fromJson(currentPlayerString, Player.class);
@@ -584,31 +592,37 @@ public class MainActivity extends AppCompatActivity implements
 //        }
 
 
-        try {
-            p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
-            p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
-            Log.d("retrieveGame","Try to set scores from save");
-        }
-        catch (NullPointerException e){
-            p1Score.setText("0");
-            p2Score.setText("0");
-            Log.d("retrieveGame","Fail to set scores from save, NULL value");
-        }
+            try {
+                p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
+                p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
+                Log.d("retrieveGame", "Try to set scores from save");
+            } catch (NullPointerException e) {
+                p1Score.setText("0");
+                p2Score.setText("0");
+                Log.d("retrieveGame", "Fail to set scores from save, NULL value");
+            }
 
-
-
-        Log.d("retrieveGame","Retrieved P1 score " + currentGame.getPlayer1().getScore());
-        Log.d("retrieveGame","Retrieved P2 score " + currentGame.getPlayer2().getScore());
+            Log.d("retrieveGame", "single game exists? " + (singlePlayer != null));
+            Log.d("retrieveGame", "multi game exists? " + (multiPlayer != null));
+            Log.d("retrieveGame", "current game exists? " + (currentGame != null));
+            Log.d("retrieveGame", "Retrieved P1 score " + currentGame.getPlayer1().getScore());
+            Log.d("retrieveGame", "Retrieved P2 score " + currentGame.getPlayer2().getScore());
 
 //        p1Color = new int[]{currentGame.getPlayer1().getColor(), currentGame.getPlayer1().getColorLight()};
 //        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
-        return true;
+            return true;
+        }
+        catch (NullPointerException e){
+            Log.d("retrieveGameFail", "No game found, new game will be created");
+            return false;
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         saveGame();
+        showTopScore();
     }
 
         GridParent.gameStateListener listener = new GridParent.gameStateListener() {
@@ -639,6 +653,7 @@ public class MainActivity extends AppCompatActivity implements
                 frag.resetPens();
                 p1Score.setText("0");
                 p2Score.setText("0");
+                showTopScore();
             }//if
         }//endGame
 
@@ -714,5 +729,27 @@ public class MainActivity extends AppCompatActivity implements
     public void setGridFragmentListener(GridParent grid){
         grid.setListener(listener);
     }//setGridFragmentListener
+
+    public void showTopScore(){
+        TextView bestScore = (TextView) findViewById(R.id.HighestScoreGrid);
+        if (currentGame == null){
+            bestScore.setText(R.string.main_highscore_default);
+            Log.d("showTopScore", "IF");
+            return;
+        }
+        HighScores.retrieveScores(getApplicationContext());
+        HighScores.Score topScore = HighScores.getHighScore(currentGame.getGrid());
+        List<HighScores.Score> aa = HighScores.getHighScores(0);
+        System.out.println(aa + " THIS IS LIST");
+        if (topScore == null){
+            bestScore.setText(R.string.main_highscore_default);
+            Log.d("showTopScore", "IF");
+            return;
+        }
+        Log.d("showTopScore", "NOT IF");
+        int score = topScore.getScore();
+        bestScore.setText(getString(R.string.main_highscore) + score);
+
+    }
 
 }//MainActivity
