@@ -77,6 +77,8 @@ public class Game {
 
         player1.setTurn();
         currentPlayer = player1;
+        player1.setWhichplayer(1);
+        player2.setWhichplayer(2);
 
         switch(size){
 
