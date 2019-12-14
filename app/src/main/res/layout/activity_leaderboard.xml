@@ -79,7 +79,7 @@
         android:id="@+id/leaderboardP1Name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="@string/scoreplaceholder"
+        android:text="@string/score_placeholder"
         android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/firstPlace"
         app:layout_constraintTop_toTopOf="@+id/firstPlace"
@@ -91,7 +91,7 @@
         android:id="@+id/leaderboardP2Name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="@string/scoreplaceholder"
+        android:text="@string/score_placeholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP1Name"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardP1Name"
@@ -103,7 +103,7 @@
         android:id="@+id/leaderboardP3Name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="@string/scoreplaceholder"
+        android:text="@string/score_placeholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP2Name"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardP2Name"
@@ -115,7 +115,7 @@
         android:id="@+id/leaderboardP4Name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="@string/scoreplaceholder"
+        android:text="@string/score_placeholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP3Name"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardP3Name"
@@ -127,7 +127,7 @@
         android:id="@+id/leaderboardP5Name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="@string/scoreplaceholder"
+        android:text="@string/score_placeholder"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/leaderboardP4Name"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardP4Name"
@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="resetAllScores"
-        android:text="@string/resetleaderboard"
+        android:text="@string/reset_leaderboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -199,6 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="78dp"
+        android:enabled="false"
         android:onClick="confirm"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -210,18 +211,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="resetCurrentScores"
-        android:text="@string/resetcurrent"
+        android:text="@string/reset_current_scores"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="testset"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
         android:id="@+id/leaderboardGridSize"

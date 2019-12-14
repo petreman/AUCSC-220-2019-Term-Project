@@ -92,6 +92,7 @@
 package com.example.piggiesteam4;
 
 import android.graphics.Color;
+import android.util.Log;
 
 public class Grid {
 
@@ -159,6 +160,10 @@ public class Grid {
     private Fence[][] yCoords; //all vertical fences
     private int x, y; //dimensions of dots for grid
     private boolean[][] pens;
+
+    public static final int GRID_5x5 = 5;
+    public static final int GRID_6x6 = 6;
+    public static final int GRID_7x7 = 7;
 
     /**
      * Grid constructor. Creates data structure for the grid of dots
@@ -355,7 +360,7 @@ public class Grid {
      * @return - true if a pen is completed, false otherwise
      */
     boolean checkPenBelow(int row, int col, Player player){
-
+        Log.d("checkPen", "Player instance is " + player);
         if (this.xCoords[row+1][col].exists() &&
                 this.yCoords[row][col].exists() &&
                 this.yCoords[row][col + 1].exists()){
@@ -363,7 +368,7 @@ public class Grid {
             setFenceX(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col] = true;
-
+            Log.d("checkPen", "Pen Found");
             return true;
 
         }//if
@@ -386,7 +391,7 @@ public class Grid {
      * @return - true if a pen is completed, false otherwise
      */
     boolean checkPenAbove(int row, int col, Player player){
-
+        Log.d("checkPen", "Player instance is " + player);
         if (this.xCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col + 1].exists()){
@@ -394,6 +399,7 @@ public class Grid {
             setFenceX(row, col, player.getColor());
             player.addScore(1);
             this.pens[row - 1][col] = true;
+            Log.d("checkPen", "Pen Found");
             return true;
 
         }//if
@@ -416,7 +422,7 @@ public class Grid {
      * @return - true if a pen is completed, false otherwise
      */
     boolean checkPenLeft(int row, int col, Player player){
-
+        Log.d("checkPen", "Player instance is " + player);
         if (this.yCoords[row][col - 1].exists() &&
                 this.xCoords[row][col - 1].exists() &&
                 this.xCoords[row + 1][col - 1].exists()){
@@ -424,7 +430,7 @@ public class Grid {
             setFenceY(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col - 1] = true;
-
+            Log.d("checkPen", "Pen Found");
             return true;
 
         }//if
@@ -447,7 +453,7 @@ public class Grid {
      * @return - true if a pen is completed , false otherwise
      */
     boolean checkPenRight(int row, int col, Player player){
-
+        Log.d("checkPen", "Player instance is " + player);
         if (this.yCoords[row][col + 1].exists() &&
                 this.xCoords[row][col].exists() &&
                 this.xCoords[row + 1][col].exists()){
@@ -455,7 +461,7 @@ public class Grid {
             setFenceY(row, col, player.getColor());
             player.addScore(1);
             this.pens[row][col] = true;
-
+            Log.d("checkPen", "Pen Found");
             return true;
 
         }//if
@@ -470,7 +476,7 @@ public class Grid {
      * @param oldColor - used to identify the fences to be replaced
      */
     void updateColors(int newColor, int oldColor){
-
+        //unimplemented
     }//updateColors
 
     /**

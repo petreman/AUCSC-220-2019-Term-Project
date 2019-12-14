@@ -22,8 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.piggiesteam4.R;
-
 public class NameQueryFragment extends DialogFragment {
 
     public interface QueryDialogListener{
@@ -38,7 +36,7 @@ public class NameQueryFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.askwinnername);
+        builder.setTitle(R.string.ask_winner_name);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View popupLayout = inflater.inflate(R.layout.name_query_popup, null);
 
