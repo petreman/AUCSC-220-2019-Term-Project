@@ -47,6 +47,8 @@
  */
 package com.example.piggiesteam4;
 
+import android.util.Log;
+
 public class Game {
 
     private Player player1, player2, currentPlayer;
@@ -149,15 +151,24 @@ public class Game {
      * By Keegan
      */
     void toggleCurrentPlayer(){
-
-        if (currentPlayer == player1){
+        Log.d("toggleCurrentPlayer", "Player 1 is " + player1.getWhichplayer());
+        Log.d("toggleCurrentPlayer", "Player 2 is " + player2.getWhichplayer());
+        Log.d("toggleCurrentPlayer", "The current player is player " + currentPlayer.getWhichplayer());
+        if (currentPlayer.getWhichplayer() == player1.getWhichplayer()){
             currentPlayer = player2;
+            Log.d("toggleCurrentPlayer", "Swapping current player to player 2");
+            Log.d("toggleCurrentPlayer", "Player 2 is " + player2.getWhichplayer());
         }//if
 
-        else{
+        else if (currentPlayer.getWhichplayer() == player2.getWhichplayer()){
             currentPlayer = player1;
+            Log.d("toggleCurrentPlayer", "Swapping current player to player 1");
+            Log.d("toggleCurrentPlayer", "Player 1 is " + player1.getWhichplayer());
         }//else
-
+        else{
+            throw new AssertionError("Unrecognized player");
+        }
+        Log.d("toggleCurrentPlayer", "The current player is player " + currentPlayer.getWhichplayer());
         player1.setTurn();
         player2.setTurn();
 
@@ -174,7 +185,7 @@ public class Game {
             return true;
         }//if
         return false;
-    }//isGameover
+    }//isGameOver
 
     /**
      * Indicates if the game is over or not.
@@ -224,8 +235,6 @@ public class Game {
      *
      * @param name the name of the winner;
      * @return the Score object.
-     *
-     * By Alvin
      */
     public HighScores.Score getHighscore(String name){
         int p1Score = player1.getScore();
@@ -240,5 +249,15 @@ public class Game {
         }//else
 
     }//getHighscore
+
+    /**
+     * Workaround for issues when reloading game.
+     * Retrieving the game creates a "fake/incorrect" instance of player, this cycling should
+     * prevent that instance from ever being used.
+     */
+    public void cyclePlayers(){
+        toggleCurrentPlayer();
+        toggleCurrentPlayer();
+    }
 
 }//Game

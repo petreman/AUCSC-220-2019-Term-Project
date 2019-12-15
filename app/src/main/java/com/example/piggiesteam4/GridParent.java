@@ -3,13 +3,15 @@ package com.example.piggiesteam4;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
-public class GridParent extends Fragment {
+public abstract class GridParent extends Fragment {
 
     /**
      * This interface must be implemented by activities that contain this
@@ -28,8 +30,8 @@ public class GridParent extends Fragment {
 
     public interface gameStateListener {
         void endGame(Game game, GridParent frag);
-        void saveGame(GridParent frag);
-        boolean retrieveGame(GridParent frag);
+//        void saveGame(GridParent frag);
+//        boolean retrieveGame(GridParent frag);
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -49,8 +51,9 @@ public class GridParent extends Fragment {
     protected Button p2ScoreButton;
 
     protected gameStateListener listener;
-    protected int size;
     protected View fragmentView;
+
+    protected int gridSize;
 
     /**
      * Sets the listener.
@@ -66,17 +69,17 @@ public class GridParent extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        listener.saveGame(this);
+        //listener.saveGame(this);
     }//onPause
 
-    /**
-     * Loads the game.
-     */
-    public void loadGame(){
-        if (listener.retrieveGame(this)){
-            showSaved();
-        }//if
-    }//load
+//    /**
+//     * Loads the game.
+//     */
+//    public void loadGame(){
+//        if (listener.retrieveGame(this)){
+//            showSaved();
+//        }//if
+//    }//load
 
     /**
      * Shows the fences previously selected in a saved game.
@@ -84,13 +87,14 @@ public class GridParent extends Fragment {
     public void showSaved(){
         Grid.Fence[][] xCoords = fragmentGame.getGrid().getxCoords();
         Grid.Fence[][] yCoords = fragmentGame.getGrid().getyCoords();
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
-                if (col < size - 1){
+
+        for (int row = 0; row < gridSize; row++){
+            for (int col = 0; col < gridSize; col++){
+                if (col < gridSize - 1){
                     Grid.Fence currentXFence = xCoords[row][col];
                     if (currentXFence.exists()) {
                         Button fence = (Button) fragmentView.findViewById(getResources()
-                                .getIdentifier("grid_" + size + size + "_hfence_" + row + col,
+                                .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" + row + col,
                                         "id", this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -99,11 +103,12 @@ public class GridParent extends Fragment {
                         fence.setAlpha((float) 1.0);
                     }//if
                 }//if
-                if (row < size - 1){
+
+                if (row < gridSize - 1){
                     Grid.Fence currentYFence = yCoords[row][col];
                     if (currentYFence.exists()) {
                         Button fence = (Button) fragmentView.findViewById(getResources()
-                                .getIdentifier("grid_" + size + size + "_vfence_" + row + col,
+                                .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" + row + col,
                                         "id", this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -120,11 +125,11 @@ public class GridParent extends Fragment {
      * Resets the fence UI.
      */
     public void resetFences(){
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
-                if (col < (size - 1)){
+        for (int row = 0; row < gridSize; row++){
+            for (int col = 0; col < gridSize; col++){
+                if (col < (gridSize - 1)){
                     Button fence = (Button) fragmentView.findViewById(getResources()
-                            .getIdentifier("grid_" + size + size + "_hfence_" + row + col,
+                            .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" + row + col,
                                     "id", this.getActivity().getPackageName()));
 
                     fence.getBackground()
@@ -132,9 +137,10 @@ public class GridParent extends Fragment {
 
                     fence.setAlpha((float) 0.0);
                 }//if
-                if (row < size - 1){
+
+                if (row < gridSize - 1){
                     Button fence = (Button) fragmentView.findViewById(getResources()
-                            .getIdentifier("grid_" + size + size + "_vfence_" + row + col,
+                            .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" + row + col,
                                     "id", this.getActivity().getPackageName()));
 
                     fence.getBackground()
@@ -156,7 +162,18 @@ public class GridParent extends Fragment {
      * @param currentPlayer - the player who's turn it currently is
      */
     public void toggleTurn(Player currentPlayer) {
-
+        int currentTurn;
+        if (currentPlayer.getWhichplayer() == 1){
+            currentTurn = 2;
+        }
+        else if(currentPlayer.getWhichplayer() == 2){
+            currentTurn = 1;
+        }
+        else{
+            throw new AssertionError("current player has no player turn value???");
+        }
+        Log.d("newFencePlaced", "Player turn has been swapped, now turn of player " + currentTurn);
+        Log.d("newFencePlaced", "Was turn of player " + currentPlayer.getWhichplayer());
         if (currentPlayer == fragmentGame.getPlayer1()) {
 
             p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
@@ -177,8 +194,9 @@ public class GridParent extends Fragment {
                     PorterDuff.Mode.MULTIPLY);
 
         }//else
-
+        Log.d("newFencePlaced", "Before fragGame.togglecurrentplayer, current player " + fragmentGame.getCurrentPlayer().getWhichplayer());
         fragmentGame.toggleCurrentPlayer();
+        Log.d("newFencePlaced", "After fragGame.togglecurrentplayer, current is now player " + fragmentGame.getCurrentPlayer().getWhichplayer());
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
     }//toggleTurn
@@ -199,7 +217,8 @@ public class GridParent extends Fragment {
         public void reset() {
             fragmentGame.endGame();
             resetFences();
-            System.out.println("AAAAAAA");
+            setP1Current();
+            resetPens();
         }
     };
 

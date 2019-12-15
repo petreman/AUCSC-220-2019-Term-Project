@@ -20,13 +20,14 @@
  */
 package com.example.piggiesteam4;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,12 +35,15 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.gson.Gson;
@@ -66,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements
     public Button p2Score;
     public int[] p1Color;
     public int[] p2Color;
+    private final int GRID_SIZE_REQUEST = 1;
+    private final int DEFAULT_GRID_SIZE = 5;
+    private int requestedGridSize;
+
+    private Fragment activeFragment;
 
     /**
      * On creation, creates a defualt single player game (5x5 grid)
@@ -85,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements
 
         if (isFirstTime) {
             popUpMenu();
+
+            //"Initializes" highscores to prevent retrieving nulls
+            HighScores.save(getApplicationContext());
         }
 
         //Initializations
@@ -103,7 +115,18 @@ public class MainActivity extends AppCompatActivity implements
                 drawerLayout.openDrawer(GravityCompat.START);
             }//onClick
         });
+        retrieveGame();
+        int p1sc = currentGame.getPlayer1().getScore();
+        int p2sc = currentGame.getPlayer2().getScore();
+        currentGame.getPlayer1().setWhichplayer(1);
+        currentGame.getPlayer2().setWhichplayer(2);
+        currentPlayer = currentGame.getCurrentPlayer();
 
+        Log.d("AfterRetrieval", "P1 Score " + p1sc);
+        Log.d("AfterRetrieval", "P2 Score " + p2sc);
+        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
+        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
+        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -183,7 +206,8 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.nav_grid_size:
                 navIntent = new Intent(this, GridSizeActivity.class);
-                this.startActivity(navIntent);
+                navIntent.putExtra("currentSize", currentGame.getGrid().getX());
+                this.startActivityForResult(navIntent, GRID_SIZE_REQUEST);
                 break;
 
             case R.id.nav_sound:
@@ -213,6 +237,26 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onNavigationItemSelected
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GRID_SIZE_REQUEST){
+            if (resultCode == RESULT_OK){
+                requestedGridSize = data.getIntExtra("size", DEFAULT_GRID_SIZE);
+
+                //Toast for testing purposes, to show what was selected.
+                Toast.makeText(getApplicationContext(), ((Integer) requestedGridSize).toString(), Toast.LENGTH_LONG).show();
+                getSupportFragmentManager().beginTransaction().remove(activeFragment).commit();
+
+                switch (requestedGridSize){
+                    case Grid.GRID_5x5:
+                        temp5x5(currentGame.isMultiplayer());
+                }
+            }
+        }
+    }
+
     //Maybe change variable away from class variable.
     String receivedName;
     /**
@@ -233,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements
                     receivedName = getString(R.string.anonymous);
                 }
                 game.endGame(receivedName);
+                HighScores.save(getApplicationContext());
             }//onDialogPositiveClick
 
             @Override
@@ -248,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements
     //The variable might be better off as not a class variable.
     /**
      * Gets the name of the winner.
-     * @return
+     * @return player's name
      */
     public String getName(){
         return receivedName;
@@ -265,6 +310,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
                 resetListener.reset();
+                p1Score.setText("0");
+                p2Score.setText("0");
             }//onDialogPositiveClick
 
             @Override
@@ -327,7 +374,9 @@ public class MainActivity extends AppCompatActivity implements
         setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
         setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
 
-        singlePlayer = new Game(55, false, p1Color, p2Color);
+        if (singlePlayer == null) {
+            singlePlayer = new Game(55, false, p1Color, p2Color);
+        }
         currentGame = singlePlayer;
         currentPlayer = currentGame.getCurrentPlayer();
 
@@ -339,6 +388,23 @@ public class MainActivity extends AppCompatActivity implements
         setScoreButtonColor();
 
     }//defaultSinglePlayer
+
+    public void temp5x5(boolean isMulti){
+        setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
+        setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
+
+        currentGame = new Game(55, isMulti, p1Color, p2Color);
+        if (isMulti){
+            multiPlayer = currentGame;
+        }
+        else{
+            singlePlayer = currentGame;
+        }
+        currentPlayer = currentGame.getCurrentPlayer();
+
+        Grid55Fragment frag55 = createGrid55Fragment(isMulti);
+
+    }
 
     /**
      * Creates a fragment for a 5x5 grid, then inflates it to fragment_container with call
@@ -360,6 +426,7 @@ public class MainActivity extends AppCompatActivity implements
         grid55Fragment.setArguments(args);
 
         setGrid55Fragment(grid55Fragment);
+        activeFragment = grid55Fragment;
 
         return grid55Fragment;
 
@@ -437,7 +504,114 @@ public class MainActivity extends AppCompatActivity implements
         //empty
     }
 
-    GridParent.gameStateListener listener = new GridParent.gameStateListener() {
+    /**
+     * Saves the active games.
+     * Note: Due to how GSON saves objects, variables pointing to the same instance of an object
+     *       will instead be saved with their own separate instances of that object.
+     */
+    public void saveGame() {
+        Context context = getApplicationContext();
+        SharedPreferences pref;
+        Gson gson = new Gson();
+        pref = context.getSharedPreferences("games", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("singleplayer", gson.toJson(singlePlayer));
+        editor.putString("multiplayer", gson.toJson(multiPlayer));
+        editor.putBoolean("isMulti", currentGame.isMultiplayer());
+        editor.putInt("gridSize", currentGame.getGrid().getX());
+        //editor.putString("currentPlayer", gson.toJson(currentPlayer));
+        editor.commit();
+
+//        if (currentGame.isMultiplayer()) {
+//            pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putString("game", gson.toJson(multiPlayer));
+//            editor.putString("fragGame", gson.toJson(currentGame)); //see next comment in else
+//            editor.putBoolean("isMulti", false);
+//            editor.commit();
+//        }//if
+//        else{
+//            pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putString("game", gson.toJson(singlePlayer));
+//            editor.putString("fragGame", gson.toJson(currentGame)); //these should be the same game instance remove later
+//            editor.putBoolean("isMulti", false);
+//            editor.commit();
+//        }
+
+    }
+
+    public boolean retrieveGame(){
+        Context context = getApplicationContext();
+        SharedPreferences pref;
+        pref = context.getSharedPreferences("games", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        boolean isMulti = pref.getBoolean("isMulti", true);
+        String singlePlayerString = pref.getString("singleplayer",null);
+        String multiPlayerString = pref.getString("multiplayer", null);
+        String currentPlayerString = pref.getString("currentPlayer", null);
+
+        if (singlePlayerString != null){
+            singlePlayer = gson.fromJson(singlePlayerString, Game.class);
+            if (singlePlayer != null){
+                singlePlayer.cyclePlayers();
+            }
+        }//if
+
+        if (multiPlayerString != null){
+            multiPlayer = gson.fromJson(multiPlayerString, Game.class);
+            if (multiPlayer != null){
+                multiPlayer.cyclePlayers();
+            }
+        }//if
+
+        if (isMulti){
+            currentGame = multiPlayer;
+        }//if
+        else{
+            currentGame = singlePlayer;
+        }//else
+
+        requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
+
+//        if (currentPlayerString != null){
+//            currentPlayer = gson.fromJson(currentPlayerString, Player.class);
+//            Log.d("retrieveGame", "retrieved current player is: " + currentPlayer.getColor());
+//        }//if
+//        else{
+//            Log.d("retrieveGame", "currentPlayer not retrieved, nothing else should have been retrieved either");
+//        }
+
+
+        try {
+            p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
+            p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
+            Log.d("retrieveGame","Try to set scores from save");
+        }
+        catch (NullPointerException e){
+            p1Score.setText("0");
+            p2Score.setText("0");
+            Log.d("retrieveGame","Fail to set scores from save, NULL value");
+        }
+
+
+
+        Log.d("retrieveGame","Retrieved P1 score " + currentGame.getPlayer1().getScore());
+        Log.d("retrieveGame","Retrieved P2 score " + currentGame.getPlayer2().getScore());
+
+//        p1Color = new int[]{currentGame.getPlayer1().getColor(), currentGame.getPlayer1().getColorLight()};
+//        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
+        return true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
+    }
+
+        GridParent.gameStateListener listener = new GridParent.gameStateListener() {
 
         /**
          * Ends the game, showing a popup asking for the winner's name.
@@ -446,79 +620,91 @@ public class MainActivity extends AppCompatActivity implements
          */
         @Override
         public void endGame(Game game, GridParent frag) {
+            Log.d("endGame", "Called");
             if (game.isGameOver()){
+
                 if (frag.fragmentGame.getPlayer1().getScore() == frag.fragmentGame.getPlayer2().getScore()){
                     game.endGame();
                     showTieAlert();
-                }
+                }//if
                 else {
                     askForName(game);
-                }
+                }//else
+
                 HighScores.save(getApplicationContext());
-                saveGame(frag);
+                saveGame();
                 frag.resetFences();
                 frag.setP1Current();
                 frag.resetPens();
+                frag.resetPens();
+                p1Score.setText("0");
+                p2Score.setText("0");
             }//if
         }//endGame
 
-        /**
-         * Saves the game.
-         * @param frag the fragment.
-         */
-        @Override
-        public void saveGame(GridParent frag) {
-            Context context = getApplicationContext();
-            SharedPreferences pref;
-            Gson gson = new Gson();
-            if (frag.isMultiplayer){
-                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("game", gson.toJson(multiPlayer));
-                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
-                editor.commit();
-            }//if
-            else{
-                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("game", gson.toJson(singlePlayer));
-                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
-                editor.commit();
-            }//else
-        }//saveGame
-
-        /**
-         * Retrieves a saved game.
-         * @param frag the fragment.
-         * @return whether a game has been retrieved.
-         */
-        @Override
-        public boolean retrieveGame(GridParent frag) {
-            Context context = getApplicationContext();
-            SharedPreferences pref;
-            Gson gson = new Gson();
-            if (frag.isMultiplayer){
-                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-            }//if
-            else{
-                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-            }//else
-            String game = pref.getString("game", "");
-            String fragGame = pref.getString("fragGame", "");
-            if (game.equals("") && fragGame.equals("")){
-                return false;
-            }//if
-            if (frag.isMultiplayer){
-                multiPlayer = gson.fromJson(game, Game.class);
-            }//if
-            else{
-                singlePlayer = gson.fromJson(game,Game.class);
-            }//else
-            frag.fragmentGame = gson.fromJson(fragGame, Game.class);
-            frag.p1ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer1().getScore()).toString());
-            frag.p2ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer2().getScore()).toString());
-            return true;
-        }//retrieveGame
+//        /**
+//         * Saves the game.
+//         * @param frag the fragment.
+//         */
+//        @Override
+//        public void saveGame(GridParent frag) {
+//            Context context = getApplicationContext();
+//            SharedPreferences pref;
+//            Gson gson = new Gson();
+//
+//            if (frag.isMultiplayer){
+//                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.putString("game", gson.toJson(multiPlayer));
+//                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
+//                editor.commit();
+//            }//if
+//            else{
+//                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.putString("game", gson.toJson(singlePlayer));
+//                editor.putString("fragGame", gson.toJson(frag.fragmentGame));
+//                editor.commit();
+//            }//else
+//        }//saveGame
+//
+//        /**
+//         * Retrieves a saved game.
+//         * @param frag the fragment.
+//         * @return whether a game has been retrieved.
+//         */
+//        @Override
+//        public boolean retrieveGame(GridParent frag) {
+//            Context context = getApplicationContext();
+//            SharedPreferences pref;
+//            Gson gson = new Gson();
+//
+//            if (frag.isMultiplayer){
+//                pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
+//            }//if
+//            else{
+//                pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
+//            }//else
+//
+//            String game = pref.getString("game", "");
+//            String fragGame = pref.getString("fragGame", "");
+//
+//            if (game.equals("") && fragGame.equals("")){
+//                return false;
+//            }//if
+//
+//            if (frag.isMultiplayer){
+//                multiPlayer = gson.fromJson(game, Game.class);
+//            }//if
+//            else{
+//                singlePlayer = gson.fromJson(game,Game.class);
+//            }//else
+//
+//            frag.fragmentGame = gson.fromJson(fragGame, Game.class);
+//            frag.p1ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer1().getScore()).toString());
+//            frag.p2ScoreButton.setText(((Integer) frag.fragmentGame.getPlayer2().getScore()).toString());
+//            return true;
+//        }//retrieveGame
     };//gameStateListener
 
     /**

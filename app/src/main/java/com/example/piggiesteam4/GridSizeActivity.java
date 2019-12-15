@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,6 +16,8 @@ public class GridSizeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_size);
+        int currentSize = getIntent().getIntExtra("currentSize", 0);
+        disableCurrentSize(currentSize);
     }
 
     /**
@@ -27,25 +30,43 @@ public class GridSizeActivity extends AppCompatActivity {
         String text = button.getText().toString().trim();
         switch (text){
             case "5x5":
-                selectedSize = 25;
+                selectedSize = 5;
                 break;
             case "6x6":
-                selectedSize = 36;
+                selectedSize = 6;
                 break;
             case "7x7":
-                selectedSize =49;
+                selectedSize =7;
+                break;
+            default:
+                Log.d("GridSizeActivity", "Unexpected current size");
         }//switch
         confirm.setEnabled(true);
     }//switchSize
 
-    //TODO rename the method
     /**
      * Starts the game with the selected size, will replace the current game.
      * @param v View
      */
-    public void pending(View v){
+    public void confirmNewGridSize(View v){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("size", selectedSize);
-        startActivity(intent);
-    }//pending
+        setResult(RESULT_OK, intent);
+    }//confirmNewGridSize
+
+    public void disableCurrentSize(int size){
+        switch (size){
+            case Grid.GRID_5x5:
+                findViewById(R.id.gridSize5x5).setEnabled(false);
+                break;
+            case Grid.GRID_6x6:
+                findViewById(R.id.gridSize6x6).setEnabled(false);
+                break;
+            case Grid.GRID_7x7:
+                findViewById(R.id.gridSize7x7).setEnabled(false);
+                break;
+            default:
+                throw new AssertionError("Error with size of current grid");
+        }
+    }
 }//GridSizeActivity

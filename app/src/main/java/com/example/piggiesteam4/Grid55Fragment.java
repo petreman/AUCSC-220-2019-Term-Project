@@ -24,12 +24,13 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,9 +110,20 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
         p1ScoreButton = main.p1Score;
         p2ScoreButton = main.p2Score;
 
-        size = 5;
+        gridSize = Grid.GRID_5x5;
         setMainCurrentGame(isMultiplayer);
 
+        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
+        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
+        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
+        Log.d("inFragment", "Scores of the current game are "
+                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
+        Log.d("inFragment", "Scores of the fragment game are "
+                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
+
+        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
+            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
+        }
     }//onCreate
 
     /**
@@ -123,10 +135,10 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
      *
      * By Keegan
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater - inflater to set up the layout
+     * @param container - where the fragament will be contained
+     * @param savedInstanceState - the saved instance if recreating the fragment
+     * @return the created view
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,12 +146,14 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
         View v = inflater.inflate(R.layout.fragment_grid_55, container, false);
         fragmentView = v;
-        loadGame();
+//        loadGame();
+        showSaved();
         setReset();
 
         int sizeX = fragmentGame.getGrid().getX();
         int sizeY = fragmentGame.getGrid().getY();
 
+        //set listeners for the horizontal fences
         for(int i = 0; i < sizeX ; i++) {
 
             for(int j = 0 ; j < sizeY - 1 ; j++) {
@@ -155,6 +169,7 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
 
         }//for
 
+        //set listeners for the vertical fences
         for(int i = 0; i < sizeX - 1 ; i++) {
 
             for(int j = 0 ; j < sizeY ; j++) {
@@ -212,173 +227,175 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
      */
     @Override
     public void onClick(View v) {
+        final char VERTICAL_ORIENTATION = 'v';
+        final char HORIZONTAL_ORIENTATION = 'h';
+        final int ORIENTATION_INDEX = 8;
+        final int ROW_INDEX = 15;
+        final int COL_INDEX = 16;
 
-        switch (v.getId()){
+        String idName = main.getResources().getResourceEntryName(v.getId());
+        Log.d("onClick", "Current player instance is " + fragmentGame.getCurrentPlayer());
+        int row = Integer.parseInt((idName.charAt(ROW_INDEX) + "").trim());
+        int col = Integer.parseInt((idName.charAt(COL_INDEX) + "").trim());
+        char orientation = idName.charAt(ORIENTATION_INDEX);
 
-            case R.id.grid_55_hfence_00:
-                setHorizontalFence(v, 0, 0);
-                break;
-
-            case R.id.grid_55_hfence_01:
-                setHorizontalFence(v, 0, 1);
-                break;
-
-            case R.id.grid_55_hfence_02:
-                setHorizontalFence(v, 0, 2);
-                break;
-
-            case R.id.grid_55_hfence_03:
-                setHorizontalFence(v, 0, 3);
-                break;
-
-            case R.id.grid_55_hfence_10:
-                setHorizontalFence(v, 1, 0);
-                break;
-
-            case R.id.grid_55_hfence_11:
-                setHorizontalFence(v, 1, 1);
-                break;
-
-            case R.id.grid_55_hfence_12:
-                setHorizontalFence(v, 1, 2);
-                break;
-
-            case R.id.grid_55_hfence_13:
-                setHorizontalFence(v, 1, 3);
-                break;
-
-            case R.id.grid_55_hfence_20:
-                setHorizontalFence(v, 2, 0);
-                break;
-
-            case R.id.grid_55_hfence_21:
-                setHorizontalFence(v, 2, 1);
-                break;
-
-            case R.id.grid_55_hfence_22:
-                setHorizontalFence(v, 2, 2);
-                break;
-
-            case R.id.grid_55_hfence_23:
-                setHorizontalFence(v, 2, 3);
-                break;
-
-            case R.id.grid_55_hfence_30:
-                setHorizontalFence(v, 3, 0);
-                break;
-
-            case R.id.grid_55_hfence_31:
-                setHorizontalFence(v, 3, 1);
-                break;
-
-            case R.id.grid_55_hfence_32:
-                setHorizontalFence(v, 3, 2);
-                break;
-
-            case R.id.grid_55_hfence_33:
-                setHorizontalFence(v, 3, 3);
-                break;
-
-            case R.id.grid_55_hfence_40:
-                setHorizontalFence(v, 4, 0);
-                break;
-
-            case R.id.grid_55_hfence_41:
-                setHorizontalFence(v, 4, 1);
-                break;
-
-            case R.id.grid_55_hfence_42:
-                setHorizontalFence(v, 4, 2);
-                break;
-
-            case R.id.grid_55_hfence_43:
-                setHorizontalFence(v, 4, 3);
-                break;
-
-            case R.id.grid_55_vfence_00:
-                setVerticalFence(v, 0, 0);
-                break;
-
-            case R.id.grid_55_vfence_01:
-                setVerticalFence(v, 0, 1);
-                break;
-
-            case R.id.grid_55_vfence_02:
-                setVerticalFence(v, 0, 2);
-                break;
-
-            case R.id.grid_55_vfence_03:
-                setVerticalFence(v, 0, 3);
-                break;
-
-            case R.id.grid_55_vfence_10:
-                setVerticalFence(v, 1, 0);
-                break;
-
-            case R.id.grid_55_vfence_11:
-                setVerticalFence(v, 1, 1);
-                break;
-
-            case R.id.grid_55_vfence_12:
-                setVerticalFence(v, 1, 2);
-                break;
-
-            case R.id.grid_55_vfence_13:
-                setVerticalFence(v, 1, 3);
-                break;
-
-            case R.id.grid_55_vfence_20:
-                setVerticalFence(v, 2, 0);
-                break;
-
-            case R.id.grid_55_vfence_21:
-                setVerticalFence(v, 2, 1);
-                break;
-
-            case R.id.grid_55_vfence_22:
-                setVerticalFence(v, 2, 2);
-                break;
-
-            case R.id.grid_55_vfence_23:
-                setVerticalFence(v, 2, 3);
-                break;
-
-            case R.id.grid_55_vfence_30:
-                setVerticalFence(v, 3, 0);
-                break;
-
-            case R.id.grid_55_vfence_31:
-                setVerticalFence(v, 3, 1);
-                break;
-
-            case R.id.grid_55_vfence_32:
-                setVerticalFence(v, 3, 2);
-                break;
-
-            case R.id.grid_55_vfence_33:
-                setVerticalFence(v, 3, 3);
-                break;
-
-            case R.id.grid_55_vfence_04:
-                setVerticalFence(v, 0, 4);
-                break;
-
-            case R.id.grid_55_vfence_14:
-                setVerticalFence(v, 1, 4);
-                break;
-
-            case R.id.grid_55_vfence_24:
-                setVerticalFence(v, 2, 4);
-                break;
-
-            case R.id.grid_55_vfence_34:
-                setVerticalFence(v, 3, 4);
-                break;
-
-            default:
-                break;
-
-        }//switch
+        if (orientation == HORIZONTAL_ORIENTATION){
+            setHorizontalFence(v, row, col);
+        }//if
+        else if (orientation == VERTICAL_ORIENTATION){
+            setVerticalFence(v, row, col);
+        }//elseif
+        else{
+            throw new AssertionError("Unexpected value, fence does not announce orientation");
+        }//else
+//            case R.id.grid_55_hfence_10:
+//                setHorizontalFence(v, 1, 0);
+//                break;
+//
+//            case R.id.grid_55_hfence_11:
+//                setHorizontalFence(v, 1, 1);
+//                break;
+//
+//            case R.id.grid_55_hfence_12:
+//                setHorizontalFence(v, 1, 2);
+//                break;
+//
+//            case R.id.grid_55_hfence_13:
+//                setHorizontalFence(v, 1, 3);
+//                break;
+//
+//            case R.id.grid_55_hfence_20:
+//                setHorizontalFence(v, 2, 0);
+//                break;
+//
+//            case R.id.grid_55_hfence_21:
+//                setHorizontalFence(v, 2, 1);
+//                break;
+//
+//            case R.id.grid_55_hfence_22:
+//                setHorizontalFence(v, 2, 2);
+//                break;
+//
+//            case R.id.grid_55_hfence_23:
+//                setHorizontalFence(v, 2, 3);
+//                break;
+//
+//            case R.id.grid_55_hfence_30:
+//                setHorizontalFence(v, 3, 0);
+//                break;
+//
+//            case R.id.grid_55_hfence_31:
+//                setHorizontalFence(v, 3, 1);
+//                break;
+//
+//            case R.id.grid_55_hfence_32:
+//                setHorizontalFence(v, 3, 2);
+//                break;
+//
+//            case R.id.grid_55_hfence_33:
+//                setHorizontalFence(v, 3, 3);
+//                break;
+//
+//            case R.id.grid_55_hfence_40:
+//                setHorizontalFence(v, 4, 0);
+//                break;
+//
+//            case R.id.grid_55_hfence_41:
+//                setHorizontalFence(v, 4, 1);
+//                break;
+//
+//            case R.id.grid_55_hfence_42:
+//                setHorizontalFence(v, 4, 2);
+//                break;
+//
+//            case R.id.grid_55_hfence_43:
+//                setHorizontalFence(v, 4, 3);
+//                break;
+//
+//            case R.id.grid_55_vfence_00:
+//                setVerticalFence(v, 0, 0);
+//                break;
+//
+//            case R.id.grid_55_vfence_01:
+//                setVerticalFence(v, 0, 1);
+//                break;
+//
+//            case R.id.grid_55_vfence_02:
+//                setVerticalFence(v, 0, 2);
+//                break;
+//
+//            case R.id.grid_55_vfence_03:
+//                setVerticalFence(v, 0, 3);
+//                break;
+//
+//            case R.id.grid_55_vfence_10:
+//                setVerticalFence(v, 1, 0);
+//                break;
+//
+//            case R.id.grid_55_vfence_11:
+//                setVerticalFence(v, 1, 1);
+//                break;
+//
+//            case R.id.grid_55_vfence_12:
+//                setVerticalFence(v, 1, 2);
+//                break;
+//
+//            case R.id.grid_55_vfence_13:
+//                setVerticalFence(v, 1, 3);
+//                break;
+//
+//            case R.id.grid_55_vfence_20:
+//                setVerticalFence(v, 2, 0);
+//                break;
+//
+//            case R.id.grid_55_vfence_21:
+//                setVerticalFence(v, 2, 1);
+//                break;
+//
+//            case R.id.grid_55_vfence_22:
+//                setVerticalFence(v, 2, 2);
+//                break;
+//
+//            case R.id.grid_55_vfence_23:
+//                setVerticalFence(v, 2, 3);
+//                break;
+//
+//            case R.id.grid_55_vfence_30:
+//                setVerticalFence(v, 3, 0);
+//                break;
+//
+//            case R.id.grid_55_vfence_31:
+//                setVerticalFence(v, 3, 1);
+//                break;
+//
+//            case R.id.grid_55_vfence_32:
+//                setVerticalFence(v, 3, 2);
+//                break;
+//
+//            case R.id.grid_55_vfence_33:
+//                setVerticalFence(v, 3, 3);
+//                break;
+//
+//            case R.id.grid_55_vfence_04:
+//                setVerticalFence(v, 0, 4);
+//                break;
+//
+//            case R.id.grid_55_vfence_14:
+//                setVerticalFence(v, 1, 4);
+//                break;
+//
+//            case R.id.grid_55_vfence_24:
+//                setVerticalFence(v, 2, 4);
+//                break;
+//
+//            case R.id.grid_55_vfence_34:
+//                setVerticalFence(v, 3, 4);
+//                break;
+//
+//            default:
+//                break;
+//
+//        }//switch
 
         listener.endGame(fragmentGame, this);
 
@@ -688,102 +705,104 @@ public class Grid55Fragment extends GridParent implements View.OnTouchListener, 
      */
      public View getUpdatedPenView(int row, int col){
 
-        switch (row){
-
-            //first row
-            case 0:
-
-                switch(col){
-
-                    case 0:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_00);
-
-                    case 1:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_01);
-
-                    case 2:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_02);
-
-                    case 3:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_03);
-
-                    default:
-                        break;
-
-                }//switch col
-
-            //second row
-            case 1:
-
-                switch(col) {
-
-                    case 0:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_10);
-
-                    case 1:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_11);
-
-                    case 2:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_12);
-
-                    case 3:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_13);
-
-                    default:
-                        break;
-
-                }//switch col
-
-                //third row
-            case 2:
-
-                switch(col) {
-
-                    case 0:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_20);
-
-                    case 1:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_21);
-
-                    case 2:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_22);
-
-                    case 3:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_23);
-
-                    default:
-                        break;
-
-                }//switch col
-
-            //third row
-            case 3:
-
-                switch(col) {
-
-                    case 0:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_30);
-
-                    case 1:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_31);
-
-                    case 2:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_32);
-
-                    case 3:
-                        return this.getActivity().findViewById(R.id.grid_55_pig_33);
-
-                    default:
-                        break;
-
-                }//switch col
-
-            default:
-                break;
-
-        }//switch row
-
-        return null;
+         String buttonId = "grid_" + gridSize + gridSize +"_pig_" + row + col;
+         return this.getActivity().findViewById(getResources()
+                 .getIdentifier(buttonId, "id", main.getPackageName()));
+//         switch (row){
+//
+//            //first row
+//            case 0:
+//
+//                switch(col){
+//
+//                    case 0:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_00);
+//
+//                    case 1:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_01);
+//
+//                    case 2:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_02);
+//
+//                    case 3:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_03);
+//
+//                    default:
+//                        break;
+//
+//                }//switch col
+//
+//            //second row
+//            case 1:
+//
+//                switch(col) {
+//
+//                    case 0:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_10);
+//
+//                    case 1:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_11);
+//
+//                    case 2:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_12);
+//
+//                    case 3:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_13);
+//
+//                    default:
+//                        break;
+//
+//                }//switch col
+//
+//                //third row
+//            case 2:
+//
+//                switch(col) {
+//
+//                    case 0:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_20);
+//
+//                    case 1:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_21);
+//
+//                    case 2:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_22);
+//
+//                    case 3:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_23);
+//
+//                    default:
+//                        break;
+//
+//                }//switch col
+//
+//            //third row
+//            case 3:
+//
+//                switch(col) {
+//
+//                    case 0:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_30);
+//
+//                    case 1:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_31);
+//
+//                    case 2:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_32);
+//
+//                    case 3:
+//                        return this.getActivity().findViewById(R.id.grid_55_pig_33);
+//
+//                    default:
+//                        break;
+//
+//                }//switch col
+//
+//            default:
+//                break;
+//
+//        }//switch row
+//         return null;
 
     }//getUpdatedPen
 

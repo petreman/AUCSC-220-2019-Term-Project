@@ -74,7 +74,7 @@ public class HighScores {
          */
         @Override
         public int compareTo(Object otherPlayer) {
-            int otherScore = ((Score)otherPlayer).getScore();
+            int otherScore = ((Score) otherPlayer).getScore();
             return otherScore - this.score;
         }//compareTo
 
@@ -90,11 +90,11 @@ public class HighScores {
     private static List<Score> mediumGrid = new ArrayList();
     private static List<Score> largeGrid = new ArrayList();
     private static List<Score> largestGrid = new ArrayList();
-    private static final int SMALLEST = 25; //5x5 dots
-    private static final int SMALL = 36;    //6x6 dots
-    private static final int MEDIUM = 49;   //7x7 dots
-    private static final int LARGE = 4;
-    private static final int LARGEST = 5;
+    private static final int SMALLEST = Grid.GRID_5x5; //5x5 dots
+    private static final int SMALL = Grid.GRID_6x6;    //6x6 dots
+    private static final int MEDIUM = Grid.GRID_7x7;   //7x7 dots
+    private static final int LARGE = -1;
+    private static final int LARGEST = -2;
 
 //    /**
 //     * Constructor.
@@ -108,10 +108,8 @@ public class HighScores {
      * @param counter determines which grid size's high scores the user is looking at.
      * @return success.
      */
-    public static boolean resetScores(int counter){ //counter in leaderboard activity class. should start at 0 each time and after
-                                             //calling any method with it as a parameter, it should be incremented by 1
-        //int size = grid.getSize(); //change later based on how size specified || this should no longer be used
-        //switch statement
+    public static boolean resetScores(int counter){ //counter in leaderboard activity class. should start at 0 each time
+                                                    //and will increase or decrease based on what grid size scores are viewed
         switch (counter){
             case 0:
                 smallestGrid.clear();
@@ -128,6 +126,9 @@ public class HighScores {
             case 4:
                 largestGrid.clear();
                 break;
+            default:
+                throw new AssertionError("Invalid counter value");
+                //return false;
         }//switch
         return true;
     }//resetScores
@@ -163,27 +164,40 @@ public class HighScores {
      * @return the Score.
      */
     public static Score getHighScore(Grid grid){ //this method for getting highest score to show on main screen
-        //may change based on how getting grid size works
-        //via getX and getY !warning! this does not get the box dimensions, it gets the fence dimensions.
-        int size = 0;
+        int size = grid.getX();
         //switch to get highscores for a grid
         switch (size){
             case SMALLEST:
+                if (smallestGrid.isEmpty()){
+                    return null;
+                }
                 return smallestGrid.get(0);
             case SMALL:
+                if (smallGrid.isEmpty()){
+                    return null;
+                }
                 return smallGrid.get(0);
             case MEDIUM:
+                if (mediumGrid.isEmpty()){
+                    return null;
+                }
                 return mediumGrid.get(0);
             case LARGE:
+                if (largestGrid.isEmpty()){
+                    return null;
+                }
                 return largeGrid.get(0);
             case LARGEST:
+                if (largestGrid.isEmpty()){
+                    return null;
+                }
                 return largestGrid.get(0);
-
+            default:
+                throw new AssertionError("Invalid grid size");
+                //return null; //this should never happen
         }//switch
-        return null; //this should never happen
     }//getHighScores
 
-    //this method scrolls through the high scores for showing on the leaderboard screen
     /**
      * Gets the list of scores to be displayed on the leaderboard screen.
      * @param counter which grid size's scores are to be displayed.
@@ -225,7 +239,7 @@ public class HighScores {
      * @return success.
      */
     public static boolean addHighScore(Score highscore, Grid grid){
-        int size = grid.getX() * grid.getY();//size via grid getX getY note doesn't get dimensions of box only of points
+        int size = grid.getX();
         switch (size){
             case SMALLEST:
                 smallestGrid.add(highscore);
@@ -247,8 +261,10 @@ public class HighScores {
                 largestGrid.add(highscore);
                 sort(largestGrid);
                 return true;
+            default:
+                throw new AssertionError("Invalid grid size");
+                //return false; //this should never happen
         }//switch
-        return false; //this should never happen
     }
 
     /**
@@ -290,14 +306,15 @@ public class HighScores {
      */
     public static boolean save(Context context){
         SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
-        //Possibly move these strings such as the one above to string resource folder?
         SharedPreferences.Editor editor = pref.edit();
-        Gson gson = new Gson(); //added implementation 'com.google.code.gson:gson:2.8.5' to gradle
+        Gson gson = new Gson();
+
         String smallest = gson.toJson(smallestGrid);
         String small = gson.toJson(smallGrid);
         String medium = gson.toJson(mediumGrid);
         String large = gson.toJson(largeGrid);
         String largest = gson.toJson(largestGrid);
+
         editor.putString("smallest", smallest);
         editor.putString("small", small);
         editor.putString("medium", medium);
@@ -305,8 +322,6 @@ public class HighScores {
         editor.putString("largest", largest);
         editor.commit();
         return true;
-        //may need commit after each putString? also move strings to string resource
-        //after tests, it doesn't appear to require multiple commits.
     }//save
 
     /**
@@ -316,23 +331,20 @@ public class HighScores {
      * @return whether saved scores have been retrieved.
      */
     public static boolean retrieveScores(Context context){
-        try{
-            SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String pendingSmallest = pref.getString("smallest", "");
-            String pendingSmall = pref.getString("small", "");
-            String pendingMedium = pref.getString("medium", "");
-            String pendingLarge = pref.getString("large", "");
-            String pendingLargest = pref.getString("largest", "");
-            smallestGrid = gson.fromJson(pendingSmallest, new TypeToken<ArrayList<Score>>(){}.getType());
-            smallGrid = gson.fromJson(pendingSmall, new TypeToken<ArrayList<Score>>(){}.getType());
-            mediumGrid = gson.fromJson(pendingMedium, new TypeToken<ArrayList<Score>>(){}.getType());
-            largeGrid = gson.fromJson(pendingLarge, new TypeToken<ArrayList<Score>>(){}.getType());
-            largestGrid = gson.fromJson(pendingLargest, new TypeToken<ArrayList<Score>>(){}.getType());
-            return true;
-        }//try
-        catch (Exception e){
-            return false; //shouldn't happen
-        }//catch
+        SharedPreferences pref = context.getSharedPreferences("leaderboard", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        String pendingSmallest = pref.getString("smallest", "");
+        String pendingSmall = pref.getString("small", "");
+        String pendingMedium = pref.getString("medium", "");
+        String pendingLarge = pref.getString("large", "");
+        String pendingLargest = pref.getString("largest", "");
+
+        smallestGrid = gson.fromJson(pendingSmallest, new TypeToken<ArrayList<Score>>(){}.getType());
+        smallGrid = gson.fromJson(pendingSmall, new TypeToken<ArrayList<Score>>(){}.getType());
+        mediumGrid = gson.fromJson(pendingMedium, new TypeToken<ArrayList<Score>>(){}.getType());
+        largeGrid = gson.fromJson(pendingLarge, new TypeToken<ArrayList<Score>>(){}.getType());
+        largestGrid = gson.fromJson(pendingLargest, new TypeToken<ArrayList<Score>>(){}.getType());
+        return true;
     }//retrieveScores
 }//HighScore

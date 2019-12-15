@@ -15,13 +15,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
-    int counter;
+    int counter = 0;
     boolean scoresReset = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +76,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                 player1.setText(nameP1);
                 break;
             case 0:
-                player1.setText(R.string.scoreplaceholder);
-                player2.setText(R.string.scoreplaceholder);
-                player3.setText(R.string.scoreplaceholder);
-                player4.setText(R.string.scoreplaceholder);
-                player5.setText(R.string.scoreplaceholder);
+                player1.setText(R.string.score_placeholder);
+                player2.setText(R.string.score_placeholder);
+                player3.setText(R.string.score_placeholder);
+                player4.setText(R.string.score_placeholder);
+                player5.setText(R.string.score_placeholder);
         }//switch
     }//setPlayerNames
 
@@ -159,17 +160,18 @@ public class LeaderboardActivity extends AppCompatActivity {
         HighScores.clear();
         getLeaderboard();
         resetText();
+        enableConfirm();
     }//resetAllScores
 
     /**
      * Resets the text showing player names and scores.
      */
     public void resetText(){
-        ((TextView) findViewById(R.id.leaderboardP1Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP2Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP3Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP4Name)).setText(R.string.scoreplaceholder);
-        ((TextView) findViewById(R.id.leaderboardP5Name)).setText(R.string.scoreplaceholder);
+        ((TextView) findViewById(R.id.leaderboardP1Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP2Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP3Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP4Name)).setText(R.string.score_placeholder);
+        ((TextView) findViewById(R.id.leaderboardP5Name)).setText(R.string.score_placeholder);
         ((TextView) findViewById(R.id.P1HighScore)).setText("0");
         ((TextView) findViewById(R.id.P2HighScore)).setText("0");
         ((TextView) findViewById(R.id.P3HighScore)).setText("0");
@@ -191,6 +193,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                 break;
             case 2:
                 gridSize.setText("7x7");
+                break;
+            default:
+                throw new AssertionError("Counter error");
         }//switch
     }//swapGridSize
 
@@ -201,6 +206,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     public void resetCurrentScores(View v){
         HighScores.resetScores(counter);
         resetText();
+        enableConfirm();
     }//resetCurrentScores
 
     /**
@@ -239,6 +245,14 @@ public class LeaderboardActivity extends AppCompatActivity {
     }//selectText
 
     /**
+     * Enables the confirm button for saving changes.
+     */
+    public void enableConfirm(){
+        Button confirm = (Button) findViewById(R.id.confirmButtonScores);
+        confirm.setEnabled(true);
+    }
+
+    /**
      * Method for testing, remove later.
      */
     public void testset(View v){
@@ -263,4 +277,4 @@ public class LeaderboardActivity extends AppCompatActivity {
         HighScores.sort(d);
         HighScores.sort(e);
     }//testset
-}
+}//LeaderboardActivity
