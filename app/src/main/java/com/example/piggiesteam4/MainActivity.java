@@ -44,6 +44,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -89,6 +90,9 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+     
+
 
         // Pop up message
 
@@ -157,10 +161,10 @@ import java.util.List;
     private void popUpMenu(){
         new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
                 .setMessage ("We hope you will fully enjoy our simple and fun game! \n \n" +
-                        "We have designed the game with multiple features including the abbility to " +
+                        "The game is designed with multiple features including the ability to " +
                         "switch between Single Player and Multiplayer with one button. You can " +
                         "press the toggle button to do that action. \n \nFor more information " +
-                        "on the different features of our app, please refer to our help menu.  ")
+                        "on the different features of our app, please refer to our help menu.")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -170,9 +174,14 @@ import java.util.List;
                     .create().show();
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        //editor.putBoolean("isFirstTime", false);
+        editor.putBoolean("isFirstTime", false);
         editor.apply();
     }// end of showStartDialog
+
+     //=========================================================================
+     // switching between mutliplayer and single player on the grid
+
+
 
 
     /**

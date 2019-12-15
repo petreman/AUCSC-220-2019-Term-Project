@@ -34,10 +34,9 @@
 
     <Button
         android:id="@+id/testButton"
-        android:layout_width="69dp"
-        android:layout_height="68dp"
-        android:text="Toggle"
-        android:textSize="10sp"
+        android:layout_width="85dp"
+        android:layout_height="92dp"
+        android:background="@drawable/tuggle"
         app:layout_constraintBottom_toTopOf="@+id/fragment_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
