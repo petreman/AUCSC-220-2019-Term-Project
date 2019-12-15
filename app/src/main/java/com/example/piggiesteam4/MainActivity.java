@@ -612,7 +612,7 @@ import java.util.List;
 //        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
             return true;
         }
-        catch (NullPointerException e){
+        catch (Exception e){
             Log.d("retrieveGameFail", "No game found, new game will be created");
             return false;
         }

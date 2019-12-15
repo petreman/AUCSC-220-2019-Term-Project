@@ -159,7 +159,7 @@ public class Grid {
     private Fence[][] xCoords; //all horizontal fences
     private Fence[][] yCoords; //all vertical fences
     private int x, y; //dimensions of dots for grid
-    private boolean[][] pens;
+    private Fence[][] pens;
 
     public static final int GRID_5x5 = 5;
     public static final int GRID_6x6 = 6;
@@ -176,7 +176,7 @@ public class Grid {
 
         this.xCoords = new Fence[x][y - 1];
         this.yCoords = new Fence[x - 1][y];
-        this.pens = new boolean[x - 1][y - 1];
+        this.pens = new Fence[x - 1][y - 1];
         this.x = x;
         this.y = y;
 
@@ -197,7 +197,8 @@ public class Grid {
         //initialize pens
         for (int i = 0 ; i < x - 1 ; i++){
             for (int j = 0 ; j < y - 1 ; j++){
-                this.pens[i][j] = false;
+                pens[i][j] = new Fence();
+                pens[i][j].setExistence(false);
             }//for
         }//for
 
@@ -281,7 +282,7 @@ public class Grid {
      * @param col - col index into pens
      * @return the state of the pen
      */
-    boolean getPen(int row, int col){
+    Fence getPen(int row, int col){
         return this.pens[row][col];
     }//getPen
 
@@ -295,7 +296,7 @@ public class Grid {
      * @param state - the state to set the pen to
      */
     void setPen(int row, int col, boolean state){
-         this.pens[row][col] = false;
+         this.pens[row][col].setExistence(state);
     }//setPen
 
     /**
@@ -367,7 +368,7 @@ public class Grid {
 
             setFenceX(row, col, player.getColor());
             player.addScore(1);
-            this.pens[row][col] = true;
+            this.pens[row][col].setExistence(true);
             Log.d("checkPen", "Pen Found");
             return true;
 
@@ -398,7 +399,7 @@ public class Grid {
 
             setFenceX(row, col, player.getColor());
             player.addScore(1);
-            this.pens[row - 1][col] = true;
+            this.pens[row - 1][col].setExistence(true);
             Log.d("checkPen", "Pen Found");
             return true;
 
@@ -429,7 +430,7 @@ public class Grid {
 
             setFenceY(row, col, player.getColor());
             player.addScore(1);
-            this.pens[row][col - 1] = true;
+            this.pens[row][col - 1].setExistence(true);
             Log.d("checkPen", "Pen Found");
             return true;
 
@@ -460,7 +461,7 @@ public class Grid {
 
             setFenceY(row, col, player.getColor());
             player.addScore(1);
-            this.pens[row][col] = true;
+            this.pens[row][col].setExistence(true);
             Log.d("checkPen", "Pen Found");
             return true;
 
@@ -501,4 +502,7 @@ public class Grid {
         return yCoords;
     }//getyCoords
 
+    public Fence[][] getPens() {
+        return pens;
+    }
 }//Grid

@@ -87,6 +87,7 @@ public abstract class GridParent extends Fragment {
     public void showSaved(){
         Grid.Fence[][] xCoords = fragmentGame.getGrid().getxCoords();
         Grid.Fence[][] yCoords = fragmentGame.getGrid().getyCoords();
+        Grid.Fence[][] pens = fragmentGame.getGrid().getPens();
 
         for (int row = 0; row < gridSize; row++){
             for (int col = 0; col < gridSize; col++){
@@ -117,6 +118,19 @@ public abstract class GridParent extends Fragment {
                         fence.setAlpha((float) 1.0);
                     }//if
                 }//if
+
+                if ((row < gridSize - 1) && (col < gridSize - 1)){
+                    Grid.Fence currentPen = pens[row][col];
+                    if (currentPen.exists()){
+                        ImageView pig = (ImageView) fragmentView.findViewById(getResources()
+                                .getIdentifier("grid_" + gridSize + gridSize + "_pig_" + row + col,
+                                        "id", this.getActivity().getPackageName()));
+
+                        pig.setColorFilter(currentPen.getColor(),
+                                PorterDuff.Mode.MULTIPLY);
+                        pig.setVisibility(View.VISIBLE);
+                    }
+                }
             }//for
         }//for
     }//showSaved
@@ -260,7 +274,7 @@ public abstract class GridParent extends Fragment {
 
                 ImageView pig = ((ImageView) fragmentView.findViewById(resID));
                 resetPigVisibility(pig);
-
+                fragmentGame.getGrid().setPen(i, j, false);
             }//for
 
         }//for
@@ -287,6 +301,14 @@ public abstract class GridParent extends Fragment {
             pig.setColorFilter(fragmentGame.getCurrentPlayer().getColorLight(),
                     PorterDuff.Mode.MULTIPLY);
             pig.setVisibility(View.VISIBLE);
+
+            final int ROW_INDEX = 12;
+            final int COL_INDEX = 13;
+            String pigId = main.getResources().getResourceEntryName(v.getId());
+            int row = Integer.parseInt((pigId.charAt(ROW_INDEX) + "").trim());
+            int col = Integer.parseInt((pigId.charAt(COL_INDEX) + "").trim());
+
+            fragmentGame.getGrid().getPens()[row][col].setColor(fragmentGame.getCurrentPlayer().getColorLight());
         }//else
 
     }//togglePigVisibility
