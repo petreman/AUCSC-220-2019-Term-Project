@@ -97,12 +97,12 @@ import java.util.List;
             @Override
             public void onClick(View v) {
                 if (isMulti == false) {
-                    Toast.makeText(MainActivity.this, "inside false", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
                     customButton.setBackgroundResource(R.drawable.twopeople);
                     isMulti = true;
 
                 }else{
-                    Toast.makeText(MainActivity.this, "inside true", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You are now in Single Player Mode", Toast.LENGTH_SHORT).show();
                     customButton.setBackgroundResource(R.drawable.singleperson);
                     isMulti = false;
                 }
