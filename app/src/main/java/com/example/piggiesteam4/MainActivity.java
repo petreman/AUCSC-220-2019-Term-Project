@@ -44,6 +44,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -76,6 +77,7 @@ import java.util.List;
     private final int GRID_SIZE_REQUEST = 1;
     private final int DEFAULT_GRID_SIZE = 5;
     private int requestedGridSize;
+    private boolean isMulti = false;
 
     private Fragment activeFragment;
 
@@ -89,6 +91,24 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final ImageButton customButton = findViewById(R.id.testButton);
+        customButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isMulti == false) {
+                    Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
+                    customButton.setImageResource(R.drawable.twopeople);
+                    isMulti = true;
+
+                }else{
+                    Toast.makeText(MainActivity.this, "You are now in Single Player Mode", Toast.LENGTH_SHORT).show();
+                    customButton.setImageResource(R.drawable.singleperson);
+                    isMulti = false;
+                }
+            }
+        });
+
 
         // Pop up message
 
@@ -156,8 +176,12 @@ import java.util.List;
      */
     private void popUpMenu(){
         new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
-                .setMessage ("For more information on how this game works, please refer to the help menu  ")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setMessage ("We hope you will fully enjoy our simple and fun game! \n \n" +
+                        "The game is designed with multiple features including the ability to " +
+                        "switch between Single Player and Multiplayer with one button. You can " +
+                        "press the toggle button to do that action. \n \nFor more information " +
+                        "on the different features of our app, please refer to our help menu.")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -169,6 +193,11 @@ import java.util.List;
         editor.putBoolean("isFirstTime", false);
         editor.apply();
     }// end of showStartDialog
+
+     //=========================================================================
+     // switching between mutliplayer and single player on the grid
+
+
 
 
     /**
