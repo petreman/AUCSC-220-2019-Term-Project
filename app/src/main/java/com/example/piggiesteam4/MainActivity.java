@@ -26,7 +26,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,14 +46,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.material.navigation.NavigationView;
-
 import com.google.gson.Gson;
 
 import java.util.List;
 
  public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, Grid55Fragment.OnFragmentInteractionListener,
-        Grid66Fragment.OnFragmentInteractionListener{
+        NavigationView.OnNavigationItemSelectedListener, GridParent.OnFragmentInteractionListener {
 
     public interface resetListener{
         void reset();
@@ -63,7 +60,6 @@ import java.util.List;
     public void setResetListener(resetListener reset){
         resetListener = reset;
     }
-
 
     //Class Variables
     public Game singlePlayer;
@@ -82,13 +78,14 @@ import java.util.List;
     private Fragment activeFragment;
 
     /**
-     * On creation, creates a defualt single player game (5x5 grid)
+     * On creation, creates a default single player game (5x5 grid)
      * Eventually we want to be able to load from a saved state
      *
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
