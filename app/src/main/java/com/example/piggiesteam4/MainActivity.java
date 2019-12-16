@@ -26,6 +26,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -45,6 +47,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -80,6 +83,8 @@ import java.util.List;
     private boolean isMulti = false;
 
     private Fragment activeFragment;
+    private Fragment nextFragment;
+    FragmentManager fragmentManager;
 
     /**
      * On creation, creates a defualt single player game (5x5 grid)
@@ -99,6 +104,12 @@ import java.util.List;
                 if (isMulti == false) {
                     Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.twopeople);
+                    FragmentTransaction fragmentTransaction;
+                    activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, nextFragment);
+                    fragmentTransaction.commit();
+
                     isMulti = true;
 
                 }else{
