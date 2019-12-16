@@ -92,18 +92,18 @@ import java.util.List;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button customButton = findViewById(R.id.testButton);
+        final ImageButton customButton = findViewById(R.id.testButton);
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isMulti == false) {
                     Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
-                    customButton.setBackgroundResource(R.drawable.twopeople);
+                    customButton.setImageResource(R.drawable.twopeople);
                     isMulti = true;
 
                 }else{
                     Toast.makeText(MainActivity.this, "You are now in Single Player Mode", Toast.LENGTH_SHORT).show();
-                    customButton.setBackgroundResource(R.drawable.singleperson);
+                    customButton.setImageResource(R.drawable.singleperson);
                     isMulti = false;
                 }
             }
