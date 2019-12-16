@@ -77,6 +77,7 @@ import java.util.List;
     private final int GRID_SIZE_REQUEST = 1;
     private final int DEFAULT_GRID_SIZE = 5;
     private int requestedGridSize;
+    private boolean isMulti = false;
 
     private Fragment activeFragment;
 
@@ -91,7 +92,22 @@ import java.util.List;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-     
+        final Button customButton = findViewById(R.id.testButton);
+        customButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isMulti == false) {
+                    Toast.makeText(MainActivity.this, "inside false", Toast.LENGTH_SHORT).show();
+                    customButton.setBackgroundResource(R.drawable.twopeople);
+                    isMulti = true;
+
+                }else{
+                    Toast.makeText(MainActivity.this, "inside true", Toast.LENGTH_SHORT).show();
+                    customButton.setBackgroundResource(R.drawable.singleperson);
+                    isMulti = false;
+                }
+            }
+        });
 
 
         // Pop up message
