@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -301,4 +302,337 @@ public abstract class GridParent extends Fragment {
         pig.clearColorFilter();
 
     }//resetPigVisibility
+
+    /**
+     * Added for fun
+     * If a "fence" hasn't been place yet, hovering over it with your finger
+     * will make it slightly visible. works by checking how visible the selected fence
+     * currently is: if alpha = 1, then already placed so don't bother
+     *
+     * By Keegan
+     *
+     * @param v - the view being touched
+     * @param event - the event (ACTION_DOWN = finger push down, ACTION_UP = finger lift)
+     * @return
+     */
+    public boolean onTouch(View v, MotionEvent event) {
+
+        //button pressed down
+        if(event.getAction() == MotionEvent.ACTION_DOWN &&
+                v.findViewById(v.getId()).getAlpha() != 1){
+            v.findViewById(v.getId()).setAlpha((float)0.15);
+        }//if
+
+        //button released
+        if(event.getAction() == MotionEvent.ACTION_UP &&
+                v.findViewById(v.getId()).getAlpha() != 1){
+            v.findViewById(v.getId()).setAlpha((float)(0.0));
+        }//if
+
+        return false;
+
+    }//onTouch
+
+    /**
+     * Called when a horizontal button is touched. Takes the button's coordinates on grid.
+     * If fence doesn't exist at corresponding spot in the grid, it's placed and the button
+     * is updated to reflect this
+     *
+     * A switch case would be more ideal here, but a switch can'y be used for non-constant
+     * variables (each grid has a variable amount of rows, so at compile time the number of
+     * rows can't be determined as this is designed to work with all grid sizes)
+     *
+     * By Keegan
+     *
+     * @param v - the button pressed
+     * @param row - button's respective row coordinate into xCoords of the grid
+     * @param col - button's respective col coordinate into xCoords of the grid
+     */
+    void setHorizontalFence(View v, int row, int col){
+
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (row == 0) {
+            setTopRowFence(v, row, col);
+        }//if
+
+        //if fence is placed on the bottom of grid
+        else if (row == fragmentGame.getGrid().getY() - 1) {
+            setBottomRowFence(v, row, col);
+        }//else if
+
+        else {
+            setMidRowFence(v, row, col);
+        }//else
+
+        updateScoreView(currentPlayer);
+
+    }//setHorizontalFence
+
+    /**
+     *
+     *
+     *
+     * @param v
+     * @param row
+     * @param col
+     */
+    void setTopRowFence(View v, int row, int col){
+
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //if fence placement didn't make pen
+            if (!fragmentGame.getGrid().checkPenBelow(row, col, currentPlayer)) {
+
+                //other players turn
+                toggleTurn(currentPlayer);
+
+            }//if
+
+            //if it did, make pig visible
+            else{
+                togglePigVisibility(getUpdatedPenView(row, col));
+            }//else
+
+        }//if
+
+    }//setTopRowFence
+
+    void setBottomRowFence(View v, int row, int col){
+
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //if fence placement didn't make pen
+            if (!fragmentGame.getGrid().checkPenAbove(row, col, currentPlayer)) {
+
+                //other players turn
+                toggleTurn(currentPlayer);
+
+            }//if
+
+            //if it did, make pig visible
+            else{
+                togglePigVisibility(getUpdatedPenView(row -1, col));
+            }//else
+
+        }//if
+
+    }//setBottomRowFence
+
+    void setMidRowFence(View v, int row, int col){
+
+        boolean createdPen = false;
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed
+        if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //check for pen to the left
+            if (fragmentGame.getGrid().checkPenAbove(row, col, currentPlayer)){
+                togglePigVisibility(getUpdatedPenView(row - 1, col));
+                createdPen = true;
+            }//if
+
+            //check for pen to the right
+            if (fragmentGame.getGrid().checkPenBelow(row, col, currentPlayer)){
+                togglePigVisibility(getUpdatedPenView(row, col));
+                createdPen = true;
+            }//if
+
+            //other player turn if no pen made
+            if (!createdPen){
+                toggleTurn(currentPlayer);
+            }//if
+
+        }//if
+
+    }//setMidFence
+
+    /**
+     *
+     * @param v
+     * @param row
+     * @param col
+     */
+    void setVerticalFence(View v, int row, int col){
+
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (col == 0) {
+            setLeftColFence(v, row, col);
+        }//if
+
+        //if fence is placed on the bottom of grid
+        else if (col == fragmentGame.getGrid().getX() - 1) {
+            setRightColFence(v, row, col);
+        }//else if
+
+        else {
+            setMidColFence(v, row, col);
+        }//else
+
+        updateScoreView(currentPlayer);
+
+    }//setVerticalFence
+
+    void setLeftColFence(View v, int row, int col){
+
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //if fence placement didn't make pen
+            if (!fragmentGame.getGrid().checkPenRight(row, col, currentPlayer)) {
+
+                //other players turn
+                toggleTurn(currentPlayer);
+
+            }//if
+
+            //if it did, make pig visible
+            else{
+                togglePigVisibility(getUpdatedPenView(row, col));
+            }//else
+
+        }//if
+
+    }//setTopRowFence
+
+    void setRightColFence(View v, int row, int col){
+
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed on top row
+        if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //if fence placement didn't make pen
+            if (!fragmentGame.getGrid().checkPenLeft(row, col, currentPlayer)) {
+
+                //other players turn
+                toggleTurn(currentPlayer);
+
+            }//if
+
+            //if it did, make pig visible
+            else{
+                togglePigVisibility(getUpdatedPenView(row, col - 1));
+            }//else
+
+        }//if
+
+    }//setBottomRowFence
+
+    void setMidColFence(View v, int row, int col){
+
+        boolean createdPen = false;
+        int currentColor = fragmentGame.getCurrentPlayer().getColor();
+        Player currentPlayer = fragmentGame.getCurrentPlayer();
+
+        //if fence is placed
+        if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
+
+            //set color
+            v.findViewById(v.getId()).getBackground()
+                    .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
+
+            v.findViewById(v.getId()).setAlpha((float) 1.0);
+
+            //check for pen to the left
+            if (fragmentGame.getGrid().checkPenLeft(row, col, currentPlayer)){
+                togglePigVisibility(getUpdatedPenView(row , col - 1));
+                createdPen = true;
+            }//if
+
+            //check for pen to the right
+            if (fragmentGame.getGrid().checkPenRight(row, col, currentPlayer)){
+                togglePigVisibility(getUpdatedPenView(row, col));
+                createdPen = true;
+            }//if
+
+            //other player turn if no pen made
+            if (!createdPen){
+                toggleTurn(currentPlayer);
+            }//if
+
+        }//if
+
+    }//setMidFence
+
+    /**
+     * Called when a pen is completed. Gets the corresponding pen's pig image, so it
+     * can be passed to togglePigVisibility to make it visible
+     *
+     * By Alvin
+     *
+     * @param row - row index for pig
+     * @param col - col index for pig
+     * @return the view of the pig that has been penned
+     */
+    public View getUpdatedPenView(int row, int col) {
+
+        String buttonId = "grid_" + gridSize + gridSize + "_pig_" + row + col;
+        return this.getActivity().findViewById(getResources()
+                .getIdentifier(buttonId, "id", main.getPackageName()));
+
+    }//getUpdatedPenView
+
+    /**
+     * Called after a fence is placed. Keeps the visible player scores up to date
+     *
+     * By Keegan
+     *
+     * @param currentPlayer - the player who's turn it currently is
+     */
+    public void updateScoreView(Player currentPlayer){
+
+        //update the scoreboard in MainActivity
+        p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
+        p2ScoreButton.setText(Integer.toString(fragmentGame.getPlayer2().getScore()));
+
+    }//updateScoreView
+
 }//GridParent
