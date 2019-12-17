@@ -36,7 +36,7 @@ public class GridSizeActivity extends AppCompatActivity {
                 selectedSize = 6;
                 break;
             case "7x7":
-                selectedSize =7;
+                selectedSize = 7;
                 break;
             default:
                 Log.d("GridSizeActivity", "Unexpected current size");

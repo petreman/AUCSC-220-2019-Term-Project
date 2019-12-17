@@ -175,24 +175,26 @@ public class Player {
     public boolean checkForPossiblePen(Grid grid){
 
         //check horizontal fences
-        for (int i = 0 ; i < grid.getX() ; i++){
-            for (int j = 0 ; j < grid.getY() - 1 ; j++){
-                if (i != 0 && grid.checkPenAbove(i, j, this)){
+        for (int row = 0 ; row < grid.getX() - 1; row++){
+            for (int col = 0 ; col < grid.getY() -1; col++){
+                Log.d("penCheck", "row is " + row + " ... col is " + col);
+                if (row != 0 && grid.checkPenAbove(row, col, this)){
                     return true;
                 }//else
-                 else if (i != grid.getX() && grid.checkPenBelow(i, j, this)){
+                 else if (row != grid.getX() - 1 && grid.checkPenBelow(row, col, this)){
                     return true;
                 }//else if
             }//for
         }//for
 
         //check vertical fences
-        for (int i = 0 ; i < grid.getX() -1 ; i++){
-            for (int j = 0 ; j < grid.getY() ; j++){
-                if (i != 0 && grid.checkPenLeft(i, j, this)){
+        for (int row = 0 ; row < grid.getX() - 1; row++){
+            for (int col = 0 ; col < grid.getY()  - 1; col++){
+                Log.d("penCheck", "row is " + row + " ... col is " + col);
+                if (col != 0 && grid.checkPenLeft(row, col, this)){
                     return true;
                 }//else
-                else if (i != grid.getX() && grid.checkPenRight(i, j, this)){
+                else if (col != grid.getX() - 1 && grid.checkPenRight(row, col, this)){
                     return true;
                 }//else if
             }//for

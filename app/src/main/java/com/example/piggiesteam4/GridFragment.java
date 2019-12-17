@@ -961,3 +961,10 @@ public class GridFragment extends Fragment
     }//setFenceListeners
 
 }//GridFragment
+    public void AiTurn(){
+        Log.e("AiTurn", "Called");
+        fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
+        showSaved();
+    }
+
+}//GridParent
