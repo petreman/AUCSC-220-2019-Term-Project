@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
+
+import java.util.concurrent.TimeUnit;
 
 public class GridFragment extends Fragment
         implements View.OnTouchListener, View.OnClickListener {
@@ -71,13 +75,13 @@ public class GridFragment extends Fragment
         gridSize = fragmentGame.getGrid().getX();
         //setMainCurrentGame(isMultiplayer);
 
-        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
-        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
-        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
-        Log.d("inFragment", "Scores of the current game are "
-                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
-        Log.d("inFragment", "Scores of the fragment game are "
-                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
+//        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
+//        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
+//        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
+//        Log.d("inFragment", "Scores of the current game are "
+//                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
+//        Log.d("inFragment", "Scores of the fragment game are "
+//                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
 
 //        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
 //            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
@@ -437,15 +441,37 @@ public class GridFragment extends Fragment
 
         if (fragmentGame.getCurrentPlayer().isCPU()){
             buttonsEnabled = false;
-            while (aiTurn()){
-                if (fragmentGame.isGameOver()){
-                    break;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep200ms();
+                    boolean penFound;
+                    do{
+                        sleep200ms();
+                        penFound = aiTurn();
+                        if (fragmentGame.isGameOver()){
+                            break;
+                        }
+                    } while (penFound);
+
+                    buttonsEnabled = true;
                 }
-            }
-            buttonsEnabled = true;
+            }).start();
+        }
+        if (fragmentGame.isGameOver()){
+            listener.endGame(fragmentGame, this);
         }
 
     }//toggleTurn
+
+    public void sleep200ms(){
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        }
+        catch (Exception e){
+
+        }
+    }
 
     /**
      * Sets player 1 to be the current player.
@@ -455,7 +481,10 @@ public class GridFragment extends Fragment
     public void setP1Current(){
 
         if(fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()){
-            toggleTurn(fragmentGame.getCurrentPlayer());
+//            toggleTurn(fragmentGame.getCurrentPlayer());
+
+            fragmentGame.toggleCurrentPlayer();
+            setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
         }//if
 
     }//setP1Current
@@ -981,7 +1010,17 @@ public class GridFragment extends Fragment
 
     public boolean aiTurn(){
         boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
-        showSaved();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                showSaved();
+                updateScoreView();
+                if (fragmentGame.isGameOver()){
+                    listener.endGame(fragmentGame, GridFragment.this);
+                }
+            }
+        });
 //        boolean foundPen = false;
         return foundPen;
     }

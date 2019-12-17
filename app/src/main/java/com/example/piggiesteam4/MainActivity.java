@@ -241,7 +241,7 @@ import java.util.List;
              multiPlayerFragment = createGridFragment(isMultiPlayer);
          }else{
              setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
-             singlePlayer = new Game(55,false,p1Color,p2Color);
+             singlePlayer = new Game(size,false,p1Color,p2Color);
              singlePlayerFragment = createGridFragment(isMultiPlayer);
              //boolean spf = singlePlayerFragment.fragmentGame.isMultiplayer();
              //Log.d("newGame", "spf ismulti: " + spf);
@@ -404,6 +404,11 @@ import java.util.List;
         };//ResetConfirmationListener
         confirmation.setListener(listener);
     }//askForResetConfirmation
+
+     public void onLossAlert(){
+        OnLossFragment loss = new OnLossFragment();
+        loss.show(getSupportFragmentManager(), "onLoss");
+     }
 
     public void showTieAlert(){
         TieAlertFragment alert = new TieAlertFragment();
@@ -601,7 +606,8 @@ import java.util.List;
         editor.putString("singleplayer", gson.toJson(singlePlayer));
         editor.putString("multiplayer", gson.toJson(multiPlayer));
         editor.putBoolean("isMulti", currentGame.isMultiplayer());
-        editor.putInt("gridSize", currentGame.getGrid().getX());
+        editor.putInt("gridSizeSingle", singlePlayer.getGrid().getX());
+        editor.putInt("gridSizeMulti", multiPlayer.getGrid().getX());
         //editor.putString("currentPlayer", gson.toJson(currentPlayer));
         editor.commit();
 
@@ -636,6 +642,12 @@ import java.util.List;
             String singlePlayerString = pref.getString("singleplayer", null);
             String multiPlayerString = pref.getString("multiplayer", null);
             String currentPlayerString = pref.getString("currentPlayer", null);
+            int singleGridSize = pref.getInt("gridSizeSingle", 5);
+            int multiGridSize = pref.getInt("gridSizeMulti", 5);
+
+            Log.d("retrieving", "Creating new games");
+            newGame(singleGridSize * 11, false);
+            newGame(multiGridSize * 11, true);
 
             if (singlePlayerString != null) {
                 singlePlayer = gson.fromJson(singlePlayerString, Game.class);
@@ -653,23 +665,14 @@ import java.util.List;
                 }
             }//if
 
-            if (isMulti && !isNull) {
+            if (isMulti) {
                 currentGame = multiPlayer;
             }//if
-            else if (!isNull){
+            else{
                 currentGame = singlePlayer;
             }//else
 
             requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
-
-//        if (currentPlayerString != null){
-//            currentPlayer = gson.fromJson(currentPlayerString, Player.class);
-//            Log.d("retrieveGame", "retrieved current player is: " + currentPlayer.getColor());
-//        }//if
-//        else{
-//            Log.d("retrieveGame", "currentPlayer not retrieved, nothing else should have been retrieved either");
-//        }
-
 
             try {
                 p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
@@ -681,14 +684,20 @@ import java.util.List;
                 Log.d("retrieveGame", "Fail to set scores from save, NULL value");
             }
 
-            Log.d("retrieveGame", "single game exists? " + (singlePlayer != null));
-            Log.d("retrieveGame", "multi game exists? " + (multiPlayer != null));
-            Log.d("retrieveGame", "current game exists? " + (currentGame != null));
-            Log.d("retrieveGame", "Retrieved P1 score " + currentGame.getPlayer1().getScore());
-            Log.d("retrieveGame", "Retrieved P2 score " + currentGame.getPlayer2().getScore());
+            Log.d("retrieving", "Adding fragments and showing");
+            FragmentManager fragManager = getSupportFragmentManager();
+            FragmentTransaction fragTrans = fragManager.beginTransaction();
+            if (isMulti){
+                fragTrans.add(R.id.fragment_container, multiPlayerFragment).commit();
+                multiPlayerFragment.updateScoreView();
+            }
+            else{
+                fragTrans.add(R.id.fragment_container, singlePlayerFragment).commit();
+                singlePlayerFragment.updateScoreView();
+            }
+            setScoreButtonColor();
 
-//        p1Color = new int[]{currentGame.getPlayer1().getColor(), currentGame.getPlayer1().getColorLight()};
-//        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
+
             return true;
         }
         catch (Exception e){
@@ -720,9 +729,14 @@ import java.util.List;
                     game.endGame();
                     showTieAlert();
                 }//if
-                else {
+                else if (frag.fragmentGame.isMultiplayer() ||
+                        (frag.fragmentGame.getPlayer1().getScore() > frag.fragmentGame.getPlayer2().getScore())){
                     askForName(game);
                 }//else
+                else{
+                    game.endGame();
+                    onLossAlert();
+                }
 
                 HighScores.save(getApplicationContext());
                 saveGame();
