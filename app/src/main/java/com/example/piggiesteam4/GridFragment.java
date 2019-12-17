@@ -20,13 +20,14 @@ public class GridFragment extends Fragment
     //Variable Declarations
     private MainActivity main;
     private boolean isMultiplayer;
-     Game fragmentGame;
+    Game fragmentGame;
     private OnFragmentInteractionListener mListener;
     private Button p1ScoreButton;
     private Button p2ScoreButton;
     private gameStateListener listener;
     private View fragmentView;
     private int gridSize;
+    private boolean buttonsEnabled = true;
 
     /**
      * This was placed by default, best not to remove it
@@ -54,12 +55,15 @@ public class GridFragment extends Fragment
         }//if
 
         main = (MainActivity) getActivity(); //get the main activity to share game variables
+        isMultiplayer = main.currentGame.isMultiplayer();
 
         if (isMultiplayer){
             fragmentGame = main.multiPlayer;
+            Log.e("onCreateFragment", "fragmentGame multiplayer");
         }//if
 
         else{
+            Log.e("onCreateFragment", "fragmentGame single");
             fragmentGame = main.singlePlayer;
         }//if
 
@@ -191,6 +195,10 @@ public class GridFragment extends Fragment
      */
     @Override
     public void onClick(View v) {
+        if (!buttonsEnabled){
+            return;
+        }
+
         final char VERTICAL_ORIENTATION = 'v';
         final char HORIZONTAL_ORIENTATION = 'h';
         final int ORIENTATION_INDEX = 8;
@@ -348,6 +356,7 @@ public class GridFragment extends Fragment
                             .setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
                     fence.setAlpha((float) 0.0);
+                    Log.d("resetFences", "hfences");
                 }//if
 
                 if (row < gridSize - 1){
@@ -361,7 +370,7 @@ public class GridFragment extends Fragment
                             .setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
                     fence.setAlpha((float) 0.0);
-
+                    Log.d("resetFences", "vfences");
                 }//if
 
             }//for
@@ -425,6 +434,16 @@ public class GridFragment extends Fragment
         Log.d("newFencePlaced", "After fragGame.togglecurrentplayer, current is now player " + fragmentGame.getCurrentPlayer().getWhichplayer());
 
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
+
+        if (fragmentGame.getCurrentPlayer().isCPU()){
+            buttonsEnabled = false;
+            while (aiTurn()){
+                if (fragmentGame.isGameOver()){
+                    break;
+                }
+            }
+            buttonsEnabled = true;
+        }
 
     }//toggleTurn
 
@@ -496,12 +515,17 @@ public class GridFragment extends Fragment
         for (int i = 0; i < sizeX - 1; i++) {
 
             for (int j = 0; j < sizeY - 1; j++) {
-
+                Log.d("resetPens", "Row: " + i + " Col: " + j);
                 String penID = "grid_" + sizeX + sizeY + "_pig_" + i + j;
                 int resID = getResources().getIdentifier(penID, "id", main.getPackageName());
 
                 ImageView pig = ((ImageView) fragmentView.findViewById(resID));
                 resetPigVisibility(pig);
+                String visible = "not invisible";
+                if (pig.getVisibility() == View.INVISIBLE){
+                    visible = "view.invisible";
+                }
+                Log.d("resetPens", "Visibility: " + visible);
                 fragmentGame.getGrid().setPen(i, j, false);
 
             }//for
@@ -539,6 +563,7 @@ public class GridFragment extends Fragment
             int col = Integer.parseInt((pigId.charAt(COL_INDEX) + "").trim());
 
             fragmentGame.getGrid().getPens()[row][col].setColor(fragmentGame.getCurrentPlayer().getColorLight());
+            fragmentGame.getGrid().getPens()[row][col].setExistence(true);
 
         }//else
 
@@ -959,5 +984,12 @@ public class GridFragment extends Fragment
         }//for
 
     }//setFenceListeners
+
+    public boolean aiTurn(){
+        boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
+        showSaved();
+//        boolean foundPen = false;
+        return foundPen;
+    }
 
 }//GridFragment

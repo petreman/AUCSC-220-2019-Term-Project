@@ -24,4 +24,10 @@
     <string name="here_is_how_to_play_the_game">Here is how to play the game</string>
     <string name="main_highscore">High Score\n</string>
     <string name="main_highscore_default">High Score\n0</string>
+    <string name="welcome">Welcome to Piggies in a Pen Game</string>
+    <string name="popup_help_message">We hope you will fully enjoy our simple and fun game!\n\n
+        The game is designed with multiple features including the ability to switch between
+        Single Player and Multiplayer with one button. You can press the toggle button to do
+        that action.\n\nFor more information on the different features of our app,
+        please refer to our help menu.</string>
 </resources>

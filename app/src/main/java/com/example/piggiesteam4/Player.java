@@ -176,7 +176,7 @@ public class Player {
 
         //check horizontal fences
         for (int row = 0 ; row < grid.getX(); row++){
-            for (int col = 0 ; col < grid.getY() -1; col++){
+            for (int col = 0 ; col < grid.getY() - 1; col++){
                 Log.d("penCheck", "row is " + row + " ... col is " + col);
                 if (row != 0 && grid.checkPenAbove(row, col, this)){
                     return true;
@@ -189,7 +189,7 @@ public class Player {
 
         //check vertical fences
         for (int row = 0 ; row < grid.getX() - 1; row++){
-            for (int col = 0 ; col < grid.getY()  - 1; col++){
+            for (int col = 0 ; col < grid.getY(); col++){
                 Log.d("penCheck", "row is " + row + " ... col is " + col);
                 if (col != 0 && grid.checkPenLeft(row, col, this)){
                     return true;

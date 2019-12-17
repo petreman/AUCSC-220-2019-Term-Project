@@ -177,14 +177,15 @@ import java.util.List;
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
-
+            Log.e("onCreateMainActivity", "Fragment container exists");
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {
+                Log.e("onCreateMainActivity", "savedInstanceState exits, exiting, not creating default");
                 return;
             }//if
-
+            Log.e("onCreateMainActivity", "Creating single player default game");
             defaultSinglePlayer();
 
         }//if
@@ -198,12 +199,8 @@ import java.util.List;
      * By Arnold
      */
     private void popUpMenu(){
-        new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
-                .setMessage ("We hope you will fully enjoy our simple and fun game! \n \n" +
-                        "The game is designed with multiple features including the ability to " +
-                        "switch between Single Player and Multiplayer with one button. You can " +
-                        "press the toggle button to do that action. \n \nFor more information " +
-                        "on the different features of our app, please refer to our help menu.")
+        new AlertDialog.Builder(this).setTitle (getString(R.string.welcome))
+                .setMessage(R.string.popup_help_message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -308,6 +305,8 @@ import java.util.List;
                 switch (requestedGridSize){
                     case Grid.GRID_5x5:
                         temp5x5(currentGame.isMultiplayer());
+                    default:
+                        break;
                 }
             }
         }
@@ -433,6 +432,7 @@ import java.util.List;
         if (singlePlayer == null) {
             singlePlayer = new Game(55, false, p1Color, p2Color);
         }
+        singlePlayer.getCurrentPlayer();
         currentGame = singlePlayer;
         currentPlayer = currentGame.getCurrentPlayer();
 
@@ -701,7 +701,6 @@ import java.util.List;
                 saveGame();
                 frag.resetFences();
                 frag.setP1Current();
-                frag.resetPens();
                 frag.resetPens();
                 p1Score.setText("0");
                 p2Score.setText("0");
