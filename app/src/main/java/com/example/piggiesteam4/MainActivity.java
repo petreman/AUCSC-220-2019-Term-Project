@@ -82,6 +82,7 @@ import java.util.List;
     private int requestedGridSize;
     private boolean isMulti = false;
 
+
     private Fragment activeFragment;
     private Fragment nextFragment;
     FragmentManager fragmentManager;
@@ -98,17 +99,43 @@ import java.util.List;
         setContentView(R.layout.activity_main);
 
         final ImageButton customButton = findViewById(R.id.testButton);
+
+
+
+        // Pop up message
+
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
+        final Fragment multiPlayerFragment = new Grid55Fragment();
+        setGridFragmentListener((GridParent)multiPlayerFragment);
+
+        if (isFirstTime) {
+            popUpMenu();
+            //multiPlayerFragment = new Grid55Fragment();
+
+
+            //"Initializes" highscores to prevent retrieving nulls
+            HighScores.save(getApplicationContext());
+        }
+
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (isMulti == false) {
                     Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.twopeople);
+
+
+                    nextFragment = createGrid55Fragment(isMulti);
                     FragmentTransaction fragmentTransaction;
                     activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    //nextFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                     fragmentTransaction= getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, nextFragment);
+                    fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment);
+                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    ((GridParent) multiPlayerFragment).showSaved();
 
                     isMulti = true;
 
@@ -119,19 +146,6 @@ import java.util.List;
                 }
             }
         });
-
-
-        // Pop up message
-
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
-
-        if (isFirstTime) {
-            popUpMenu();
-
-            //"Initializes" highscores to prevent retrieving nulls
-            HighScores.save(getApplicationContext());
-        }
 
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);
