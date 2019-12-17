@@ -114,7 +114,7 @@ import java.util.List;
             popUpMenu();
             newGame(55,false);
             newGame(55,true);
-            
+
             currentGame = singlePlayer;
             setGridFragment(singlePlayerFragment);
             setScoreButtonColor();
@@ -202,7 +202,7 @@ import java.util.List;
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "You are now in Single Player mode. You are playing again'st the AI", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "You are now in Single Player mode. You are playing again'st the Computer", Toast.LENGTH_LONG).show();
                     }
                 })
 
