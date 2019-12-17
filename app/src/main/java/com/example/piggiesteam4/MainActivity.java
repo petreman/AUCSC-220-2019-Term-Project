@@ -107,8 +107,9 @@ import java.util.List;
 
         if (isFirstTime) {
             popUpMenu();
-            newGame(55,true);
             newGame(55,false);
+            newGame(55,true);
+
 
             currentGame = singlePlayer;
             setGridFragment(singlePlayerFragment);
@@ -122,12 +123,12 @@ import java.util.List;
             public void onClick(View v) {
 
                 if (currentGame.isMultiplayer()) {
-                    Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.twopeople);
+                    Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
+                    customButton.setImageResource(R.drawable.singleperson);
 
                 }else{
-                    Toast.makeText(MainActivity.this, "You are now in Single Player Mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.singleperson);
+                    Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
+                    customButton.setImageResource(R.drawable.twopeople);
 
                 }
 
@@ -218,17 +219,10 @@ import java.util.List;
 
          if (isMulti){
              fragmentTransaction.replace(R.id.fragment_container, singlePlayerFragment, "singleplayer");
-             fragManager.popBackStack();
-             fragmentTransaction.addToBackStack(null).show(singlePlayerFragment);
-             fragmentTransaction.show(getSupportFragmentManager().findFragmentByTag("singleplayer"));
              fragmentTransaction.commit();
-             ((GridFragment) singlePlayerFragment).showSaved();
          }else{
              fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment, "multiplayer");
-             fragmentTransaction.addToBackStack(null).show(multiPlayerFragment);
-             fragmentTransaction.show(getSupportFragmentManager().findFragmentByTag("multiplayer"));
              fragmentTransaction.commit();
-             ((GridFragment) multiPlayerFragment).showSaved();
          }
      }// end of swap
 
@@ -237,18 +231,15 @@ import java.util.List;
         setP1Color(R.color.red, R.color.lightRed);
 
          if(isMultiPlayer){
-             setP2Color(R.color.ai, R.color.aiLight);
+             setP2Color(R.color.blue, R.color.lightBlue);
              multiPlayer = new Game(size, true, p1Color,p2Color);
              multiPlayerFragment = createGridFragment(isMultiPlayer);
-             boolean mpf = multiPlayerFragment.fragmentGame.isMultiplayer();
-             Log.d("newGame", "mpf ismulti: " + mpf);
-
          }else{
-             setP2Color(R.color.blue, R.color.lightBlue);
+             setP2Color(R.color.ai, R.color.aiLight);
              singlePlayer = new Game(55,false,p1Color,p2Color);
              singlePlayerFragment = createGridFragment(isMultiPlayer);
-             boolean spf = singlePlayerFragment.fragmentGame.isMultiplayer();
-             Log.d("newGame", "spf ismulti: " + spf);
+             //boolean spf = singlePlayerFragment.fragmentGame.isMultiplayer();
+             //Log.d("newGame", "spf ismulti: " + spf);
 
 
          }//else
