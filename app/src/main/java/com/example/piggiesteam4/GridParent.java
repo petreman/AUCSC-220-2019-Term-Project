@@ -657,4 +657,10 @@ public abstract class GridParent extends Fragment {
 
     }//updateScoreView
 
+    public void AiTurn(){
+        Log.e("AiTurn", "Called");
+        fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
+        showSaved();
+    }
+
 }//GridParent

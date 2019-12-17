@@ -74,6 +74,10 @@ public class Game {
             multiplayer = true;
             //set ai stuff
         }//if
+        else{
+            player2.makeCPU();
+            Log.d("makeCPU", "player 2 cpu");
+        }
 
         player1.setTurn();
         currentPlayer = player1;

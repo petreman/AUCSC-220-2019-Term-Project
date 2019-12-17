@@ -362,6 +362,8 @@ public class Grid {
      */
     boolean checkPenBelow(int row, int col, Player player){
         Log.d("checkPen", "Player instance is " + player);
+        Log.d("checkpen", "xCoords size is " + xCoords.length);
+        Log.d("checkpen", "yCoords size is " + yCoords.length);
         if (this.xCoords[row+1][col].exists() &&
                 this.yCoords[row][col].exists() &&
                 this.yCoords[row][col + 1].exists()){
