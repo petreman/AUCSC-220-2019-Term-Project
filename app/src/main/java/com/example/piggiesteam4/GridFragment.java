@@ -27,6 +27,7 @@ public class GridFragment extends Fragment
     private gameStateListener listener;
     private View fragmentView;
     private int gridSize;
+    private boolean buttonsEnabled = true;
 
     /**
      * This was placed by default, best not to remove it
@@ -195,6 +196,10 @@ public class GridFragment extends Fragment
      */
     @Override
     public void onClick(View v) {
+        if (!buttonsEnabled){
+            return;
+        }
+
         final char VERTICAL_ORIENTATION = 'v';
         final char HORIZONTAL_ORIENTATION = 'h';
         final int ORIENTATION_INDEX = 8;
@@ -430,6 +435,16 @@ public class GridFragment extends Fragment
 
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
+        if (fragmentGame.getCurrentPlayer().isCPU()){
+            buttonsEnabled = false;
+            while (aiTurn()){
+                if (fragmentGame.isGameOver()){
+                    break;
+                }
+            }
+            buttonsEnabled = true;
+        }
+
     }//toggleTurn
 
     /**
@@ -543,6 +558,7 @@ public class GridFragment extends Fragment
             int col = Integer.parseInt((pigId.charAt(COL_INDEX) + "").trim());
 
             fragmentGame.getGrid().getPens()[row][col].setColor(fragmentGame.getCurrentPlayer().getColorLight());
+            fragmentGame.getGrid().getPens()[row][col].setExistence(true);
 
         }//else
 
@@ -963,10 +979,11 @@ public class GridFragment extends Fragment
 
     }//setFenceListeners
 
-    public void AiTurn(){
-        Log.e("AiTurn", "Called");
-        fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
+    public boolean aiTurn(){
+        boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
         showSaved();
+//        boolean foundPen = false;
+        return foundPen;
     }
 
-}//GridParent
+}//GridFragment

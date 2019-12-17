@@ -368,12 +368,16 @@ public class Grid {
                 this.yCoords[row][col].exists() &&
                 this.yCoords[row][col + 1].exists()){
 
-            setFenceX(row, col, player.getColor());
-            player.addScore(1);
-            this.pens[row][col].setExistence(true);
-            Log.d("checkPen", "Pen Found");
-            return true;
-
+            if (!pens[row][col].exists()) {
+                setFenceX(row, col, player.getColor());
+                player.addScore(1);
+                this.pens[row][col].setExistence(true);
+                Log.d("checkPen", "Pen Found");
+                return true;
+            }
+            else{
+                return false;
+            }
         }//if
 
         return false;
@@ -398,13 +402,16 @@ public class Grid {
         if (this.xCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col + 1].exists()){
-
-            setFenceX(row, col, player.getColor());
-            player.addScore(1);
-            this.pens[row - 1][col].setExistence(true);
-            Log.d("checkPen", "Pen Found");
-            return true;
-
+            if (!pens[row - 1][col].exists()) {
+                setFenceX(row, col, player.getColor());
+                player.addScore(1);
+                this.pens[row - 1][col].setExistence(true);
+                Log.d("checkPen", "Pen Found");
+                return true;
+            }
+            else{
+                return false;
+            }
         }//if
 
         return false;
@@ -430,12 +437,16 @@ public class Grid {
                 this.xCoords[row][col - 1].exists() &&
                 this.xCoords[row + 1][col - 1].exists()){
 
-            setFenceY(row, col, player.getColor());
-            player.addScore(1);
-            this.pens[row][col - 1].setExistence(true);
-            Log.d("checkPen", "Pen Found");
-            return true;
-
+            if (!pens[row][col - 1].exists()) {
+                setFenceY(row, col, player.getColor());
+                player.addScore(1);
+                this.pens[row][col - 1].setExistence(true);
+                Log.d("checkPen", "Pen Found");
+                return true;
+            }
+            else{
+                return false;
+            }
         }//if
 
         return false;
@@ -461,12 +472,16 @@ public class Grid {
                 this.xCoords[row][col].exists() &&
                 this.xCoords[row + 1][col].exists()){
 
-            setFenceY(row, col, player.getColor());
-            player.addScore(1);
-            this.pens[row][col].setExistence(true);
-            Log.d("checkPen", "Pen Found");
-            return true;
-
+            if (!pens[row][col].exists()) {
+                setFenceY(row, col, player.getColor());
+                player.addScore(1);
+                this.pens[row][col].setExistence(true);
+                Log.d("checkPen", "Pen Found");
+                return true;
+            }
+            else{
+                return false;
+            }
         }//if
 
         return false;
@@ -506,5 +521,14 @@ public class Grid {
 
     public Fence[][] getPens() {
         return pens;
+    }
+
+    public boolean aiCheck(Player player, Fence fence){
+        if (!player.isCPU()){
+            return true;
+        }
+        else{
+            return fence.exists();
+        }
     }
 }//Grid

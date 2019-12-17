@@ -197,12 +197,8 @@ import java.util.List;
      * By Arnold
      */
     private void popUpMenu(){
-        new AlertDialog.Builder(this).setTitle ("Welcome to Piggies in a Pen Game")
-                .setMessage ("We hope you will fully enjoy our simple and fun game! \n \n" +
-                        "The game is designed with multiple features including the ability to " +
-                        "switch between Single Player and Multiplayer with one button. You can " +
-                        "press the toggle button to do that action. \n \nFor more information " +
-                        "on the different features of our app, please refer to our help menu.")
+        new AlertDialog.Builder(this).setTitle (getString(R.string.welcome))
+                .setMessage(R.string.popup_help_message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -464,6 +460,7 @@ import java.util.List;
         if (singlePlayer == null) {
             singlePlayer = new Game(55, false, p1Color, p2Color);
         }
+        singlePlayer.getCurrentPlayer();
         currentGame = singlePlayer;
         currentPlayer = currentGame.getCurrentPlayer();
 
@@ -731,7 +728,6 @@ import java.util.List;
                 saveGame();
                 frag.resetFences();
                 frag.setP1Current();
-                frag.resetPens();
                 frag.resetPens();
                 p1Score.setText("0");
                 p2Score.setText("0");
