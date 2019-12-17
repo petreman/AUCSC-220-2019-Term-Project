@@ -69,7 +69,6 @@ public class GridFragment extends Fragment
         updateScoreView();
 
         gridSize = fragmentGame.getGrid().getX();
-        //setMainCurrentGame(isMultiplayer);
 
         Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
         Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);

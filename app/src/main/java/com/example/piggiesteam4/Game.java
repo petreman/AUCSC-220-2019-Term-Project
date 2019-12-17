@@ -94,6 +94,10 @@ public class Game {
                 grid = new Grid(6, 6);
                 break;
 
+            case(77):
+                grid = new Grid(7, 7);
+                break;
+
         }//switch
 
     }//constructor

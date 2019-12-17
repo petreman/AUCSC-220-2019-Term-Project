@@ -57,7 +57,8 @@ import java.util.List;
  public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, GridFragment.OnFragmentInteractionListener {
 
-    public interface resetListener{
+
+     public interface resetListener{
         void reset();
     }
     public resetListener resetListener;
@@ -81,8 +82,7 @@ import java.util.List;
 
 
     private Fragment activeFragment;
-    private Fragment nextFragment;
-    FragmentManager fragmentManager;
+
     GridFragment multiPlayerFragment;
     GridFragment singlePlayerFragment;
 
@@ -105,16 +105,15 @@ import java.util.List;
         p2Score = (Button) findViewById(R.id.p2ScoreButton);
         final ImageButton customButton = findViewById(R.id.testButton);
 
-        // Pop up message
-
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
 
         if (isFirstTime) {
+
             popUpMenu();
+
             newGame(55,false);
             newGame(55,true);
-
 
             currentGame = singlePlayer;
             setGridFragment(singlePlayerFragment);
@@ -122,11 +121,12 @@ import java.util.List;
 
             //"Initializes" highscores to prevent retrieving nulls
             HighScores.save(getApplicationContext());
-        }
+
+        }//if
 
         else {
             retrieveGame();
-        }
+        }//else
 
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,19 +135,18 @@ import java.util.List;
                 if (currentGame.isMultiplayer()) {
                     Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.singleperson);
-
-                }
+                }//if
 
                 else{
                     Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.twopeople);
-
-                }
+                }//else
 
                 swap(currentGame.isMultiplayer());
                 toggleCurrentGame();
                 setScoreButtonColor();
-            }
+
+            }//onClick
         });
 
         //listens for drawer menu items being selected
@@ -173,6 +172,7 @@ import java.util.List;
 //        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
 //        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
 //        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
+
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -183,8 +183,6 @@ import java.util.List;
             if (savedInstanceState != null) {
                 return;
             }//if
-
-
 
         }//if
 
@@ -212,12 +210,12 @@ import java.util.List;
         editor.apply();
     }// end of PopUpMenu
 
-     //=========================================================================
-     // switching between mutliplayer and single player on the grid
-
-
-
+     /**
+      *
+      * @param isMulti
+      */
      public void swap(boolean isMulti){
+
          FragmentTransaction fragmentTransaction;
          FragmentManager fragManager = getSupportFragmentManager();
          fragmentTransaction = fragManager.beginTransaction();
@@ -225,30 +223,37 @@ import java.util.List;
          if (isMulti){
              fragmentTransaction.replace(R.id.fragment_container, singlePlayerFragment, "singleplayer");
              fragmentTransaction.commit();
-         }else{
+         }//else
+
+         else {
              fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment, "multiplayer");
              fragmentTransaction.commit();
-         }
-     }// end of swap
+         }//else
 
+     }//swap
+
+     /**
+      *
+      * @param size
+      * @param isMultiPlayer
+      */
      public void newGame(int size, boolean isMultiPlayer){
 
         setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
 
          if(isMultiPlayer){
              setP2Color(getColor(R.color.blue), getColor(R.color.lightBlue));
-             multiPlayer = new Game(size, true, p1Color,p2Color);
+             multiPlayer = new Game(size, true, p1Color, p2Color);
              multiPlayerFragment = createGridFragment(isMultiPlayer);
-         }else{
+         }//if
+
+         else{
              setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
-             singlePlayer = new Game(55,false,p1Color,p2Color);
+             singlePlayer = new Game(size, false, p1Color, p2Color);
              singlePlayerFragment = createGridFragment(isMultiPlayer);
-             //boolean spf = singlePlayerFragment.fragmentGame.isMultiplayer();
-             //Log.d("newGame", "spf ismulti: " + spf);
-
-
          }//else
-     }// end of newGame
+
+     }//newGame
 
      /**
      * This basically tells the main activity that is has an options menu
@@ -308,12 +313,14 @@ import java.util.List;
                 navIntent = new Intent(this, AboutActivity.class);
                 this.startActivity(navIntent);
                 break;
+
             case R.id.nav_reset:
                 askForResetConfirmation();
                 break;
 
             default:
                 return super.onOptionsItemSelected(item);
+
         }//switch
 
         return true;
@@ -325,20 +332,30 @@ import java.util.List;
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == GRID_SIZE_REQUEST){
+
             if (resultCode == RESULT_OK){
                 requestedGridSize = data.getIntExtra("size", DEFAULT_GRID_SIZE);
 
                 //Toast for testing purposes, to show what was selected.
                 Toast.makeText(getApplicationContext(), ((Integer) requestedGridSize).toString(), Toast.LENGTH_LONG).show();
-                getSupportFragmentManager().beginTransaction().remove(activeFragment).commit();
 
-                switch (requestedGridSize){
-                    case Grid.GRID_5x5:
-                        temp5x5(currentGame.isMultiplayer());
-                }
-            }
-        }
-    }
+                if (currentGame.isMultiplayer()){
+                    getSupportFragmentManager().beginTransaction().remove(multiPlayerFragment).commit();
+                    newGame(requestedGridSize, true);
+                    setGridFragment(multiPlayerFragment);
+                }//if
+
+                else {
+                    getSupportFragmentManager().beginTransaction().remove(singlePlayerFragment).commit();
+                    newGame(requestedGridSize, false);
+                    setGridFragment(singlePlayerFragment);
+                }//else
+
+            }//if
+
+        }//if
+
+    }//onActivity
 
     //Maybe change variable away from class variable.
     String receivedName;
@@ -408,7 +425,7 @@ import java.util.List;
     public void showTieAlert(){
         TieAlertFragment alert = new TieAlertFragment();
         alert.show(getSupportFragmentManager(), "tieAlert");
-    }
+    }//showTieAlert
 
     /**
      * Sets player 1's color locally
@@ -439,39 +456,6 @@ import java.util.List;
     public void setP2Color(int color, int colorLight){
         p2Color = new int[]{ color, colorLight };
     }//setP2Color
-
-    /**
-     * Sets up a default single player game
-     *
-     * Defaults are:
-     *  - player 1 is red
-     *  - player 2 is an AI and brown
-     *  - game grid size is 5x5
-     *
-     *  Intended to be only called on the app's first launch
-     *
-     *  By Keegan
-     */
-    public void defaultSinglePlayer(){
-
-        setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
-        setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
-
-        if (singlePlayer == null) {
-            singlePlayer = new Game(55, false, p1Color, p2Color);
-        }
-        singlePlayer.getCurrentPlayer();
-        currentGame = singlePlayer;
-        currentPlayer = currentGame.getCurrentPlayer();
-
-        GridFragment singlePlayerDefaultFragment = createGridFragment(false);
-
-        p1Score.setText(Integer.toString(currentGame.getPlayer1().getScore()));
-        p2Score.setText(Integer.toString(currentGame.getPlayer2().getScore()));
-
-        setScoreButtonColor();
-
-    }//defaultSinglePlayer
 
     public void temp5x5(boolean isMulti){
         setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
@@ -566,11 +550,13 @@ import java.util.List;
      *
      */
     public void toggleCurrentGame(){
+
         if (currentGame.isMultiplayer())
             currentGame = singlePlayer;
         else
             currentGame = multiPlayer;
-    }
+
+    }//toggleCurrentGame
 
     /**
      * Intentionally left blank
@@ -585,7 +571,7 @@ import java.util.List;
     @Override
     public void onFragmentInteraction(Uri uri) {
         //empty
-    }
+    }//onFragmentInteraction
 
     /**
      * Saves the active games.
@@ -622,8 +608,12 @@ import java.util.List;
 //            editor.commit();
 //        }
 
-    }
+    }//saveGame
 
+     /**
+      *
+      * @return
+      */
     public boolean retrieveGame(){
         try {
             Context context = getApplicationContext();
@@ -675,11 +665,13 @@ import java.util.List;
                 p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
                 p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
                 Log.d("retrieveGame", "Try to set scores from save");
-            } catch (NullPointerException e) {
+            }//try
+
+            catch (NullPointerException e) {
                 p1Score.setText("0");
                 p2Score.setText("0");
                 Log.d("retrieveGame", "Fail to set scores from save, NULL value");
-            }
+            }//catch
 
             Log.d("retrieveGame", "single game exists? " + (singlePlayer != null));
             Log.d("retrieveGame", "multi game exists? " + (multiPlayer != null));
@@ -690,12 +682,12 @@ import java.util.List;
 //        p1Color = new int[]{currentGame.getPlayer1().getColor(), currentGame.getPlayer1().getColorLight()};
 //        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
             return true;
-        }
+        }//try
         catch (Exception e){
             Log.d("retrieveGameFail", "No game found, new game will be created");
             return false;
         }
-    }
+    }//retrieveGame
 
     @Override
     protected void onPause() {
