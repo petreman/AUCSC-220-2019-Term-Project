@@ -26,6 +26,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,6 +47,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -75,7 +79,10 @@ import java.util.List;
     private int requestedGridSize;
     private boolean isMulti = false;
 
+
     private Fragment activeFragment;
+    private Fragment nextFragment;
+    FragmentManager fragmentManager;
 
     /**
      * On creation, creates a default single player game (5x5 grid)
@@ -90,12 +97,44 @@ import java.util.List;
         setContentView(R.layout.activity_main);
 
         final ImageButton customButton = findViewById(R.id.testButton);
+
+
+
+        // Pop up message
+
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
+        final Fragment multiPlayerFragment = createGridFragment(true);
+        setGridFragmentListener((GridFragment)multiPlayerFragment);
+
+        if (isFirstTime) {
+            popUpMenu();
+            //multiPlayerFragment = new Grid55Fragment();
+
+
+            //"Initializes" highscores to prevent retrieving nulls
+            HighScores.save(getApplicationContext());
+        }
+
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (isMulti == false) {
                     Toast.makeText(MainActivity.this, "You are now in Multiplayer mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.twopeople);
+
+
+
+                    FragmentTransaction fragmentTransaction;
+                    activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    //nextFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    //((GridFragment) multiPlayerFragment).showSaved();
+
                     isMulti = true;
 
                 }else{
@@ -105,19 +144,6 @@ import java.util.List;
                 }
             }
         });
-
-
-        // Pop up message
-
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
-
-        if (isFirstTime) {
-            popUpMenu();
-
-            //"Initializes" highscores to prevent retrieving nulls
-            HighScores.save(getApplicationContext());
-        }
 
         //Initializations
         ImageButton menuButton = findViewById(R.id.hamMenuButton);

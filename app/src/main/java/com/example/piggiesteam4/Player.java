@@ -175,7 +175,7 @@ public class Player {
     public boolean checkForPossiblePen(Grid grid){
 
         //check horizontal fences
-        for (int row = 0 ; row < grid.getX() - 1; row++){
+        for (int row = 0 ; row < grid.getX(); row++){
             for (int col = 0 ; col < grid.getY() -1; col++){
                 Log.d("penCheck", "row is " + row + " ... col is " + col);
                 if (row != 0 && grid.checkPenAbove(row, col, this)){
@@ -216,14 +216,24 @@ public class Player {
         int secondNumber;
         int timeoutCounter = 0;
 
-        while (timeoutCounter < 999) {
-            firstNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
-            secondNumber = (int) Math.random() * ((grid.getX() - grid.getY() + 1) + grid.getY());
+        while (true) {
+            int orientation = (int) (Math.random() * 2);
+            System.out.println("aaa");
 
-            if (grid.setFenceX(firstNumber, secondNumber, color) == true) {
-                return;
-            }//if
-            timeoutCounter++;
+            if (orientation == 0) {
+                firstNumber = (int) (Math.random() * (grid.getX()));
+                secondNumber = (int) (Math.random() * (grid.getY() - 1));
+                if (grid.setFenceX(firstNumber, secondNumber, color) == true) {
+                    return;
+                }//if
+            }
+            else{
+                firstNumber = (int) (Math.random() * (grid.getX()) - 1);
+                secondNumber = (int) (Math.random() * (grid.getY()));
+                if (grid.setFenceY(firstNumber, secondNumber, color) == true) {
+                    return;
+                }//if
+            }
 
         }//end of while loop
     }//end of choosePositionEmptyGrid
