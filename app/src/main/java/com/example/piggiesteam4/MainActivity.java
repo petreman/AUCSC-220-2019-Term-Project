@@ -194,9 +194,6 @@ import java.util.List;
      //=========================================================================
      // switching between mutliplayer and single player on the grid
 
-
-
-
     /**
      * This basically tells the main activity that is has an options menu
      * (the navigation drawer) and inflates it so that it is visible
@@ -649,7 +646,7 @@ import java.util.List;
         super.onPause();
         saveGame();
         showTopScore();
-    }
+    }//onPause
 
         GridFragment.gameStateListener listener = new GridFragment.gameStateListener() {
 
@@ -776,6 +773,6 @@ import java.util.List;
         int score = topScore.getScore();
         bestScore.setText(getString(R.string.main_highscore) + score);
 
-    }
+    }//showTopScore
 
 }//MainActivity

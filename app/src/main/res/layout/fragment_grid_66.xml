@@ -161,6 +161,7 @@
 
     <Button
         android:id="@+id/grid_66_hfence_00"
+        android:alpha="0.0"
         android:layout_width="72dp"
         android:layout_height="25dp"
         android:translationZ="0dp"
@@ -172,6 +173,7 @@
 
     <Button
         android:id="@+id/grid_66_hfence_01"
+        android:alpha="0.0"
         android:layout_width="72dp"
         android:layout_height="25dp"
         android:translationZ="0dp"
@@ -184,6 +186,7 @@
     <Button
         android:id="@+id/grid_66_hfence_02"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
@@ -195,6 +198,7 @@
     <Button
         android:id="@+id/grid_66_hfence_03"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
@@ -206,6 +210,7 @@
     <Button
         android:id="@+id/grid_66_hfence_04"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
@@ -232,6 +237,7 @@
     <Button
         android:id="@+id/grid_66_vfence_00"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_10"
@@ -243,6 +249,7 @@
     <Button
         android:id="@+id/grid_66_vfence_01"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_11"
@@ -254,6 +261,7 @@
     <Button
         android:id="@+id/grid_66_vfence_02"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_12"
@@ -265,6 +273,7 @@
     <Button
         android:id="@+id/grid_66_vfence_03"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_13"
@@ -276,6 +285,7 @@
     <Button
         android:id="@+id/grid_66_vfence_04"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_14"
@@ -288,6 +298,7 @@
     <Button
         android:id="@+id/grid_66_vfence_05"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_15"
@@ -295,8 +306,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/grid_66_vfence_04"
         app:layout_constraintTop_toTopOf="@+id/grid_66_post_05" />
-
-
 
     <ImageView
         android:id="@+id/grid_66_post_20"
@@ -493,6 +502,7 @@
     <Button
         android:id="@+id/grid_66_hfence_10"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline2"
@@ -504,6 +514,7 @@
     <Button
         android:id="@+id/grid_66_hfence_11"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline2"
@@ -515,6 +526,7 @@
     <Button
         android:id="@+id/grid_66_hfence_12"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline2"
@@ -526,6 +538,7 @@
     <Button
         android:id="@+id/grid_66_hfence_13"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline2"
@@ -537,6 +550,7 @@
     <Button
         android:id="@+id/grid_66_hfence_14"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline2"
@@ -548,6 +562,7 @@
     <Button
         android:id="@+id/grid_66_vfence_10"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_20"
@@ -559,6 +574,7 @@
     <Button
         android:id="@+id/grid_66_vfence_11"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_21"
@@ -570,6 +586,7 @@
     <Button
         android:id="@+id/grid_66_vfence_12"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_22"
@@ -581,6 +598,7 @@
     <Button
         android:id="@+id/grid_66_vfence_13"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_23"
@@ -592,6 +610,7 @@
     <Button
         android:id="@+id/grid_66_vfence_14"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_24"
@@ -604,6 +623,7 @@
     <Button
         android:id="@+id/grid_66_vfence_15"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_25"
@@ -615,6 +635,7 @@
     <Button
         android:id="@+id/grid_66_hfence_20"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline3"
@@ -626,6 +647,7 @@
     <Button
         android:id="@+id/grid_66_hfence_21"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline3"
@@ -637,6 +659,7 @@
     <Button
         android:id="@+id/grid_66_hfence_22"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline3"
@@ -648,6 +671,7 @@
     <Button
         android:id="@+id/grid_66_hfence_23"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline3"
@@ -659,6 +683,7 @@
     <Button
         android:id="@+id/grid_66_hfence_24"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline3"
@@ -670,6 +695,7 @@
     <Button
         android:id="@+id/grid_66_vfence_20"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_30"
@@ -681,6 +707,7 @@
     <Button
         android:id="@+id/grid_66_vfence_21"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_31"
@@ -692,6 +719,7 @@
     <Button
         android:id="@+id/grid_66_vfence_22"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_32"
@@ -703,6 +731,7 @@
     <Button
         android:id="@+id/grid_66_vfence_23"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_33"
@@ -714,6 +743,7 @@
     <Button
         android:id="@+id/grid_66_vfence_24"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_34"
@@ -726,6 +756,7 @@
     <Button
         android:id="@+id/grid_66_vfence_25"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_35"
@@ -737,6 +768,7 @@
     <Button
         android:id="@+id/grid_66_hfence_30"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
@@ -748,6 +780,7 @@
     <Button
         android:id="@+id/grid_66_hfence_31"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
@@ -759,6 +792,7 @@
     <Button
         android:id="@+id/grid_66_hfence_32"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
@@ -770,6 +804,7 @@
     <Button
         android:id="@+id/grid_66_hfence_33"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
@@ -781,6 +816,7 @@
     <Button
         android:id="@+id/grid_66_hfence_34"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
@@ -792,6 +828,7 @@
     <Button
         android:id="@+id/grid_66_vfence_30"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_40"
@@ -803,6 +840,7 @@
     <Button
         android:id="@+id/grid_66_vfence_31"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_41"
@@ -814,6 +852,7 @@
     <Button
         android:id="@+id/grid_66_vfence_32"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_42"
@@ -825,6 +864,7 @@
     <Button
         android:id="@+id/grid_66_vfence_33"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_43"
@@ -836,6 +876,7 @@
     <Button
         android:id="@+id/grid_66_vfence_34"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_44"
@@ -848,6 +889,7 @@
     <Button
         android:id="@+id/grid_66_vfence_35"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_45"
@@ -859,6 +901,7 @@
     <Button
         android:id="@+id/grid_66_hfence_40"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
@@ -870,6 +913,7 @@
     <Button
         android:id="@+id/grid_66_hfence_41"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
@@ -881,6 +925,7 @@
     <Button
         android:id="@+id/grid_66_hfence_42"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
@@ -892,6 +937,7 @@
     <Button
         android:id="@+id/grid_66_hfence_43"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
@@ -903,6 +949,7 @@
     <Button
         android:id="@+id/grid_66_hfence_44"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
@@ -1051,6 +1098,7 @@
     <Button
         android:id="@+id/grid_66_hfence_50"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline7"
@@ -1062,6 +1110,7 @@
     <Button
         android:id="@+id/grid_66_hfence_51"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline7"
@@ -1073,6 +1122,7 @@
     <Button
         android:id="@+id/grid_66_hfence_52"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline7"
@@ -1084,6 +1134,7 @@
     <Button
         android:id="@+id/grid_66_hfence_53"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline7"
@@ -1095,6 +1146,7 @@
     <Button
         android:id="@+id/grid_66_hfence_54"
         android:layout_width="72dp"
+        android:alpha="0.0"
         android:layout_height="25dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline7"
@@ -1106,6 +1158,7 @@
     <Button
         android:id="@+id/grid_66_vfence_40"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_50"
@@ -1117,6 +1170,7 @@
     <Button
         android:id="@+id/grid_66_vfence_41"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_51"
@@ -1128,6 +1182,7 @@
     <Button
         android:id="@+id/grid_66_vfence_42"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_52"
@@ -1139,6 +1194,7 @@
     <Button
         android:id="@+id/grid_66_vfence_43"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_53"
@@ -1150,6 +1206,7 @@
     <Button
         android:id="@+id/grid_66_vfence_44"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_54"
@@ -1162,6 +1219,7 @@
     <Button
         android:id="@+id/grid_66_vfence_45"
         android:layout_width="22dp"
+        android:alpha="0.0"
         android:layout_height="72dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_66_post_66"
