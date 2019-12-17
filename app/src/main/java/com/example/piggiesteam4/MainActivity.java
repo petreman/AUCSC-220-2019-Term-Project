@@ -51,7 +51,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
  public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, GridParent.OnFragmentInteractionListener {
+        NavigationView.OnNavigationItemSelectedListener, GridFragment.OnFragmentInteractionListener {
 
     public interface resetListener{
         void reset();
@@ -410,7 +410,7 @@ import java.util.List;
         currentGame = singlePlayer;
         currentPlayer = currentGame.getCurrentPlayer();
 
-        Grid55Fragment singlePlayerDefaultFragment = createGrid55Fragment(false);
+        GridFragment singlePlayerDefaultFragment = createGridFragment(false);
 
         p1Score.setText(Integer.toString(currentGame.getPlayer1().getScore()));
         p2Score.setText(Integer.toString(currentGame.getPlayer2().getScore()));
@@ -432,36 +432,36 @@ import java.util.List;
         }
         currentPlayer = currentGame.getCurrentPlayer();
 
-        Grid55Fragment frag55 = createGrid55Fragment(isMulti);
+        GridFragment frag55 = createGridFragment(isMulti);
 
     }
 
     /**
      * Creates a fragment for a 5x5 grid, then inflates it to fragment_container with call
-     * to setGrid55Fragment()
+     * to setGridFragment()
      *
      * By Keegan
      *
      * @param isMultiplayer - if the grid being created is for a multiplayer game
      * @return - the created instance of the fragment grid
      */
-    public Grid55Fragment createGrid55Fragment(boolean isMultiplayer){
+    public GridFragment createGridFragment(boolean isMultiplayer){
 
         // Create a new Fragment to be placed in the activity layout
-        Grid55Fragment grid55Fragment = new Grid55Fragment();
-        setGridFragmentListener(grid55Fragment);
+        GridFragment GridFragment = new GridFragment();
+        setGridFragmentListener(GridFragment);
 
         Bundle args = new Bundle();
         args.putBoolean("multiplayer", isMultiplayer);
-        grid55Fragment.setArguments(args);
+        GridFragment.setArguments(args);
 
-        setGrid55Fragment(grid55Fragment);
-        activeFragment = grid55Fragment;
+        setGridFragment(GridFragment);
+        activeFragment = GridFragment;
 
-        return grid55Fragment;
+        return GridFragment;
 
 
-    }//createGrid55Fragment
+    }//createGridFragment
 
     /**
      * Sets the 5x5 grid on the screen by placing it in fragment_container
@@ -471,7 +471,7 @@ import java.util.List;
      *
      * @param fragment - the 5x5 grid fragment to display
      */
-    public void setGrid55Fragment(Grid55Fragment fragment){
+    public void setGridFragment(GridFragment fragment){
 
         // Add the fragment to the 'fragment_container' FrameLayout
         androidx.fragment.app.FragmentTransaction fragTrans =
@@ -480,7 +480,7 @@ import java.util.List;
         fragTrans.add(R.id.fragment_container, fragment).commit();
 
 
-    }//setGrid55Fragment
+    }//setGridFragment
 
     /**
      * Sets the initial highlighting of the player scores to indicate
@@ -651,7 +651,7 @@ import java.util.List;
         showTopScore();
     }
 
-        GridParent.gameStateListener listener = new GridParent.gameStateListener() {
+        GridFragment.gameStateListener listener = new GridFragment.gameStateListener() {
 
         /**
          * Ends the game, showing a popup asking for the winner's name.
@@ -659,7 +659,7 @@ import java.util.List;
          * @param frag the fragment.
          */
         @Override
-        public void endGame(Game game, GridParent frag) {
+        public void endGame(Game game, GridFragment frag) {
             Log.d("endGame", "Called");
             if (game.isGameOver()){
 
@@ -688,7 +688,7 @@ import java.util.List;
 //         * @param frag the fragment.
 //         */
 //        @Override
-//        public void saveGame(GridParent frag) {
+//        public void saveGame(GridFragment frag) {
 //            Context context = getApplicationContext();
 //            SharedPreferences pref;
 //            Gson gson = new Gson();
@@ -715,7 +715,7 @@ import java.util.List;
 //         * @return whether a game has been retrieved.
 //         */
 //        @Override
-//        public boolean retrieveGame(GridParent frag) {
+//        public boolean retrieveGame(GridFragment frag) {
 //            Context context = getApplicationContext();
 //            SharedPreferences pref;
 //            Gson gson = new Gson();
@@ -752,7 +752,7 @@ import java.util.List;
      * Sets the listener in a grid fragment.
      * @param grid the grid fragment.
      */
-    public void setGridFragmentListener(GridParent grid){
+    public void setGridFragmentListener(GridFragment grid){
         grid.setListener(listener);
     }//setGridFragmentListener
 
