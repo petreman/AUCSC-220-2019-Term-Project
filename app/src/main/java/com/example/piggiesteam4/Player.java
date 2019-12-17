@@ -139,6 +139,10 @@ public class Player {
         this.isCPU = true;
     }//makeCPU
 
+    public boolean isCPU() {
+        return isCPU;
+    }
+
     /**
      * The function the CPU uses to place fences. If it makes a pen, true is returned
      *
