@@ -20,7 +20,7 @@ public class GridFragment extends Fragment
     //Variable Declarations
     private MainActivity main;
     private boolean isMultiplayer;
-    private Game fragmentGame;
+     Game fragmentGame;
     private OnFragmentInteractionListener mListener;
     private Button p1ScoreButton;
     private Button p2ScoreButton;

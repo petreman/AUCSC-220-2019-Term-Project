@@ -104,7 +104,7 @@ import java.util.List;
 
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
-        final Fragment multiPlayerFragment = new GridFragment();
+        final Fragment multiPlayerFragment = createGridFragment(true);
         setGridFragmentListener((GridFragment)multiPlayerFragment);
 
         if (isFirstTime) {
@@ -125,7 +125,7 @@ import java.util.List;
                     customButton.setImageResource(R.drawable.twopeople);
 
 
-                    nextFragment = createGridFragment(isMulti);
+
                     FragmentTransaction fragmentTransaction;
                     activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                     //nextFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
@@ -133,7 +133,7 @@ import java.util.List;
                     fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    ((GridFragment) multiPlayerFragment).showSaved();
+                    //((GridFragment) multiPlayerFragment).showSaved();
 
                     isMulti = true;
 
