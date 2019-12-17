@@ -48,12 +48,11 @@ public class GridFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-
-            isMultiplayer = getArguments().getBoolean("multiplayer");
-        }//if
+        isMultiplayer = getArguments().getBoolean("multiplayer");
 
         main = (MainActivity) getActivity(); //get the main activity to share game variables
+
+        Log.d("onCreate grid fragment", "isMultiplayer = " + isMultiplayer);
 
         if (isMultiplayer){
             fragmentGame = main.multiPlayer;
@@ -66,8 +65,10 @@ public class GridFragment extends Fragment
         p1ScoreButton = main.p1Score;
         p2ScoreButton = main.p2Score;
 
+        updateScoreView();
+
         gridSize = fragmentGame.getGrid().getX();
-        setMainCurrentGame(isMultiplayer);
+        //setMainCurrentGame(isMultiplayer);
 
         Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
         Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
@@ -77,9 +78,9 @@ public class GridFragment extends Fragment
         Log.d("inFragment", "Scores of the fragment game are "
                 + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
 
-        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
-            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
-        }//if
+//        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
+//            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
+//        }//if
 
     }//onCreate
 
@@ -160,6 +161,9 @@ public class GridFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        Log.d("onAttach", "onAttach called");
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -618,7 +622,7 @@ public class GridFragment extends Fragment
             setMidRowFence(v, row, col);
         }//else
 
-        updateScoreView(currentPlayer);
+        updateScoreView();
 
     }//setHorizontalFence
 
@@ -764,7 +768,7 @@ public class GridFragment extends Fragment
             setMidColFence(v, row, col);
         }//else
 
-        updateScoreView(currentPlayer);
+        updateScoreView();
 
     }//setVerticalFence
 
@@ -907,9 +911,8 @@ public class GridFragment extends Fragment
      *
      * By Keegan
      *
-     * @param currentPlayer - the player who's turn it currently is
      */
-    public void updateScoreView(Player currentPlayer){
+    public void updateScoreView(){
 
         //update the scoreboard in MainActivity
         p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
@@ -960,7 +963,6 @@ public class GridFragment extends Fragment
 
     }//setFenceListeners
 
-}//GridFragment
     public void AiTurn(){
         Log.e("AiTurn", "Called");
         fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
