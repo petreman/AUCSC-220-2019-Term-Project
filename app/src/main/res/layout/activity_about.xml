@@ -5,8 +5,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".AboutActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -18,120 +19,144 @@
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arnoldGDes" />
 
         <TextView
             android:id="@+id/alvinDes"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Alvin is a second year computing science student. On this game, Alvin worked
-    in getting the proper scores sorted for the player and the AI, worked on the high score, leaderboard
-    and had major contributions in getting the AI implemented within the game. If you have any questions
-    in regards of the back end work, feel free to contact ajwang@ualberta.ca."
+            android:text="Alvin is a second year computing science student. On this game, Alvin worked on getting the proper scores sorted for the player and the AI, worked on the HighScores class, the leaderboard functionality, and had major contributions in getting the AI implemented within the game.\najwang@ualberta.ca"
+            android:textAlignment="center"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/alvinTitle" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="32dp"
             android:text="Resources"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.464"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/keeganDes" />
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:text="Pig:\nhttps://www.kissclipart.com/cute-pig-cartoon-clipart-pig-cartoon-clip-art-ahtd4g/"
             android:textAlignment="center"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.584"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Grass:\nhttps://ulrickwery.artstation.com/projects/V2WOb"
             android:textAlignment="center"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.656"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/soundSource"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sound Effects:\nAll sound effects are taken from the video game 'Minecraft' and implemented under fair use."
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/arnoldGTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="32dp"
             android:text="Arnold Gihozo"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.458"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/arnoldGDes"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Arnold is a second year Computing Science Major. On this application,
-    Arnold worked on the creation of the AI algorithm, fragment switch between Multi Player
-    and Single Player, the Player class as well as the background music. If you have any
-    questions regarding these areas, please feel free to contact him a gihozo@ualberta.ca. "
+            android:text="Arnold is a second year Computing Science Major. On this application, Arnold worked on the creation of the AI algorithm, the fragment switching between Multi Player and Single Player games, and the Player class.\ngihozo@ualberta.ca"
+            android:textAlignment="center"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/arnoldGTitle" />
 
         <TextView
             android:id="@+id/keeganTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:text="Keegan Petreman"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/alvinDes" />
 
         <TextView
             android:id="@+id/keeganDes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Keegan is a third year Computing Science major. He worked on swapping the fragments in and out of the main screen, designing the user interface, and working on the overall functionality of the grid.\npetreman@ualberta.ca "
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
+            app:layout_constraintTop_toBottomOf="@+id/keeganTitle" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="Keegan is a thrid year Computing Science major. In this game, he in swapping
-    fragments between different grid sizes, designing the overall user interface and finally working on the
-    overall functionality of the grid. If you have petreman@ualberta.ca "
-            android:textSize="15sp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/keeganTitle" />
+            app:layout_constraintGuide_end="10dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
