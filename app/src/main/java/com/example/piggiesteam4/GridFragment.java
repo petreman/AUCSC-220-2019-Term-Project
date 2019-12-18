@@ -1017,10 +1017,19 @@ public class GridFragment extends Fragment
         this.fragmentGame = fragmentGame;
     }//setFragmentGame
 
+    /**
+     * Sets main, used in loading.
+     * @param main the activity.
+     */
     public void setMain(MainActivity main) {
         this.main = main;
     }
 
+    /**
+     * Sets the score buttons, used in loading.
+     * @param p1ScoreButton player one's score button.
+     * @param p2ScoreButton player two's score button.
+     */
     public void setScoreButtons(Button p1ScoreButton, Button p2ScoreButton) {
         this.p1ScoreButton = p1ScoreButton;
         this.p2ScoreButton = p2ScoreButton;

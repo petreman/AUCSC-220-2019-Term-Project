@@ -13,30 +13,35 @@
         <activity android:name=".GridSizeActivity"
             android:label="@string/gridsize"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
 
 
         <activity android:name=".SoundActivity"
             android:label="@string/sound"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".AboutActivity"
             android:label="@string/about"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".LeaderboardActivity"
             android:label="@string/leaderboard"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".HelpActivity"
             android:label="@string/help"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".MainActivity"
