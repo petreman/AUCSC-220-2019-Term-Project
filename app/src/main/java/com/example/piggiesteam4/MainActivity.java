@@ -46,7 +46,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+import android.widget.ZoomButton;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -132,17 +132,7 @@ import java.util.List;
             @Override
             public void onClick(View v) {
 
-                if (currentGame.isMultiplayer()) {
-                    Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.singleperson);
-
-                }
-
-                else{
-                    Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.twopeople);
-
-                }
+                changeGameModeIcon(customButton);
 
                 swap(currentGame.isMultiplayer());
                 toggleCurrentGame();
@@ -161,18 +151,7 @@ import java.util.List;
             }//onClick
         });
 
-//        int p1sc = currentGame.getPlayer1().getScore();
-//        int p2sc = currentGame.getPlayer2().getScore();
-//        currentGame.getPlayer1().setWhichplayer(1);
-//        currentGame.getPlayer2().setWhichplayer(2);
-//        currentPlayer = currentGame.getCurrentPlayer();
         showTopScore();
-//
-//        Log.d("AfterRetrieval", "P1 Score " + p1sc);
-//        Log.d("AfterRetrieval", "P2 Score " + p2sc);
-//        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
-//        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
-//        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -190,7 +169,21 @@ import java.util.List;
 
     }//onCreate
 
-    /**
+     private void changeGameModeIcon(ImageButton customButton) {
+         if (currentGame.isMultiplayer()) {
+             Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.singleperson);
+
+         }
+
+         else{
+             Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.twopeople);
+
+         }
+     }
+
+     /**
      * This function will display a pop up message the very first time the game is opened. Afterwards
      * the message will stop displaying.
      *
@@ -239,13 +232,13 @@ import java.util.List;
              setP2Color(getColor(R.color.blue), getColor(R.color.lightBlue));
              multiPlayer = new Game(size, true, p1Color,p2Color);
              multiPlayerFragment = createGridFragment(isMultiPlayer);
-         }else{
-             setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
-             singlePlayer = new Game(size,false,p1Color,p2Color);
-             singlePlayerFragment = createGridFragment(isMultiPlayer);
-             //boolean spf = singlePlayerFragment.fragmentGame.isMultiplayer();
-             //Log.d("newGame", "spf ismulti: " + spf);
-
+             multiPlayerFragment.setMain(this);
+         }
+         else{
+            setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
+            singlePlayer = new Game(size,false,p1Color,p2Color);
+            singlePlayerFragment = createGridFragment(isMultiPlayer);
+            singlePlayerFragment.setMain(this);
 
          }//else
      }// end of newGame
@@ -608,25 +601,7 @@ import java.util.List;
         editor.putBoolean("isMulti", currentGame.isMultiplayer());
         editor.putInt("gridSizeSingle", singlePlayer.getGrid().getX());
         editor.putInt("gridSizeMulti", multiPlayer.getGrid().getX());
-        //editor.putString("currentPlayer", gson.toJson(currentPlayer));
         editor.commit();
-
-//        if (currentGame.isMultiplayer()) {
-//            pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putString("game", gson.toJson(multiPlayer));
-//            editor.putString("fragGame", gson.toJson(currentGame)); //see next comment in else
-//            editor.putBoolean("isMulti", false);
-//            editor.commit();
-//        }//if
-//        else{
-//            pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putString("game", gson.toJson(singlePlayer));
-//            editor.putString("fragGame", gson.toJson(currentGame)); //these should be the same game instance remove later
-//            editor.putBoolean("isMulti", false);
-//            editor.commit();
-//        }
 
     }
 
@@ -641,17 +616,18 @@ import java.util.List;
             boolean isMulti = pref.getBoolean("isMulti", true);
             String singlePlayerString = pref.getString("singleplayer", null);
             String multiPlayerString = pref.getString("multiplayer", null);
-            String currentPlayerString = pref.getString("currentPlayer", null);
             int singleGridSize = pref.getInt("gridSizeSingle", 5);
             int multiGridSize = pref.getInt("gridSizeMulti", 5);
 
-            Log.d("retrieving", "Creating new games");
             newGame(singleGridSize * 11, false);
             newGame(multiGridSize * 11, true);
 
             if (singlePlayerString != null) {
+                Log.e("singleplayerstring", "not null");
                 singlePlayer = gson.fromJson(singlePlayerString, Game.class);
                 if (singlePlayer != null) {
+                    Log.e("singleplayer", "not null");
+                    singlePlayerFragment.setFragmentGame(singlePlayer);
                     singlePlayer.cyclePlayers();
                     isNull = true;
                 }
@@ -660,6 +636,7 @@ import java.util.List;
             if (multiPlayerString != null) {
                 multiPlayer = gson.fromJson(multiPlayerString, Game.class);
                 if (multiPlayer != null) {
+                    multiPlayerFragment.setFragmentGame(multiPlayer);
                     multiPlayer.cyclePlayers();
                     isNull = true;
                 }
@@ -677,11 +654,9 @@ import java.util.List;
             try {
                 p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
                 p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
-                Log.d("retrieveGame", "Try to set scores from save");
             } catch (NullPointerException e) {
                 p1Score.setText("0");
                 p2Score.setText("0");
-                Log.d("retrieveGame", "Fail to set scores from save, NULL value");
             }
 
             Log.d("retrieving", "Adding fragments and showing");
@@ -689,20 +664,32 @@ import java.util.List;
             FragmentTransaction fragTrans = fragManager.beginTransaction();
             if (isMulti){
                 fragTrans.add(R.id.fragment_container, multiPlayerFragment).commit();
+                multiPlayerFragment.setScoreButtons(p1Score, p2Score);
                 multiPlayerFragment.updateScoreView();
             }
             else{
                 fragTrans.add(R.id.fragment_container, singlePlayerFragment).commit();
+                singlePlayerFragment.setScoreButtons(p1Score, p2Score);
                 singlePlayerFragment.updateScoreView();
             }
             setScoreButtonColor();
-
+            ImageButton imageButton = (ImageButton) findViewById(R.id.testButton);
+            Log.e("setImage", "run");
+            if (isMulti){
+                Log.e("setImage", "Multiplayer");
+                imageButton.setImageResource(R.drawable.twopeople);
+            }
+            else{
+                Log.e("setImage", "Singleplayer");
+                imageButton.setImageResource(R.drawable.singleperson);
+            }
 
             return true;
         }
         catch (Exception e){
-            Log.d("retrieveGameFail", "No game found, new game will be created");
-            return false;
+            Log.e("retrievalException", e.toString());
+            throw e;
+            //return false;
         }
     }
 
@@ -826,19 +813,15 @@ import java.util.List;
         TextView bestScore = (TextView) findViewById(R.id.HighestScoreGrid);
         if (currentGame == null){
             bestScore.setText(R.string.main_highscore_default);
-            Log.d("showTopScore", "IF");
             return;
         }
         HighScores.retrieveScores(getApplicationContext());
         HighScores.Score topScore = HighScores.getHighScore(currentGame.getGrid());
         List<HighScores.Score> aa = HighScores.getHighScores(0);
-        System.out.println(aa + " THIS IS LIST");
         if (topScore == null){
             bestScore.setText(R.string.main_highscore_default);
-            Log.d("showTopScore", "IF");
             return;
         }
-        Log.d("showTopScore", "NOT IF");
         int score = topScore.getScore();
         bestScore.setText(getString(R.string.main_highscore) + score);
 

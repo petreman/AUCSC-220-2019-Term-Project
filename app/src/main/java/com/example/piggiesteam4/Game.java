@@ -52,7 +52,6 @@ import android.util.Log;
 public class Game {
 
     private Player player1, player2, currentPlayer;
-    //private AI AI;
     private Grid grid;
     private boolean multiplayer = false;
 
@@ -264,6 +263,5 @@ public class Game {
     public void cyclePlayers(){
         toggleCurrentPlayer();
         toggleCurrentPlayer();
-    }
-
+    }//cyclePlayers
 }//Game

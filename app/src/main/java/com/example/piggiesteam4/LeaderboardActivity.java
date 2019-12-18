@@ -250,31 +250,5 @@ public class LeaderboardActivity extends AppCompatActivity {
     public void enableConfirm(){
         Button confirm = (Button) findViewById(R.id.confirmButtonScores);
         confirm.setEnabled(true);
-    }
-
-    /**
-     * Method for testing, remove later.
-     */
-    public void testset(View v){
-        List<HighScores.Score> a = HighScores.getHighScores(0);
-        List<HighScores.Score> b = HighScores.getHighScores(1);
-        List<HighScores.Score> c = HighScores.getHighScores(2);
-        List<HighScores.Score> d = HighScores.getHighScores(3);
-        List<HighScores.Score> e = HighScores.getHighScores(4);
-        a.add(new HighScores.Score("a1", 10));
-        a.add(new HighScores.Score("a2", 19));
-        b.add(new HighScores.Score("b1", 15));
-        b.add(new HighScores.Score("b2", 13));
-        c.add(new HighScores.Score("c1", 4));
-        c.add(new HighScores.Score("c2", 7));
-        d.add(new HighScores.Score("d1", 20));
-        d.add(new HighScores.Score("d2", 6));
-        e.add(new HighScores.Score("e1", 1));
-        e.add(new HighScores.Score("e2", 9));
-        HighScores.sort(a);
-        HighScores.sort(b);
-        HighScores.sort(c);
-        HighScores.sort(d);
-        HighScores.sort(e);
-    }//testset
+    }//enableConfirm
 }//LeaderboardActivity

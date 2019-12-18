@@ -15,13 +15,13 @@ public class OnLossFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("You lose");
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.player_loss);
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+            }//onClick
+        });//setPositiveButton
         return builder.create();
-    }
-}
+    }//onCreateDialog
+}//OnLossFragment

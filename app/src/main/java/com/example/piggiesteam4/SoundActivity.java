@@ -15,10 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
-
-import com.example.piggiesteam4.R;
-import com.example.piggiesteam4.Settings;
 
 public class SoundActivity extends AppCompatActivity {
 
@@ -35,23 +31,19 @@ public class SoundActivity extends AppCompatActivity {
 
     public void setListeners() {
         Switch music = (Switch) findViewById(R.id.music);
-        music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //Settings.setMusicOn(isChecked);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 musicOn = isChecked;
-                //testSet();
                 enableConfirm();
             }
         });
 
         Switch sfx = (Switch) findViewById(R.id.soundfx);
-        sfx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        sfx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //Settings.setSfxOn(isChecked);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 sfxOn = isChecked;
-                //testSet();
                 enableConfirm();
             }
         });
@@ -79,17 +71,7 @@ public class SoundActivity extends AppCompatActivity {
         Settings.setSfxOn(sfxOn);
         Settings.save(getApplicationContext());
         enableConfirm();
-    }
-
-//    //no longer displays accurate info
-//    public void testSet(){
-//        TextView sound = (TextView) findViewById(R.id.textsfx);
-//        TextView music = (TextView) findViewById(R.id.textMusic);
-//        Boolean sfx = Settings.isSfxOn();
-//        Boolean mus = Settings.isMusicOn();
-//        sound.setText(sfx.toString());
-//        music.setText(mus.toString());
-//    }
+    }//confirm
 
     /**
      * Enables the confirmation button when settings have been changed.
@@ -97,11 +79,11 @@ public class SoundActivity extends AppCompatActivity {
     public void enableConfirm(){
         Button confirm = (Button) findViewById(R.id.confirmButtonSound);
 
-        if ((sfxOn != Settings.getSfxOn()) || (musicOn != Settings.getMusicOn())) {
+        if ((sfxOn != Settings.getSfxOn()) || (musicOn != Settings.getMusicOn())){
             confirm.setEnabled(true);
         }
         else{
             confirm.setEnabled(false);
-        }
-    }
-}
+        }//else
+    }//if
+}//SoundActivity

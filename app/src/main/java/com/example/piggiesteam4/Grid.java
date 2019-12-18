@@ -518,12 +518,19 @@ public class Grid {
      *
      * By Alvin
      *
-     * @return yCoordsArray
+     * @return yCoords array
      */
     public Fence[][] getyCoords() {
         return yCoords;
     }//getyCoords
 
+    /**
+     * Gets Pens array
+     *
+     * By Alvin
+     *
+     * @return pens array
+     */
     public Fence[][] getPens() {
         return pens;
     }
@@ -531,9 +538,9 @@ public class Grid {
     public boolean aiCheck(Player player, Fence fence){
         if (!player.isCPU()){
             return true;
-        }
+        }//if
         else{
             return fence.exists();
-        }
-    }
+        }//else
+    }//aiCheck
 }//Grid

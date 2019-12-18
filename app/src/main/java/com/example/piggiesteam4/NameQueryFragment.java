@@ -11,7 +11,6 @@ package com.example.piggiesteam4;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,8 +24,8 @@ import androidx.fragment.app.DialogFragment;
 public class NameQueryFragment extends DialogFragment {
 
     public interface QueryDialogListener{
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogPositiveClick(DialogFragment dialog);
+        void onDialogNegativeClick(DialogFragment dialog);
     }//NoticeDialogListener
 
     private QueryDialogListener listener;
@@ -61,17 +60,6 @@ public class NameQueryFragment extends DialogFragment {
         });//setNegativeButton
         return builder.create();
     }//onCreateDialog
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            listener = (QueryDialogListener) context;
-        }//try
-        catch(Exception e) {
-            ;
-        }//catch
-    }//onAttach
 
     /**
      * Sets the listener.

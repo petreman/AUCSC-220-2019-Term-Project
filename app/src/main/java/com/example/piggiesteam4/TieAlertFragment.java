@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class TieAlertFragment extends DialogFragment {
+public class TieAlertFragment extends DialogFragment{
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.tie);
         builder.setPositiveButton(R.string.exit, new DialogInterface.OnClickListener() {
@@ -23,5 +23,5 @@ public class TieAlertFragment extends DialogFragment {
             }
         });
         return builder.create();
-    }
-}
+    }//onCreateDialog
+}//TieAlertFragment

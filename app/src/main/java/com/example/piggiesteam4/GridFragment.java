@@ -222,9 +222,6 @@ public class GridFragment extends Fragment
         else if (orientation == VERTICAL_ORIENTATION){
             setVerticalFence(v, row, col);
         }//elseif
-        else{
-            throw new AssertionError("Unexpected value, fence does not announce orientation");
-        }//else
 
         listener.endGame(fragmentGame, this);
 
@@ -255,15 +252,6 @@ public class GridFragment extends Fragment
         super.onPause();
         //listener.saveGame(this);
     }//onPause
-
-//    /**
-//     * Loads the game.
-//     */
-//    public void loadGame(){
-//        if (listener.retrieveGame(this)){
-//            showSaved();
-//        }//if
-//    }//load
 
     /**
      * Shows the fences previously selected in a saved game.
@@ -404,13 +392,6 @@ public class GridFragment extends Fragment
             currentTurn = 1;
         }// else if
 
-        else{
-            throw new AssertionError("current player has no player turn value???");
-        }//else
-
-        Log.d("newFencePlaced", "Player turn has been swapped, now turn of player " + currentTurn);
-        Log.d("newFencePlaced", "Was turn of player " + currentPlayer.getWhichplayer());
-
         if (currentPlayer == fragmentGame.getPlayer1()) {
 
             p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
@@ -431,14 +412,11 @@ public class GridFragment extends Fragment
 
         }//else
 
-        Log.d("newFencePlaced", "Before fragGame.togglecurrentplayer, current player " + fragmentGame.getCurrentPlayer().getWhichplayer());
-
         fragmentGame.toggleCurrentPlayer();
-
-        Log.d("newFencePlaced", "After fragGame.togglecurrentplayer, current is now player " + fragmentGame.getCurrentPlayer().getWhichplayer());
 
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
+        //This lets the AI have its turn.
         if (fragmentGame.getCurrentPlayer().isCPU()){
             buttonsEnabled = false;
             new Thread(new Runnable() {
@@ -464,6 +442,9 @@ public class GridFragment extends Fragment
 
     }//toggleTurn
 
+    /**
+     * Waits for 200ms.
+     */
     public void sleep200ms(){
         try {
             TimeUnit.MILLISECONDS.sleep(200);
@@ -1008,6 +989,10 @@ public class GridFragment extends Fragment
 
     }//setFenceListeners
 
+    /**
+     * Carries out the AI's turn.
+     * @return whether a pen is found.
+     */
     public boolean aiTurn(){
         boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
         Handler handler = new Handler(Looper.getMainLooper());
@@ -1018,11 +1003,26 @@ public class GridFragment extends Fragment
                 updateScoreView();
                 if (fragmentGame.isGameOver()){
                     listener.endGame(fragmentGame, GridFragment.this);
-                }
-            }
-        });
-//        boolean foundPen = false;
+                }//if
+            }//run
+        });//Runnable
         return foundPen;
+    }//aiTurn
+
+    /**
+     * Sets fragmentGame, used in loading.
+     * @param fragmentGame the game.
+     */
+    public void setFragmentGame(Game fragmentGame) {
+        this.fragmentGame = fragmentGame;
+    }//setFragmentGame
+
+    public void setMain(MainActivity main) {
+        this.main = main;
     }
 
+    public void setScoreButtons(Button p1ScoreButton, Button p2ScoreButton) {
+        this.p1ScoreButton = p1ScoreButton;
+        this.p2ScoreButton = p2ScoreButton;
+    }
 }//GridFragment
