@@ -27,10 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Alvin is a second year computing science student. On this game, Alvin worked
-    in getting the proper scores sorted for the player and the AI, worked on the high score, leaderboard
-    and had major contributions in getting the AI implemented within the game. If you have any questions
-    in regards of the back end work, feel free to contact ajwang@ualberta.ca."
+            android:text="@string/about_alvin"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -96,10 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Arnold is a second year Computing Science Major. On this application,
-    Arnold worked on the creation of the AI algorithm, fragment switch between Multi Player
-    and Single Player, the Player class as well as the background music. If you have any
-    questions regarding these areas, please feel free to contact him a gihozo@ualberta.ca. "
+            android:text="@string/about_arnold"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -125,9 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="Keegan is a thrid year Computing Science major. In this game, he in swapping
-    fragments between different grid sizes, designing the overall user interface and finally working on the
-    overall functionality of the grid. If you have petreman@ualberta.ca "
+            android:text="@string/about_keegan"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
