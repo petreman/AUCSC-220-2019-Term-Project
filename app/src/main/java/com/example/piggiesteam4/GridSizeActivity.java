@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GridSizeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,17 +24,19 @@ public class GridSizeActivity extends AppCompatActivity implements View.OnClickL
         Button size5 = (Button) findViewById(R.id.gridSize5x5);
         Button size6 = (Button) findViewById(R.id.gridSize6x6);
         Button size7 = (Button) findViewById(R.id.gridSize7x7);
+        Button confirm = (Button) findViewById(R.id.gridSizeConfirm);
 
         size5.setOnClickListener(this);
         size6.setOnClickListener(this);
         size7.setOnClickListener(this);
+        confirm.setOnClickListener(this);
 
     }//onCreate
 
     /**
      * Passes the new game size to the main activity so that it can create a game
      * of the requested new size
-     * <p>
+     *
      * By Alvin
      */
     public void confirmNewGridSize() {
@@ -47,7 +48,7 @@ public class GridSizeActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * Disables the selection of the current game's current size
-     * <p>
+     *
      * By Alvin
      *
      * @param size - the size of the current game
@@ -77,10 +78,10 @@ public class GridSizeActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * What happens when the buttons on the activity are clicked.
-     * <p>
+     *
      * Highlights the currently selected new size, and saves the selected size in case
      * "confirm" button is pressed so that the result can be sent to the main activity
-     * <p>
+     *
      * By Keegan
      *
      * @param v - the button clicked
@@ -152,10 +153,10 @@ public class GridSizeActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * Darkens the choice for new size that the user chose
-     * <p>
+     *
      * By Keegan
      *
-     * @param v              - the pressed button
+     * @param v - the pressed button
      * @param unselectedSize - the size that wasn't chosen
      */
     void toggleHighlight(View v, int unselectedSize) {

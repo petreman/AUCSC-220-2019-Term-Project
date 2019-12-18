@@ -3,6 +3,7 @@ package com.example.piggiesteam4;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import androidx.fragment.app.Fragment;
+import java.util.Random;
 
 public class GridFragment extends Fragment
         implements View.OnTouchListener, View.OnClickListener {
@@ -29,6 +30,8 @@ public class GridFragment extends Fragment
     private View fragmentView;
     private int gridSize;
     private boolean buttonsEnabled = true;
+    private MediaPlayer[] fenceSounds;
+    private MediaPlayer[] pigSounds;
 
     /**
      * This was placed by default, best not to remove it
@@ -41,7 +44,7 @@ public class GridFragment extends Fragment
     /**
      * On creation of the fragment, find out if it is for a multiplayer game or not
      * so it can point to the correct game inside MainActivity
-     * <p>
+     *
      * By Keegan
      *
      * @param savedInstanceState
@@ -70,6 +73,7 @@ public class GridFragment extends Fragment
         updateScoreView();
 
         gridSize = fragmentGame.getGrid().getX();
+        initializeSoundEffects();
 
         Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
         Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
@@ -79,23 +83,19 @@ public class GridFragment extends Fragment
         Log.d("inFragment", "Scores of the fragment game are "
                 + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
 
-//        if (main.currentPlayer != fragmentGame.getCurrentPlayer()){
-//            throw new AssertionError("main.currentPlayer does not equal fragmentGame.currentPlayer");
-//        }//if
-
     }//onCreate
 
     /**
      * Set up the buttons on creation of the fragment
-     * <p>
+     *
      * I also set an onTouchListener for every button: what this does, is when a unplaced
      * fence/button is pressed and held, a little preview of the fence appears first,
      * designed to give a little bit of feedback to the player
-     * <p>
+     *
      * By Keegan
      *
-     * @param inflater           - inflater to set up the layout
-     * @param container          - where the fragment will be contained
+     * @param inflater - inflater to set up the layout
+     * @param container - where the fragment will be contained
      * @param savedInstanceState - the saved instance if recreating the fragment
      * @return the created view
      */
@@ -107,7 +107,6 @@ public class GridFragment extends Fragment
                 fragmentGame.getGrid().getY();
 
         int resID = getResources().getIdentifier(viewID, "layout", main.getPackageName());
-
 
         View v = inflater.inflate(resID, container, false);
         fragmentView = v;
@@ -127,7 +126,7 @@ public class GridFragment extends Fragment
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     *
      * This was put in here by default, I don't wanna touch it, just to be safe
      * -Keegan
      */
@@ -139,7 +138,7 @@ public class GridFragment extends Fragment
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * <p>
+     *
      * This was put in here by default, I don't wanna touch it, just to be safe
      * -Keegan
      *
@@ -154,7 +153,7 @@ public class GridFragment extends Fragment
     }//newInstance
 
     /**
-     * This was placed by default, best not to remove it
+     * This was placed by default, best not to touch it
      * - Keegan
      *
      * @param context
@@ -174,7 +173,7 @@ public class GridFragment extends Fragment
     }//onAttach
 
     /**
-     * This was placed by default, best not to remove it
+     * This was placed by default, best not to touch it
      * - Keegan
      */
     @Override
@@ -186,16 +185,14 @@ public class GridFragment extends Fragment
     /**
      * When a button is pressed (ie fence placement attempted), a check is performed to
      * see if a fence can be placed at the specified location (if it hasn't been placed already)
-     * <p>
-     * I wish there was a way to simplify this (I spent quite a while looking), it has to
-     * be like this. At least it'll be fast?
-     * <p>
-     * By Keegan
+     *
+     * By Alvin
      *
      * @param v - the button clicked
      */
     @Override
     public void onClick(View v) {
+
         if (!buttonsEnabled) {
             return;
         }
@@ -264,6 +261,8 @@ public class GridFragment extends Fragment
 
     /**
      * Shows the fences previously selected in a saved game.
+     *
+     * By Alvin
      */
     public void showSaved() {
 
@@ -533,7 +532,7 @@ public class GridFragment extends Fragment
     /**
      * Called when a pen has been completed. Makes the parameter pig (in the pen) visible,
      * ands give the pig a color filter based on who created the pen
-     * <p>
+     *
      * By Keegan
      *
      * @param v - the image view to toggle visibility of
@@ -561,12 +560,16 @@ public class GridFragment extends Fragment
             fragmentGame.getGrid().getPens()[row][col].setColor(fragmentGame.getCurrentPlayer().getColorLight());
             fragmentGame.getGrid().getPens()[row][col].setExistence(true);
 
+            playPigSound();
+
         }//else
 
     }//togglePigVisibility
 
     /**
      * Sets the provided image view to be invisible
+     *
+     * By Keegan
      *
      * @param pig - the image view (of a pig) to make invisible
      */
@@ -582,12 +585,12 @@ public class GridFragment extends Fragment
      * If a "fence" hasn't been place yet, hovering over it with your finger
      * will make it slightly visible. works by checking how visible the selected fence
      * currently is: if alpha = 1, then already placed so don't bother
-     * <p>
+     * <
      * By Keegan
      *
      * @param v     - the view being touched
      * @param event - the event (ACTION_DOWN = finger push down, ACTION_UP = finger lift)
-     * @return
+     * @return false for some reason
      */
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -611,11 +614,11 @@ public class GridFragment extends Fragment
      * Called when a horizontal button is touched. Takes the button's coordinates on grid.
      * If fence doesn't exist at corresponding spot in the grid, it's placed and the button
      * is updated to reflect this
-     * <p>
-     * A switch case would be more ideal here, but a switch can'y be used for non-constant
+     *
+     * A switch case would be more ideal here, but a switch can't be used for non-constant
      * variables (each grid has a variable amount of rows, so at compile time the number of
      * rows can't be determined as this is designed to work with all grid sizes)
-     * <p>
+     *
      * By Keegan
      *
      * @param v   - the button pressed
@@ -623,8 +626,6 @@ public class GridFragment extends Fragment
      * @param col - button's respective col coordinate into xCoords of the grid
      */
     void setHorizontalFence(View v, int row, int col) {
-
-        Player currentPlayer = fragmentGame.getCurrentPlayer();
 
         //if fence is placed on top row
         if (row == 0) {
@@ -645,7 +646,11 @@ public class GridFragment extends Fragment
     }//setHorizontalFence
 
     /**
-     * @param v
+     * Sets a fence on the top row
+     *
+     * By Keegan
+     *
+     * @param v - the fence to be placed
      * @param row
      * @param col
      */
@@ -656,6 +661,8 @@ public class GridFragment extends Fragment
 
         //if fence is placed on top row
         if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            playFenceSound();
 
             //set color
             v.findViewById(v.getId()).getBackground()
@@ -681,6 +688,10 @@ public class GridFragment extends Fragment
     }//setTopRowFence
 
     /**
+     * Sets a fence on the bottom row
+     *
+     * By Keegan
+     *
      * @param v
      * @param row
      * @param col
@@ -692,6 +703,8 @@ public class GridFragment extends Fragment
 
         //if fence is placed on top row
         if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            playFenceSound();
 
             //set color
             v.findViewById(v.getId()).getBackground()
@@ -717,6 +730,10 @@ public class GridFragment extends Fragment
     }//setBottomRowFence
 
     /**
+     * Sets a horizontal fence that isn't on the top or bottom row
+     *
+     * By Keegan
+     *
      * @param v
      * @param row
      * @param col
@@ -729,6 +746,8 @@ public class GridFragment extends Fragment
 
         //if fence is placed
         if (fragmentGame.getGrid().setFenceX(row, col, currentColor)) {
+
+            playFenceSound();
 
             //set color
             v.findViewById(v.getId()).getBackground()
@@ -758,13 +777,16 @@ public class GridFragment extends Fragment
     }//setMidFence
 
     /**
+     * Sets a vertical fence, calling the necessary function
+     * based on its location
+     *
+     * By Keegan
+     *
      * @param v
      * @param row
      * @param col
      */
     void setVerticalFence(View v, int row, int col) {
-
-        Player currentPlayer = fragmentGame.getCurrentPlayer();
 
         //if fence is placed on top row
         if (col == 0) {
@@ -796,6 +818,8 @@ public class GridFragment extends Fragment
 
         //if fence is placed on top row
         if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
+
+            playFenceSound();
 
             //set color
             v.findViewById(v.getId()).getBackground()
@@ -833,6 +857,8 @@ public class GridFragment extends Fragment
         //if fence is placed on top row
         if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
 
+            playFenceSound();
+
             //set color
             v.findViewById(v.getId()).getBackground()
                     .setColorFilter(currentColor, PorterDuff.Mode.MULTIPLY);
@@ -857,7 +883,11 @@ public class GridFragment extends Fragment
     }//setBottomRowFence
 
     /**
-     * @param v
+     * Sets a vertical fence that isn't on the far left or right
+     *
+     * By Keegan
+     *
+     * @param v - the fence placed
      * @param row
      * @param col
      */
@@ -869,6 +899,8 @@ public class GridFragment extends Fragment
 
         //if fence is placed
         if (fragmentGame.getGrid().setFenceY(row, col, currentColor)) {
+
+            playFenceSound();
 
             //set color
             v.findViewById(v.getId()).getBackground()
@@ -900,7 +932,7 @@ public class GridFragment extends Fragment
     /**
      * Called when a pen is completed. Gets the corresponding pen's pig image, so it
      * can be passed to togglePigVisibility to make it visible
-     * <p>
+     *
      * By Alvin
      *
      * @param row - row index for pig
@@ -917,7 +949,7 @@ public class GridFragment extends Fragment
 
     /**
      * Called after a fence is placed. Keeps the visible player scores up to date
-     * <p>
+     *
      * By Keegan
      */
     public void updateScoreView() {
@@ -929,6 +961,10 @@ public class GridFragment extends Fragment
     }//updateScoreView
 
     /**
+     * Set the listeners for interactions on the fences
+     *
+     * By Keegan
+     *
      * @param v
      */
     void setFenceListeners(View v) {
@@ -970,11 +1006,88 @@ public class GridFragment extends Fragment
 
     }//setFenceListeners
 
+    /**
+     * By Alvin
+     *
+     * @return
+     */
     public boolean aiTurn() {
         boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
         showSaved();
-//        boolean foundPen = false;
+//      boolean foundPen = false;
         return foundPen;
     }
+
+    /**
+     * Initializes the sound effects
+     *
+     * By Keegan
+     */
+    void initializeSoundEffects(){
+
+        pigSounds = new MediaPlayer[3];
+        fenceSounds = new MediaPlayer[5];
+
+        //pig sounds
+        for (int i = 0 ; i < 3 ; i++){
+
+            int resID = getResources().getIdentifier("pig" + (i + 1), "raw", main.getPackageName());
+            pigSounds[i] = MediaPlayer.create(main, resID);
+
+        }//for
+
+        //fence sounds
+        for (int i = 0 ; i < 5 ; i++){
+
+            int resID = getResources().getIdentifier("wood" + (i + 1), "raw", main.getPackageName());
+            fenceSounds[i] = MediaPlayer.create(main, resID);
+
+        }//for
+
+    }//initializeSoundEffects
+
+    /**
+     * Plays a random pig sound
+     *
+     * By Keegan
+     */
+    void playPigSound(){
+
+        Settings.retrieve(main);
+
+        int randNum;
+        Random rand = new Random();
+
+        if (Settings.getSfxOn()){
+
+            randNum = rand.nextInt(pigSounds.length - 1);
+
+            pigSounds[randNum].start();
+
+        }//if
+
+    }//playPigSound
+
+    /**
+     * Plays a random fence placement sound
+     *
+     * By Keegan
+     */
+    void playFenceSound(){
+
+        Settings.retrieve(main);
+
+        int randNum;
+        Random rand = new Random();
+
+        if (Settings.getSfxOn()){
+
+            randNum = rand.nextInt(fenceSounds.length - 1);
+
+            fenceSounds[randNum].start();
+
+        }//if
+
+    }//playPigSound
 
 }//GridFragment

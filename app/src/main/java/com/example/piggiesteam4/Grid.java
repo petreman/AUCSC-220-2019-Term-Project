@@ -1,92 +1,92 @@
 /**
  * AUCSC 220
  * PiggiesTeam4
- * <p>
+ *
  * Grid.java
- * <p>
+ *
  * Used to store the state of the game and update it as appropriate
- * <p>
+ *
  * Has an inner class Fence, which is just the data need to represent a fence on
  * the game board. Every grid is made up of Fence objects
- * <p>
+ *
  * Fence Methods:
- * - Fence() -> Fence
- * Creates a fence with default values.
- * <p>
- * - setColor(String Color) -> void
- * Sets the color of the fence from a 6 digit hex string (ie "FFFFFF")
- * <p>
- * - setColor(int Color) -> void
- * Sets the color of the fence from the provided integer
- * Use Color.parseColor("FFFFFF") to convert "FFFFFF" to int
- * <p>
- * - exists() -> boolean
- * Returns if the fence "exists" of not (ie has been placed)
- * <p>
- * - setExistence(boolean exists) -> void
- * Sets the existence of the Fence to whatever boolean is provided
- * <p>
+ *  - Fence() -> Fence
+ *      Creates a fence with default values.
+ *
+ *  - setColor(String Color) -> void
+ *      Sets the color of the fence from a 6 digit hex string (ie "FFFFFF")
+ *
+ *  - setColor(int Color) -> void
+ *      Sets the color of the fence from the provided integer
+ *      Use Color.parseColor("FFFFFF") to convert "FFFFFF" to int
+ *
+ *  - exists() -> boolean
+ *      Returns if the fence "exists" of not (ie has been placed)
+ *
+ *  - setExistence(boolean exists) -> void
+ *      Sets the existence of the Fence to whatever boolean is provided
+ *
  * Grid Methods:
- * - Grid(int x, int y) -> Grid
- * Constructor. Creates structure for gameboard of size x*y dots and appropriate
- * number of fences. Fences stored in two arrays: one for horizontal, the other
- * for vertical
- * <p>
- * - clearGrid() -> void
- * Sets every fences existance in the grid to "false"
- * <p>
- * - getX() -> int
- * Returns the horizontal dimension of dots for the grid
- * <p>
- * - getY() -> int
- * Returns the vertical dimension of dots for the grid
- * <p>
- * - updateColors(player Player)-> void
- * To be called wehn a player changes their color. Iterates over the grid
- * to update any colors of fences placed by the parameter player
- * <p>
- * - setFenceX(int row, int col, player Player) -> boolean
- * Attempts to set the existence of the fence located at [row][col]
- * of xCoords to true (if false). Sets the fence's placement ownership to
- * the provided player. Returns true if successful, false if fence already
- * exists at location.
- * <p>
- * - setFenceY(int row, int col, player Player) -> boolean
- * Attempts to set the existence of the fence located at [row][col]
- * of yCoords to true (if false). Sets the fence's placement ownership to
- * the provided playerReturns true if successful, false if fence already
- * exists at location.
- * <p>
- * - checkPenBelow(int row, int col, Player player) -> boolean
- * Checks for a potentially completed pen below the provided xCoords horizontal
- * fence coordinate. If a pen can be made, places the fence and updates the
- * current players score. Returns true if pen is completed, false otherwise
- * <p>
- * - checkPenAbove(int row, int col, Player player) -> boolean
- * Checks for a potentially completed pen above the provided xCoords horizontal
- * fence coordinate. If a pen can be made, places the fence and updates the
- * current players score. Returns true if pen is completed, false otherwise
- * <p>
- * - checkPenLeft(int row, int col, Player player) -> boolean
- * Checks for a potentially completed pen to the left of the provided
- * yCoords vertical fence coordinate. If a pen can be made, places the fence
- * and updates the current players score. Returns true if pen is completed,
- * false otherwise
- * <p>
- * - checkPenRight(int row, int col, Player player) -> boolean
- * Checks for a potentially completed pen to the right of the provided
- * yCoords vertical fence coordinate. If a pen can be made, places the fence
- * and updates the current players score. Returns true if pen is completed,
- * false otherwise
- * <p>
+ *  - Grid(int x, int y) -> Grid
+ *      Constructor. Creates structure for gameboard of size x*y dots and appropriate
+ *      number of fences. Fences stored in two arrays: one for horizontal, the other
+ *      for vertical
+ *
+ *  - clearGrid() -> void
+ *      Sets every fences existance in the grid to "false"
+ *
+ *  - getX() -> int
+ *      Returns the horizontal dimension of dots for the grid
+ *
+ *  - getY() -> int
+ *      Returns the vertical dimension of dots for the grid
+ *
+ *  - updateColors(player Player)-> void
+ *      To be called wehn a player changes their color. Iterates over the grid
+ *      to update any colors of fences placed by the parameter player
+ *
+ *  - setFenceX(int row, int col, player Player) -> boolean
+ *      Attempts to set the existence of the fence located at [row][col]
+ *      of xCoords to true (if false). Sets the fence's placement ownership to
+ *      the provided player. Returns true if successful, false if fence already
+ *      exists at location.
+ *
+ *  - setFenceY(int row, int col, player Player) -> boolean
+ *      Attempts to set the existence of the fence located at [row][col]
+ *      of yCoords to true (if false). Sets the fence's placement ownership to
+ *      the provided playerReturns true if successful, false if fence already
+ *      exists at location.
+ *
+ *  - checkPenBelow(int row, int col, Player player) -> boolean
+ *      Checks for a potentially completed pen below the provided xCoords horizontal
+ *      fence coordinate. If a pen can be made, places the fence and updates the
+ *      current players score. Returns true if pen is completed, false otherwise
+ *
+ *  - checkPenAbove(int row, int col, Player player) -> boolean
+ *      Checks for a potentially completed pen above the provided xCoords horizontal
+ *      fence coordinate. If a pen can be made, places the fence and updates the
+ *      current players score. Returns true if pen is completed, false otherwise
+ *
+ *  - checkPenLeft(int row, int col, Player player) -> boolean
+ *      Checks for a potentially completed pen to the left of the provided
+ *      yCoords vertical fence coordinate. If a pen can be made, places the fence
+ *      and updates the current players score. Returns true if pen is completed,
+ *      false otherwise
+ *
+ *  - checkPenRight(int row, int col, Player player) -> boolean
+ *      Checks for a potentially completed pen to the right of the provided
+ *      yCoords vertical fence coordinate. If a pen can be made, places the fence
+ *      and updates the current players score. Returns true if pen is completed,
+ *      false otherwise
+ *
  * Started November 17, 2019 by Keegan
- * <p>
+ *
  * Changelog:
- * - 12/02/19: Alvin
- * Added getters for xCoords and yCoords
- * <p>
- * - 11/28/19: Keegan
- * Added getters for fence existence
+ *  - 12/02/19: Alvin
+ *      Added getters for xCoords and yCoords
+ *
+ *  - 11/28/19: Keegan
+ *      Added getters for fence existence
  */
 
 package com.example.piggiesteam4;

@@ -1,11 +1,11 @@
 /**
  * AUCSC 220
  * PiggiesTeam4
- * <p>
+ *
  * MainActivity.java
- * <p>
+ *
  * The main, single screen where all games take place.
- * <p>
+ *
  * On first launch, loads a 5x5 single player game.
  * Visible grids are represented by fragments, and are swapped in and out as necessary
  * into a frame layout
@@ -106,12 +106,12 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
 
                 if (currentGame.isMultiplayer()) {
-                    Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You are now in single player mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.singleperson);
                 }//if
 
                 else {
-                    Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You are now in multi player Mode", Toast.LENGTH_SHORT).show();
                     customButton.setImageResource(R.drawable.twopeople);
                 }//else
 
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * This basically tells the main activity that is has an options menu
      * (the navigation drawer) and inflates it so that it is visible
-     * <p>
+     *
      * By Keegan
      *
      * @param menu - Gonna be honest, I don't know
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * On selection of the an item in the drawer menu,
      * the corresponding activity is started.
-     * <p>
+     *
      * By Keegan
      *
      * @param item - the item in the menu that has been selected
@@ -333,6 +333,9 @@ public class MainActivity extends AppCompatActivity implements
 
         }//if
 
+        DrawerLayout drawerLayout = findViewById(R.id.drawerId);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
     }//onActivity
 
     //Maybe change variable away from class variable.
@@ -393,6 +396,8 @@ public class MainActivity extends AppCompatActivity implements
                 resetListener.reset();
                 p1Score.setText("0");
                 p2Score.setText("0");
+                DrawerLayout drawerLayout = findViewById(R.id.drawerId);
+                drawerLayout.closeDrawer(GravityCompat.START);
             }//onDialogPositiveClick
 
             @Override
@@ -476,7 +481,6 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportFragmentManager().beginTransaction();
 
         fragTrans.add(R.id.fragment_container, fragment).commit();
-
 
     }//setGridFragment
 

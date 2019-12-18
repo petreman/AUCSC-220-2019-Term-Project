@@ -1,49 +1,49 @@
 /**
  * AUCSC 220
  * PiggiesTeam4
- * <p>
+ *
  * Game.java
- * <p>
+ *
  * Each game is made up of 2 players and a grid. So the game class is a
  * container for a game
- * <p>
+ *
  * Methods:
- * - Game(int size, boolean isMulti, int[] p1Color, int[] p2Color) -> Game
- * Creates a game with the specified grid size, the type of game, and the
- * given player colors
- * <p>
- * - getGrid -> Grid
- * Returns the grid for the game
- * <p>
- * - getCurrentPlayer() -> Player
- * Returns the player who's turn is set to true
- * <p>
- * - getNonCurrentPlayer() -> Player
- * Returns the player who's turn it currently isn't
- * <p>
- * - getPlayer1() -> Player
- * Returns player 1
- * <p>
- * - getPlayer2() -> Player
- * Returns player 2
- * <p>
- * - isMultiplayer() -> boolean
- * Returns if the game is multiplayer or not
- * <p>
- * - toggleCurrentPlayer -> void
- * Ends the current players turn, and sets the the other players turn to true
- * <p>
- * - isGameOver() -> boolean
- * Checks if the game is over or not
- * <p>
- * - resetGame() -> void
- * Clears the gird and the player's scores
- * <p>
+ *  - Game(int size, boolean isMulti, int[] p1Color, int[] p2Color) -> Game
+ *      Creates a game with the specified grid size, the type of game, and the
+ *      given player colors
+ *
+ *  - getGrid -> Grid
+ *      Returns the grid for the game
+ *
+ *  - getCurrentPlayer() -> Player
+ *      Returns the player who's turn is set to true
+ *
+ *  - getNonCurrentPlayer() -> Player
+ *      Returns the player who's turn it currently isn't
+ *
+ *  - getPlayer1() -> Player
+ *      Returns player 1
+ *
+ *  - getPlayer2() -> Player
+ *      Returns player 2
+ *
+ *  - isMultiplayer() -> boolean
+ *      Returns if the game is multiplayer or not
+ *
+ *  - toggleCurrentPlayer -> void
+ *      Ends the current players turn, and sets the the other players turn to true
+ *
+ *  - isGameOver() -> boolean
+ *      Checks if the game is over or not
+ *
+ *  - resetGame() -> void
+ *      Clears the gird and the player's scores
+ *
  * Started November 29, 2019 by Keegan
- * <p>
+ *
  * Changelog
- * 2019/11/30: Keegan
- * Merged Keegan's and Alvin's differing instances of Game.java
+ *  2019/11/30: Keegan
+ *      Merged Keegan's and Alvin's differing instances of Game.java
  */
 package com.example.piggiesteam4;
 
