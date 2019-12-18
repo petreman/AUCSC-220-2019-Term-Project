@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import androidx.fragment.app.Fragment;
 
 public class GridFragment extends Fragment
@@ -40,7 +41,7 @@ public class GridFragment extends Fragment
     /**
      * On creation of the fragment, find out if it is for a multiplayer game or not
      * so it can point to the correct game inside MainActivity
-     *
+     * <p>
      * By Keegan
      *
      * @param savedInstanceState
@@ -55,11 +56,11 @@ public class GridFragment extends Fragment
 
         Log.d("onCreate grid fragment", "isMultiplayer = " + isMultiplayer);
 
-        if (isMultiplayer){
+        if (isMultiplayer) {
             fragmentGame = main.multiPlayer;
         }//if
 
-        else{
+        else {
             fragmentGame = main.singlePlayer;
         }//if
 
@@ -86,15 +87,15 @@ public class GridFragment extends Fragment
 
     /**
      * Set up the buttons on creation of the fragment
-     *
+     * <p>
      * I also set an onTouchListener for every button: what this does, is when a unplaced
      * fence/button is pressed and held, a little preview of the fence appears first,
      * designed to give a little bit of feedback to the player
-     *
+     * <p>
      * By Keegan
      *
-     * @param inflater - inflater to set up the layout
-     * @param container - where the fragment will be contained
+     * @param inflater           - inflater to set up the layout
+     * @param container          - where the fragment will be contained
      * @param savedInstanceState - the saved instance if recreating the fragment
      * @return the created view
      */
@@ -126,7 +127,7 @@ public class GridFragment extends Fragment
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     *
+     * <p>
      * This was put in here by default, I don't wanna touch it, just to be safe
      * -Keegan
      */
@@ -138,7 +139,7 @@ public class GridFragment extends Fragment
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
+     * <p>
      * This was put in here by default, I don't wanna touch it, just to be safe
      * -Keegan
      *
@@ -185,17 +186,17 @@ public class GridFragment extends Fragment
     /**
      * When a button is pressed (ie fence placement attempted), a check is performed to
      * see if a fence can be placed at the specified location (if it hasn't been placed already)
-     *
+     * <p>
      * I wish there was a way to simplify this (I spent quite a while looking), it has to
      * be like this. At least it'll be fast?
-     *
+     * <p>
      * By Keegan
      *
      * @param v - the button clicked
      */
     @Override
     public void onClick(View v) {
-        if (!buttonsEnabled){
+        if (!buttonsEnabled) {
             return;
         }
 
@@ -211,13 +212,13 @@ public class GridFragment extends Fragment
         int col = Integer.parseInt((idName.charAt(COL_INDEX) + "").trim());
         char orientation = idName.charAt(ORIENTATION_INDEX);
 
-        if (orientation == HORIZONTAL_ORIENTATION){
+        if (orientation == HORIZONTAL_ORIENTATION) {
             setHorizontalFence(v, row, col);
         }//if
-        else if (orientation == VERTICAL_ORIENTATION){
+        else if (orientation == VERTICAL_ORIENTATION) {
             setVerticalFence(v, row, col);
         }//elseif
-        else{
+        else {
             throw new AssertionError("Unexpected value, fence does not announce orientation");
         }//else
 
@@ -236,9 +237,10 @@ public class GridFragment extends Fragment
 
     /**
      * Sets the listener.
+     *
      * @param listener the listener.
      */
-    public void setListener(gameStateListener listener){
+    public void setListener(gameStateListener listener) {
         this.listener = listener;
     }//setListener
 
@@ -246,7 +248,7 @@ public class GridFragment extends Fragment
      * Saves game on pause.
      */
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         //listener.saveGame(this);
     }//onPause
@@ -263,17 +265,17 @@ public class GridFragment extends Fragment
     /**
      * Shows the fences previously selected in a saved game.
      */
-    public void showSaved(){
+    public void showSaved() {
 
         Grid.Fence[][] xCoords = fragmentGame.getGrid().getxCoords();
         Grid.Fence[][] yCoords = fragmentGame.getGrid().getyCoords();
         Grid.Fence[][] pens = fragmentGame.getGrid().getPens();
 
-        for (int row = 0; row < gridSize; row++){
+        for (int row = 0; row < gridSize; row++) {
 
-            for (int col = 0; col < gridSize; col++){
+            for (int col = 0; col < gridSize; col++) {
 
-                if (col < gridSize - 1){
+                if (col < gridSize - 1) {
 
                     Grid.Fence currentXFence = xCoords[row][col];
 
@@ -281,7 +283,7 @@ public class GridFragment extends Fragment
 
                         Button fence = (Button) fragmentView.findViewById(getResources()
                                 .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" +
-                                                row + col,"id",
+                                                row + col, "id",
                                         this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -293,7 +295,7 @@ public class GridFragment extends Fragment
 
                 }//if
 
-                if (row < gridSize - 1){
+                if (row < gridSize - 1) {
 
                     Grid.Fence currentYFence = yCoords[row][col];
 
@@ -301,7 +303,7 @@ public class GridFragment extends Fragment
 
                         Button fence = (Button) fragmentView.findViewById(getResources()
                                 .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" +
-                                                row + col,"id",
+                                                row + col, "id",
                                         this.getActivity().getPackageName()));
 
                         fence.getBackground()
@@ -312,15 +314,15 @@ public class GridFragment extends Fragment
 
                 }//if
 
-                if ((row < gridSize - 1) && (col < gridSize - 1)){
+                if ((row < gridSize - 1) && (col < gridSize - 1)) {
 
                     Grid.Fence currentPen = pens[row][col];
 
-                    if (currentPen.exists()){
+                    if (currentPen.exists()) {
 
                         ImageView pig = (ImageView) fragmentView.findViewById(getResources()
                                 .getIdentifier("grid_" + gridSize + gridSize + "_pig_" +
-                                                row + col,"id",
+                                                row + col, "id",
                                         this.getActivity().getPackageName()));
 
                         pig.setColorFilter(currentPen.getColor(), PorterDuff.Mode.MULTIPLY);
@@ -339,13 +341,13 @@ public class GridFragment extends Fragment
     /**
      * Resets the fence UI.
      */
-    public void resetFences(){
+    public void resetFences() {
 
-        for (int row = 0; row < gridSize; row++){
+        for (int row = 0; row < gridSize; row++) {
 
-            for (int col = 0; col < gridSize; col++){
+            for (int col = 0; col < gridSize; col++) {
 
-                if (col < (gridSize - 1)){
+                if (col < (gridSize - 1)) {
 
                     Button fence = (Button) fragmentView.findViewById(getResources()
                             .getIdentifier("grid_" + gridSize + gridSize + "_hfence_" +
@@ -358,7 +360,7 @@ public class GridFragment extends Fragment
                     fence.setAlpha((float) 0.0);
                 }//if
 
-                if (row < gridSize - 1){
+                if (row < gridSize - 1) {
 
                     Button fence = (Button) fragmentView.findViewById(getResources()
                             .getIdentifier("grid_" + gridSize + gridSize + "_vfence_" +
@@ -382,7 +384,7 @@ public class GridFragment extends Fragment
      * Ends the current players turn, and set's the other players turn to true.
      * Also updates the color of the player score button to indicate who the new
      * current player is
-     *
+     * <p>
      * By Keegan
      *
      * @param currentPlayer - the player who's turn it currently is
@@ -391,15 +393,15 @@ public class GridFragment extends Fragment
 
         int currentTurn;
 
-        if (currentPlayer.getWhichplayer() == 1){
+        if (currentPlayer.getWhichplayer() == 1) {
             currentTurn = 2;
         }//if
 
-        else if(currentPlayer.getWhichplayer() == 2){
+        else if (currentPlayer.getWhichplayer() == 2) {
             currentTurn = 1;
         }// else if
 
-        else{
+        else {
             throw new AssertionError("current player has no player turn value???");
         }//else
 
@@ -416,7 +418,7 @@ public class GridFragment extends Fragment
 
         }//if
 
-        else{
+        else {
 
             p1ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer1().getColor(),
                     PorterDuff.Mode.MULTIPLY);
@@ -434,10 +436,10 @@ public class GridFragment extends Fragment
 
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
-        if (fragmentGame.getCurrentPlayer().isCPU()){
+        if (fragmentGame.getCurrentPlayer().isCPU()) {
             buttonsEnabled = false;
-            while (aiTurn()){
-                if (fragmentGame.isGameOver()){
+            while (aiTurn()) {
+                if (fragmentGame.isGameOver()) {
                     break;
                 }
             }
@@ -448,12 +450,12 @@ public class GridFragment extends Fragment
 
     /**
      * Sets player 1 to be the current player.
-     *
+     * <p>
      * By Alvin
      */
-    public void setP1Current(){
+    public void setP1Current() {
 
-        if(fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()){
+        if (fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()) {
             toggleTurn(fragmentGame.getCurrentPlayer());
         }//if
 
@@ -475,31 +477,31 @@ public class GridFragment extends Fragment
     /**
      * Sets the resetListener in the main activity.
      */
-    public void setReset(){
+    public void setReset() {
         ((MainActivity) getActivity()).setResetListener(resetListener);
     }//setReset
 
     /**
      * Sets the currentGame in the main activity to the currently active game.
+     *
      * @param isMultiplayer
      */
-    public void setMainCurrentGame(boolean isMultiplayer){
+    public void setMainCurrentGame(boolean isMultiplayer) {
 
-        if (isMultiplayer){
+        if (isMultiplayer) {
             main.currentGame = main.multiPlayer;
         }//if
 
-        else{
+        else {
             main.currentGame = main.singlePlayer;
         }//else
 
     }//setMainCurrentGame
 
     /**
-     *
      * @param currentPlayer
      */
-    public void setMainCurrentPlayer(Player currentPlayer){
+    public void setMainCurrentPlayer(Player currentPlayer) {
         main.currentPlayer = currentPlayer;
     }//setMainCurrentPlayer
 
@@ -531,20 +533,20 @@ public class GridFragment extends Fragment
     /**
      * Called when a pen has been completed. Makes the parameter pig (in the pen) visible,
      * ands give the pig a color filter based on who created the pen
-     *
+     * <p>
      * By Keegan
      *
      * @param v - the image view to toggle visibility of
      */
-    public void togglePigVisibility(View v){
+    public void togglePigVisibility(View v) {
 
         ImageView pig = (ImageView) v;
 
-        if (pig.getVisibility() == View.VISIBLE){
+        if (pig.getVisibility() == View.VISIBLE) {
             resetPigVisibility(pig);
         }//if
 
-        else{
+        else {
 
             pig.setColorFilter(fragmentGame.getCurrentPlayer().getColorLight(),
                     PorterDuff.Mode.MULTIPLY);
@@ -565,9 +567,10 @@ public class GridFragment extends Fragment
 
     /**
      * Sets the provided image view to be invisible
+     *
      * @param pig - the image view (of a pig) to make invisible
      */
-    public void resetPigVisibility(ImageView pig){
+    public void resetPigVisibility(ImageView pig) {
 
         pig.setVisibility(View.INVISIBLE);
         pig.clearColorFilter();
@@ -579,25 +582,25 @@ public class GridFragment extends Fragment
      * If a "fence" hasn't been place yet, hovering over it with your finger
      * will make it slightly visible. works by checking how visible the selected fence
      * currently is: if alpha = 1, then already placed so don't bother
-     *
+     * <p>
      * By Keegan
      *
-     * @param v - the view being touched
+     * @param v     - the view being touched
      * @param event - the event (ACTION_DOWN = finger push down, ACTION_UP = finger lift)
      * @return
      */
     public boolean onTouch(View v, MotionEvent event) {
 
         //button pressed down
-        if(event.getAction() == MotionEvent.ACTION_DOWN &&
-                v.findViewById(v.getId()).getAlpha() != 1){
-            v.findViewById(v.getId()).setAlpha((float)0.15);
+        if (event.getAction() == MotionEvent.ACTION_DOWN &&
+                v.findViewById(v.getId()).getAlpha() != 1) {
+            v.findViewById(v.getId()).setAlpha((float) 0.15);
         }//if
 
         //button released
-        if(event.getAction() == MotionEvent.ACTION_UP &&
-                v.findViewById(v.getId()).getAlpha() != 1){
-            v.findViewById(v.getId()).setAlpha((float)(0.0));
+        if (event.getAction() == MotionEvent.ACTION_UP &&
+                v.findViewById(v.getId()).getAlpha() != 1) {
+            v.findViewById(v.getId()).setAlpha((float) (0.0));
         }//if
 
         return false;
@@ -608,18 +611,18 @@ public class GridFragment extends Fragment
      * Called when a horizontal button is touched. Takes the button's coordinates on grid.
      * If fence doesn't exist at corresponding spot in the grid, it's placed and the button
      * is updated to reflect this
-     *
+     * <p>
      * A switch case would be more ideal here, but a switch can'y be used for non-constant
      * variables (each grid has a variable amount of rows, so at compile time the number of
      * rows can't be determined as this is designed to work with all grid sizes)
-     *
+     * <p>
      * By Keegan
      *
-     * @param v - the button pressed
+     * @param v   - the button pressed
      * @param row - button's respective row coordinate into xCoords of the grid
      * @param col - button's respective col coordinate into xCoords of the grid
      */
-    void setHorizontalFence(View v, int row, int col){
+    void setHorizontalFence(View v, int row, int col) {
 
         Player currentPlayer = fragmentGame.getCurrentPlayer();
 
@@ -642,14 +645,11 @@ public class GridFragment extends Fragment
     }//setHorizontalFence
 
     /**
-     *
-     *
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setTopRowFence(View v, int row, int col){
+    void setTopRowFence(View v, int row, int col) {
 
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
@@ -672,7 +672,7 @@ public class GridFragment extends Fragment
             }//if
 
             //if it did, make pig visible
-            else{
+            else {
                 togglePigVisibility(getUpdatedPenView(row, col));
             }//else
 
@@ -681,12 +681,11 @@ public class GridFragment extends Fragment
     }//setTopRowFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setBottomRowFence(View v, int row, int col){
+    void setBottomRowFence(View v, int row, int col) {
 
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
@@ -709,8 +708,8 @@ public class GridFragment extends Fragment
             }//if
 
             //if it did, make pig visible
-            else{
-                togglePigVisibility(getUpdatedPenView(row -1, col));
+            else {
+                togglePigVisibility(getUpdatedPenView(row - 1, col));
             }//else
 
         }//if
@@ -718,12 +717,11 @@ public class GridFragment extends Fragment
     }//setBottomRowFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setMidRowFence(View v, int row, int col){
+    void setMidRowFence(View v, int row, int col) {
 
         boolean createdPen = false;
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
@@ -739,19 +737,19 @@ public class GridFragment extends Fragment
             v.findViewById(v.getId()).setAlpha((float) 1.0);
 
             //check for pen to the left
-            if (fragmentGame.getGrid().checkPenAbove(row, col, currentPlayer)){
+            if (fragmentGame.getGrid().checkPenAbove(row, col, currentPlayer)) {
                 togglePigVisibility(getUpdatedPenView(row - 1, col));
                 createdPen = true;
             }//if
 
             //check for pen to the right
-            if (fragmentGame.getGrid().checkPenBelow(row, col, currentPlayer)){
+            if (fragmentGame.getGrid().checkPenBelow(row, col, currentPlayer)) {
                 togglePigVisibility(getUpdatedPenView(row, col));
                 createdPen = true;
             }//if
 
             //other player turn if no pen made
-            if (!createdPen){
+            if (!createdPen) {
                 toggleTurn(currentPlayer);
             }//if
 
@@ -760,12 +758,11 @@ public class GridFragment extends Fragment
     }//setMidFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setVerticalFence(View v, int row, int col){
+    void setVerticalFence(View v, int row, int col) {
 
         Player currentPlayer = fragmentGame.getCurrentPlayer();
 
@@ -788,12 +785,11 @@ public class GridFragment extends Fragment
     }//setVerticalFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setLeftColFence(View v, int row, int col){
+    void setLeftColFence(View v, int row, int col) {
 
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
@@ -816,7 +812,7 @@ public class GridFragment extends Fragment
             }//if
 
             //if it did, make pig visible
-            else{
+            else {
                 togglePigVisibility(getUpdatedPenView(row, col));
             }//else
 
@@ -825,12 +821,11 @@ public class GridFragment extends Fragment
     }//setTopRowFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setRightColFence(View v, int row, int col){
+    void setRightColFence(View v, int row, int col) {
 
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
         Player currentPlayer = fragmentGame.getCurrentPlayer();
@@ -853,7 +848,7 @@ public class GridFragment extends Fragment
             }//if
 
             //if it did, make pig visible
-            else{
+            else {
                 togglePigVisibility(getUpdatedPenView(row, col - 1));
             }//else
 
@@ -862,12 +857,11 @@ public class GridFragment extends Fragment
     }//setBottomRowFence
 
     /**
-     *
      * @param v
      * @param row
      * @param col
      */
-    void setMidColFence(View v, int row, int col){
+    void setMidColFence(View v, int row, int col) {
 
         boolean createdPen = false;
         int currentColor = fragmentGame.getCurrentPlayer().getColor();
@@ -883,19 +877,19 @@ public class GridFragment extends Fragment
             v.findViewById(v.getId()).setAlpha((float) 1.0);
 
             //check for pen to the left
-            if (fragmentGame.getGrid().checkPenLeft(row, col, currentPlayer)){
-                togglePigVisibility(getUpdatedPenView(row , col - 1));
+            if (fragmentGame.getGrid().checkPenLeft(row, col, currentPlayer)) {
+                togglePigVisibility(getUpdatedPenView(row, col - 1));
                 createdPen = true;
             }//if
 
             //check for pen to the right
-            if (fragmentGame.getGrid().checkPenRight(row, col, currentPlayer)){
+            if (fragmentGame.getGrid().checkPenRight(row, col, currentPlayer)) {
                 togglePigVisibility(getUpdatedPenView(row, col));
                 createdPen = true;
             }//if
 
             //other player turn if no pen made
-            if (!createdPen){
+            if (!createdPen) {
                 toggleTurn(currentPlayer);
             }//if
 
@@ -906,7 +900,7 @@ public class GridFragment extends Fragment
     /**
      * Called when a pen is completed. Gets the corresponding pen's pig image, so it
      * can be passed to togglePigVisibility to make it visible
-     *
+     * <p>
      * By Alvin
      *
      * @param row - row index for pig
@@ -923,11 +917,10 @@ public class GridFragment extends Fragment
 
     /**
      * Called after a fence is placed. Keeps the visible player scores up to date
-     *
+     * <p>
      * By Keegan
-     *
      */
-    public void updateScoreView(){
+    public void updateScoreView() {
 
         //update the scoreboard in MainActivity
         p1ScoreButton.setText(Integer.toString(fragmentGame.getPlayer1().getScore()));
@@ -936,20 +929,19 @@ public class GridFragment extends Fragment
     }//updateScoreView
 
     /**
-     *
      * @param v
      */
-    void setFenceListeners(View v){
+    void setFenceListeners(View v) {
 
         int sizeX = fragmentGame.getGrid().getX();
         int sizeY = fragmentGame.getGrid().getY();
 
         //set listeners for the horizontal fences
-        for(int i = 0; i < sizeX ; i++) {
+        for (int i = 0; i < sizeX; i++) {
 
-            for(int j = 0 ; j < sizeY - 1 ; j++) {
+            for (int j = 0; j < sizeY - 1; j++) {
 
-                String buttonID = "grid_" + sizeX + sizeY +"_hfence_" + i + j;
+                String buttonID = "grid_" + sizeX + sizeY + "_hfence_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", main.getPackageName());
 
                 Button button = ((Button) v.findViewById(resID));
@@ -961,11 +953,11 @@ public class GridFragment extends Fragment
         }//for
 
         //set listeners for the vertical fences
-        for(int i = 0; i < sizeX - 1 ; i++) {
+        for (int i = 0; i < sizeX - 1; i++) {
 
-            for(int j = 0 ; j < sizeY ; j++) {
+            for (int j = 0; j < sizeY; j++) {
 
-                String buttonID = "grid_" + sizeX + sizeY +"_vfence_" + i + j;
+                String buttonID = "grid_" + sizeX + sizeY + "_vfence_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", main.getPackageName());
 
                 Button button = ((Button) v.findViewById(resID));
@@ -978,7 +970,7 @@ public class GridFragment extends Fragment
 
     }//setFenceListeners
 
-    public boolean aiTurn(){
+    public boolean aiTurn() {
         boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
         showSaved();
 //        boolean foundPen = false;

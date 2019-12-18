@@ -1,6 +1,5 @@
 package com.example.piggiesteam4;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -8,135 +7,173 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class GridSizeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int selectedSize;
-    int currentSize;
+    private int selectedSize;
+    private int currentSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_size);
+
         currentSize = getIntent().getIntExtra("currentSize", 0);
         disableCurrentSize(currentSize);
-
-
 
         Button size5 = (Button) findViewById(R.id.gridSize5x5);
         Button size6 = (Button) findViewById(R.id.gridSize6x6);
         Button size7 = (Button) findViewById(R.id.gridSize7x7);
 
-        //size5.setOnClickListener(this);
-        //size6.setOnClickListener(this);
-        //size7.setOnClickListener(this);
-
+        size5.setOnClickListener(this);
+        size6.setOnClickListener(this);
+        size7.setOnClickListener(this);
 
     }//onCreate
 
-
-
     /**
-     * Sets what size to switch to.
-     * @param v View
+     * Passes the new game size to the main activity so that it can create a game
+     * of the requested new size
+     * <p>
+     * By Alvin
      */
-    public void switchSize(View v){
-        Button button = (Button) v;
-        Button confirm = (Button) findViewById(R.id.confirmButtonSize);
-        String text = button.getText().toString().trim();
-        switch (text){
-            case "5x5":
-                selectedSize = 55;
-                break;
-            case "6x6":
-                selectedSize = 66;
-                break;
-            case "7x7":
-                selectedSize = 77;
-                break;
-            default:
-                Log.d("GridSizeActivity", "Unexpected current size");
-        }//switch
-        confirm.setEnabled(true);
-    }//switchSize
-
-    /**
-     * Starts the game with the selected size, will replace the current game.
-     * @param v View
-     */
-    public void confirmNewGridSize(View v){
+    public void confirmNewGridSize() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("size", selectedSize);
         setResult(RESULT_OK, intent);
         finish();
-
     }//confirmNewGridSize
 
-    public void disableCurrentSize(int size){
-        switch (size){
-            case Grid.GRID_5x5:
+    /**
+     * Disables the selection of the current game's current size
+     * <p>
+     * By Alvin
+     *
+     * @param size - the size of the current game
+     */
+    public void disableCurrentSize(int size) {
+
+        switch (size) {
+
+            case 5:
                 findViewById(R.id.gridSize5x5).setEnabled(false);
                 break;
-            case Grid.GRID_6x6:
+
+            case 6:
                 findViewById(R.id.gridSize6x6).setEnabled(false);
                 break;
-            case Grid.GRID_7x7:
+
+            case 7:
                 findViewById(R.id.gridSize7x7).setEnabled(false);
                 break;
+
             default:
                 throw new AssertionError("Error with size of current grid");
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-
-            case R.id.gridSize5x5:
-                selectedSize = 5;
-                break;
-
-            case R.id.gridSize6x6:
-                selectedSize = 6;
-                break;
-
-            case R.id.gridSize7x7:
-                selectedSize = 7;
-                break;
 
         }//switch
 
-        toggleHighlight(v);
+    }//disableCurrentSize
 
-    }//onClick
+    /**
+     * What happens when the buttons on the activity are clicked.
+     * <p>
+     * Highlights the currently selected new size, and saves the selected size in case
+     * "confirm" button is pressed so that the result can be sent to the main activity
+     * <p>
+     * By Keegan
+     *
+     * @param v - the button clicked
+     */
+    @Override
+    public void onClick(View v) {
 
-    void toggleHighlight(View v){
+        Button confirm = (Button) findViewById(R.id.gridSizeConfirm);
 
-        switch (v.getId()){
+        int unselectedSize = 5;
+
+        switch (v.getId()) {
 
             case R.id.gridSize5x5:
-                v.getBackground().setColorFilter(getColor(R.color.gray), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize6x6).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize7x7).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
+
+                selectedSize = 5;
+
+                if (currentSize == 6) {
+                    unselectedSize = 7;
+                }//if
+
+                else {
+                    unselectedSize = 6;
+                }//else
+
                 break;
 
             case R.id.gridSize6x6:
-                v.getBackground().setColorFilter(getColor(R.color.gray), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize5x5).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize7x7).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
+
+                selectedSize = 6;
+
+                if (currentSize == 5) {
+                    unselectedSize = 7;
+                }//if
+
+                else {
+                    unselectedSize = 5;
+                }//else
+
                 break;
 
             case R.id.gridSize7x7:
-                v.getBackground().setColorFilter(getColor(R.color.gray), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize6x6).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.gridSize5x5).getBackground().
-                        setColorFilter(getColor(R.color.grayLight), PorterDuff.Mode.MULTIPLY);
 
+                selectedSize = 7;
+
+                if (currentSize == 5) {
+                    unselectedSize = 6;
+                }//if
+
+                else {
+                    unselectedSize = 5;
+                }//else
+
+                break;
+
+            case R.id.gridSizeConfirm:
+                confirmNewGridSize();
+                break;
+
+            default:
+                Log.d("GridSizeActivity", "Unexpected current size, setting size to 5");
+
+        }//switch
+
+        toggleHighlight(v, unselectedSize);
+        confirm.setEnabled(true);
+
+    }//onClick
+
+    /**
+     * Darkens the choice for new size that the user chose
+     * <p>
+     * By Keegan
+     *
+     * @param v              - the pressed button
+     * @param unselectedSize - the size that wasn't chosen
+     */
+    void toggleHighlight(View v, int unselectedSize) {
+
+        v.getBackground().setColorFilter(getColor(R.color.gray), PorterDuff.Mode.MULTIPLY);
+
+        switch (unselectedSize) {
+
+            case 5:
+                findViewById(R.id.gridSize5x5).getBackground().clearColorFilter();
+                break;
+
+            case 6:
+                findViewById(R.id.gridSize6x6).getBackground().clearColorFilter();
+                break;
+
+            case 7:
+                findViewById(R.id.gridSize7x7).getBackground().clearColorFilter();
                 break;
 
         }//switch
