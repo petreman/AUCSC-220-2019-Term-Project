@@ -91,9 +91,9 @@ public class HighScores {
     private static List<Score> mediumGrid = new ArrayList();
     private static List<Score> largeGrid = new ArrayList();
     private static List<Score> largestGrid = new ArrayList();
-    private static final int SMALLEST = Grid.GRID_5x5; //5x5 dots
-    private static final int SMALL = Grid.GRID_6x6;    //6x6 dots
-    private static final int MEDIUM = Grid.GRID_7x7;   //7x7 dots
+    private static final int SMALLEST = 5; //5x5 dots
+    private static final int SMALL = 6;    //6x6 dots
+    private static final int MEDIUM = 7;   //7x7 dots
     private static final int LARGE = -1;
     private static final int LARGEST = -2;
 

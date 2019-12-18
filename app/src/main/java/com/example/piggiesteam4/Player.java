@@ -214,7 +214,6 @@ public class Player {
 
         int firstNumber;
         int secondNumber;
-        int timeoutCounter = 0;
 
         while (true) {
             int orientation = (int) (Math.random() * 2);

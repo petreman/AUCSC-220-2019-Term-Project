@@ -8,10 +8,10 @@
 
     <Button
         android:id="@+id/gridSize5x5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="switchSize"
-        android:text="5x5"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:text="5×5"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/gridSize6x6"
         app:layout_constraintEnd_toEndOf="@+id/gridSize6x6"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,11 +21,11 @@
 
     <Button
         android:id="@+id/gridSize6x6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        android:onClick="switchSize"
-        android:text="6x6"
+        android:text="6×6"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/gridSize7x7"
         app:layout_constraintEnd_toEndOf="@+id/gridSize7x7"
         app:layout_constraintHorizontal_bias="0.5"
@@ -34,26 +34,38 @@
 
     <Button
         android:id="@+id/gridSize7x7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        android:onClick="switchSize"
-        android:text="7x7"
-        app:layout_constraintBottom_toTopOf="@+id/confirmButtonSize"
+        android:text="7×7"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/gridSizeConfirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridSize6x6" />
 
     <Button
-        android:id="@+id/confirmButtonSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/gridSizeConfirm"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="50dp"
         android:enabled="false"
-        android:onClick="confirmNewGridSize"
         android:text="@string/confirm"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="Confirming selection will replace the current game"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/gridSize5x5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

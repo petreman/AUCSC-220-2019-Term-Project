@@ -65,16 +65,16 @@ public class Game {
      * @param p1Color - player 1's colors
      * @param p2Color - player 2's colors
      */
-    Game(int size, boolean isMulti, int[] p1Color, int[] p2Color){
+    Game(int size, boolean isMulti, int[] p1Color, int[] p2Color) {
 
         player1 = new Player(p1Color);
         player2 = new Player(p2Color);
 
-        if (isMulti){
+        if (isMulti) {
             multiplayer = true;
             //set ai stuff
         }//if
-        else{
+        else {
             player2.makeCPU();
             Log.d("makeCPU", "player 2 cpu");
         }
@@ -84,14 +84,18 @@ public class Game {
         player1.setWhichplayer(1);
         player2.setWhichplayer(2);
 
-        switch(size){
+        switch (size) {
 
-            case(55):
+            case (5):
                 grid = new Grid(5, 5);
                 break;
 
-            case(66):
+            case (6):
                 grid = new Grid(6, 6);
+                break;
+
+            case (7):
+                grid = new Grid(7, 7);
                 break;
 
         }//switch
@@ -102,7 +106,7 @@ public class Game {
      * By Keegan
      * @return - the grid for the game
      */
-    public Grid getGrid(){
+    public Grid getGrid() {
         return this.grid;
     }//getGrid
 
@@ -110,7 +114,7 @@ public class Game {
      * By Keegan
      * @return - the game's current player (player who's turn it currently is)
      */
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }//getCurrentPlayer
 
@@ -118,9 +122,9 @@ public class Game {
      * By Keegan
      * @return - the game's waiting player (player who's turn it currently isn't)
      */
-    public Player getNonCurrentPlayer(){
+    public Player getNonCurrentPlayer() {
 
-        if (player1 == currentPlayer){
+        if (player1 == currentPlayer) {
             return player2;
         }//if
 
@@ -132,7 +136,7 @@ public class Game {
      * By Keegan
      * @return - the game's first player
      */
-    public Player getPlayer1(){
+    public Player getPlayer1() {
         return player1;
     }//getPlayer1
 
@@ -140,7 +144,7 @@ public class Game {
      * By Keegan
      * @return - the game's second player
      */
-    public Player getPlayer2(){
+    public Player getPlayer2() {
         return player2;
     }//getPlayer2
 
@@ -148,7 +152,7 @@ public class Game {
      * By Keegan
      * @return - if the game is multiplayer or not
      */
-    public boolean isMultiplayer(){
+    public boolean isMultiplayer() {
         return this.multiplayer;
     }//isMultiplayer
 
@@ -156,22 +160,22 @@ public class Game {
      * Swaps who the current player is (ending and starting turns)
      * By Keegan
      */
-    void toggleCurrentPlayer(){
+    void toggleCurrentPlayer() {
         Log.d("toggleCurrentPlayer", "Player 1 is " + player1.getWhichplayer());
         Log.d("toggleCurrentPlayer", "Player 2 is " + player2.getWhichplayer());
         Log.d("toggleCurrentPlayer", "The current player is player " + currentPlayer.getWhichplayer());
-        if (currentPlayer.getWhichplayer() == player1.getWhichplayer()){
+        if (currentPlayer.getWhichplayer() == player1.getWhichplayer()) {
             currentPlayer = player2;
             Log.d("toggleCurrentPlayer", "Swapping current player to player 2");
             Log.d("toggleCurrentPlayer", "Player 2 is " + player2.getWhichplayer());
         }//if
 
-        else if (currentPlayer.getWhichplayer() == player2.getWhichplayer()){
+        else if (currentPlayer.getWhichplayer() == player2.getWhichplayer()) {
             currentPlayer = player1;
             Log.d("toggleCurrentPlayer", "Swapping current player to player 1");
             Log.d("toggleCurrentPlayer", "Player 1 is " + player1.getWhichplayer());
         }//else
-        else{
+        else {
             throw new AssertionError("Unrecognized player");
         }
         Log.d("toggleCurrentPlayer", "The current player is player " + currentPlayer.getWhichplayer());
@@ -184,10 +188,10 @@ public class Game {
      * Checks if the game is over.
      * @return whether the game is over.
      */
-    public boolean isGameOver(){
+    public boolean isGameOver() {
         int size = (grid.getX() - 1) * (grid.getY() - 1);
         int totalScore = player1.getScore() + player2.getScore();
-        if (totalScore == size){
+        if (totalScore == size) {
             return true;
         }//if
         return false;
@@ -199,7 +203,7 @@ public class Game {
      *
      * By Alvin
      */
-    public void endGame(String name){
+    public void endGame(String name) {
         HighScores.Score highscore = getHighscore(name);
         HighScores.addHighScore(highscore, grid);
         resetGame();
@@ -208,7 +212,7 @@ public class Game {
     /**
      * Same as above, only for ties.
      */
-    public void endGame(){
+    public void endGame() {
         resetGame();
     }
 
@@ -217,7 +221,7 @@ public class Game {
      *
      * By Alvin
      */
-    public void resetGame(){
+    public void resetGame() {
         player1.clearScore();
         player2.clearScore();
         grid.clearGrid();
@@ -230,7 +234,7 @@ public class Game {
      *
      * By Alvin
      */
-    public void updateFenceColors(int newColor, int oldColor){
+    public void updateFenceColors(int newColor, int oldColor) {
         this.getGrid().updateColors(newColor, oldColor);
     }//updateFenceColors
 
@@ -242,15 +246,15 @@ public class Game {
      * @param name the name of the winner;
      * @return the Score object.
      */
-    public HighScores.Score getHighscore(String name){
+    public HighScores.Score getHighscore(String name) {
         int p1Score = player1.getScore();
         int p2Score = player2.getScore();
 
-        if (p1Score > p2Score){
+        if (p1Score > p2Score) {
             return new HighScores.Score(name, p1Score);
         }//if
 
-        else{
+        else {
             return new HighScores.Score(name, p2Score);
         }//else
 
@@ -261,7 +265,7 @@ public class Game {
      * Retrieving the game creates a "fake/incorrect" instance of player, this cycling should
      * prevent that instance from ever being used.
      */
-    public void cyclePlayers(){
+    public void cyclePlayers() {
         toggleCurrentPlayer();
         toggleCurrentPlayer();
     }
