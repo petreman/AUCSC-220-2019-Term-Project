@@ -49,8 +49,11 @@ public class Player {
      * @param playerScore- current playScore
      */
     void addScore(int playerScore){
+        if (playerScore < 0){
+            playerScore = 0;
+        }
         score = score + playerScore;
-        Log.d("addScore", "Score added to player " + whichPlayer);
+        //Log.d("addScore", "Score added to player " + whichPlayer);
     }// end of addScore
 
     /**
