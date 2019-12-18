@@ -2,7 +2,10 @@ package com.example.piggiesteam4;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -23,4 +26,28 @@ public class PiggiesTeam4Test {
         player.setWhichplayer(1);
         assertEquals(player.getWhichplayer(), 1);
     }
+
+    /**
+     * Keegan
+     *
+     * A simple test to check if score is added to an empty high score list,
+     * it's the first and only item in the list
+     */
+    @Test
+    public void highscoreAddTest() {
+
+        Grid grid = new Grid(5, 5);
+        HighScores hs = new HighScores();
+
+        HighScores.Score myScore = new HighScores.Score("Keegan", 10);
+
+        hs.addHighScore(myScore, grid);
+
+        //0 is for the smallest gameboard, which is 5
+        List<HighScores.Score> gottonScores = HighScores.getHighScores(0);
+
+        assertEquals(myScore, gottonScores.get(0));
+
+    }//highscoreAddTest
+
 }
