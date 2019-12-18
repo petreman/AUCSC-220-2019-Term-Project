@@ -46,7 +46,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -103,7 +102,7 @@ import java.util.List;
         NavigationView menuView = findViewById(R.id.navigationId);
         p1Score = (Button) findViewById(R.id.p1ScoreButton);
         p2Score = (Button) findViewById(R.id.p2ScoreButton);
-        final ImageButton customButton = findViewById(R.id.testButton);
+        final ImageButton customButton = findViewById(R.id.tuggleBtn);
 
         // Pop up message
 
@@ -125,24 +124,13 @@ import java.util.List;
 
         else {
             retrieveGame();
-        }
+        }// else
 
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (currentGame.isMultiplayer()) {
-                    Toast.makeText(MainActivity.this, "You are now in Single Player mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.singleperson);
-
-                }
-
-                else{
-                    Toast.makeText(MainActivity.this, "You are now in Multi Player Mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.twopeople);
-
-                }
-
+                // tuggle the button and swap the games
+                changeGameModeIcon(customButton);
                 swap(currentGame.isMultiplayer());
                 toggleCurrentGame();
                 setScoreButtonColor();
@@ -160,19 +148,8 @@ import java.util.List;
             }//onClick
         });
 
-//        int p1sc = currentGame.getPlayer1().getScore();
-//        int p2sc = currentGame.getPlayer2().getScore();
-//        currentGame.getPlayer1().setWhichplayer(1);
-//        currentGame.getPlayer2().setWhichplayer(2);
-//        currentPlayer = currentGame.getCurrentPlayer();
         showTopScore();
-//
-//        Log.d("AfterRetrieval", "P1 Score " + p1sc);
-//        Log.d("AfterRetrieval", "P2 Score " + p2sc);
-//        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
-//        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
-//        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
-        // Check that the activity is using the layout version with
+
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -189,10 +166,22 @@ import java.util.List;
 
     }//onCreate
 
-    /**
-     * This function will display a pop up message the very first time the game is opened. Afterwards
-     * the message will stop displaying.
-     *
+     private void changeGameModeIcon(ImageButton customButton) {
+         if (currentGame.isMultiplayer()) {
+             Toast.makeText(MainActivity.this, "You are now in Single Player mode",
+                     Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.singleperson);
+         }else{
+             Toast.makeText(MainActivity.this, "You are now in Multi Player Mode",
+                     Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.twopeople);
+
+         }// else
+     }// changeGameModeIcon
+
+     /**
+     * This function will display a pop up message the very first time the game is opened.
+     * Afterwards the message will stop displaying.
      * By Arnold
      */
     private void popUpMenu(){
@@ -202,7 +191,9 @@ import java.util.List;
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "You are now in Single Player mode. You are playing again'st the Computer", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "You are now in " +
+                                "Single Player mode. You are playing again'st the Computer",
+                                Toast.LENGTH_LONG).show();
                     }
                 })
 
@@ -213,6 +204,8 @@ import java.util.List;
         editor.putBoolean("isFirstTime", false);
         editor.apply();
     }// end of PopUpMenu
+
+
 
      //=========================================================================
      // switching between mutliplayer and single player on the grid

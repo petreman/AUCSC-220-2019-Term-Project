@@ -50,7 +50,7 @@ public class Player {
      */
     void addScore(int playerScore){
         score = score + playerScore;
-        Log.d("addScore", "Score added to player " + whichplayer);
+        Log.d("addScore", "Score added to player " + whichPlayer);
     }// end of addScore
 
     /**
@@ -238,11 +238,11 @@ public class Player {
         }//end of while loop
     }//end of choosePositionEmptyGrid
 
-    private int whichplayer;
+    private int whichPlayer;
 
     public void setWhichplayer(int whichplayer){
-        if((this.whichplayer == 0) || this.whichplayer == whichplayer){
-            this.whichplayer = whichplayer;
+        if((this.whichPlayer == 0) || this.whichPlayer == whichplayer){
+            this.whichPlayer = whichplayer;
         }
         else{
             throw new AssertionError("whichplayer has already been set, it cannot be altered to a different value");
@@ -250,6 +250,6 @@ public class Player {
     }
 
     public int getWhichplayer() {
-        return whichplayer;
+        return whichPlayer;
     }
 }// end of Player
