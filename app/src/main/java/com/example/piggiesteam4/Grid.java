@@ -398,6 +398,7 @@ public class Grid {
                 this.yCoords[row][col + 1].exists()) {
 
             if (!pens[row][col].exists()) {
+                pens[row][col].setColor(player.getColorLight());
                 setFenceX(row, col, player.getColor());
                 player.addScore(1);
                 this.pens[row][col].setExistence(true);
@@ -429,8 +430,10 @@ public class Grid {
         Log.d("checkPen", "Player instance is " + player);
         if (this.xCoords[row - 1][col].exists() &&
                 this.yCoords[row - 1][col].exists() &&
-                this.yCoords[row - 1][col + 1].exists()) {
+                this.yCoords[row - 1][col + 1].exists()){
+
             if (!pens[row - 1][col].exists()) {
+                pens[row - 1][col].setColor(player.getColorLight());
                 setFenceX(row, col, player.getColor());
                 player.addScore(1);
                 this.pens[row - 1][col].setExistence(true);
@@ -465,6 +468,7 @@ public class Grid {
                 this.xCoords[row + 1][col - 1].exists()) {
 
             if (!pens[row][col - 1].exists()) {
+                pens[row][col - 1].setColor(player.getColorLight());
                 setFenceY(row, col, player.getColor());
                 player.addScore(1);
                 this.pens[row][col - 1].setExistence(true);
@@ -499,6 +503,7 @@ public class Grid {
                 this.xCoords[row + 1][col].exists()) {
 
             if (!pens[row][col].exists()) {
+                pens[row][col].setColor(player.getColorLight());
                 setFenceY(row, col, player.getColor());
                 player.addScore(1);
                 this.pens[row][col].setExistence(true);

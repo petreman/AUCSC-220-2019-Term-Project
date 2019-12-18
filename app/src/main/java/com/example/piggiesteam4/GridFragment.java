@@ -6,6 +6,8 @@ import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 import java.util.Random;
+
+import java.util.concurrent.TimeUnit;
 
 public class GridFragment extends Fragment
         implements View.OnTouchListener, View.OnClickListener {
@@ -75,13 +79,13 @@ public class GridFragment extends Fragment
         gridSize = fragmentGame.getGrid().getX();
         initializeSoundEffects();
 
-        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
-        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
-        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
-        Log.d("inFragment", "Scores of the current game are "
-                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
-        Log.d("inFragment", "Scores of the fragment game are "
-                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
+//        Log.d("inFragment", "Is current game same as fragmentGame " + (fragmentGame == main.currentGame));
+//        Log.d("inFragment", "Is this fragmentGame multiplayer " + isMultiplayer);
+//        Log.d("inFragment", "Is this game same as singlePlayer main " + (fragmentGame == main.singlePlayer));
+//        Log.d("inFragment", "Scores of the current game are "
+//                + main.currentGame.getPlayer1().getScore() + " " + main.currentGame.getPlayer2().getScore());
+//        Log.d("inFragment", "Scores of the fragment game are "
+//                + fragmentGame.getPlayer1().getScore() + " " + fragmentGame.getPlayer2().getScore());
 
     }//onCreate
 
@@ -250,15 +254,6 @@ public class GridFragment extends Fragment
         //listener.saveGame(this);
     }//onPause
 
-//    /**
-//     * Loads the game.
-//     */
-//    public void loadGame(){
-//        if (listener.retrieveGame(this)){
-//            showSaved();
-//        }//if
-//    }//load
-
     /**
      * Shows the fences previously selected in a saved game.
      *
@@ -404,9 +399,6 @@ public class GridFragment extends Fragment
             throw new AssertionError("current player has no player turn value???");
         }//else
 
-        Log.d("newFencePlaced", "Player turn has been swapped, now turn of player " + currentTurn);
-        Log.d("newFencePlaced", "Was turn of player " + currentPlayer.getWhichplayer());
-
         if (currentPlayer == fragmentGame.getPlayer1()) {
 
             p2ScoreButton.getBackground().setColorFilter(fragmentGame.getPlayer2().getColor(),
@@ -427,25 +419,47 @@ public class GridFragment extends Fragment
 
         }//else
 
-        Log.d("newFencePlaced", "Before fragGame.togglecurrentplayer, current player " + fragmentGame.getCurrentPlayer().getWhichplayer());
-
         fragmentGame.toggleCurrentPlayer();
-
-        Log.d("newFencePlaced", "After fragGame.togglecurrentplayer, current is now player " + fragmentGame.getCurrentPlayer().getWhichplayer());
 
         setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
 
-        if (fragmentGame.getCurrentPlayer().isCPU()) {
+        //This lets the AI have its turn.
+        if (fragmentGame.getCurrentPlayer().isCPU()){
             buttonsEnabled = false;
-            while (aiTurn()) {
-                if (fragmentGame.isGameOver()) {
-                    break;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep200ms();
+                    boolean penFound;
+                    do{
+                        sleep200ms();
+                        penFound = aiTurn();
+                        if (fragmentGame.isGameOver()){
+                            break;
+                        }
+                    } while (penFound);
+
+                    buttonsEnabled = true;
                 }
-            }
-            buttonsEnabled = true;
+            }).start();
+        }
+        if (fragmentGame.isGameOver()){
+            listener.endGame(fragmentGame, this);
         }
 
     }//toggleTurn
+
+    /**
+     * Waits for 200ms.
+     */
+    public void sleep200ms(){
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        }
+        catch (Exception e){
+
+        }
+    }
 
     /**
      * Sets player 1 to be the current player.
@@ -454,8 +468,11 @@ public class GridFragment extends Fragment
      */
     public void setP1Current() {
 
-        if (fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()) {
-            toggleTurn(fragmentGame.getCurrentPlayer());
+        if(fragmentGame.getCurrentPlayer() != fragmentGame.getPlayer1()){
+//            toggleTurn(fragmentGame.getCurrentPlayer());
+
+            fragmentGame.toggleCurrentPlayer();
+            setMainCurrentPlayer(fragmentGame.getCurrentPlayer());
         }//if
 
     }//setP1Current
@@ -1007,15 +1024,39 @@ public class GridFragment extends Fragment
     }//setFenceListeners
 
     /**
-     * By Alvin
-     *
-     * @return
+     * Carries out the AI's turn.
+     * @return whether a pen is found.
      */
-    public boolean aiTurn() {
+    public boolean aiTurn(){
         boolean foundPen = fragmentGame.getCurrentPlayer().placeFenceCPU(fragmentGame);
-        showSaved();
-//      boolean foundPen = false;
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                showSaved();
+                updateScoreView();
+                if (fragmentGame.isGameOver()){
+                    listener.endGame(fragmentGame, GridFragment.this);
+                }//if
+            }//run
+        });//Runnable
         return foundPen;
+    }//aiTurn
+
+    /**
+     * Sets fragmentGame, used in loading.
+     * @param fragmentGame the game.
+     */
+    public void setFragmentGame(Game fragmentGame) {
+        this.fragmentGame = fragmentGame;
+    }//setFragmentGame
+
+    /**
+     * Sets main, used in loading.
+     * @param main the activity.
+     */
+    public void setMain(MainActivity main) {
+        this.main = main;
     }
 
     /**
@@ -1090,4 +1131,13 @@ public class GridFragment extends Fragment
 
     }//playPigSound
 
+    /**
+     * Sets the score buttons, used in loading.
+     * @param p1ScoreButton player one's score button.
+     * @param p2ScoreButton player two's score button.
+     */
+    public void setScoreButtons(Button p1ScoreButton, Button p2ScoreButton) {
+        this.p1ScoreButton = p1ScoreButton;
+        this.p2ScoreButton = p2ScoreButton;
+    }
 }//GridFragment

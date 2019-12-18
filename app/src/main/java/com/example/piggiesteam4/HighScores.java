@@ -128,8 +128,6 @@ public class HighScores {
                 largestGrid.clear();
                 break;
             default:
-                throw new AssertionError("Invalid counter value");
-                //return false;
         }//switch
         return true;
     }//resetScores
@@ -198,8 +196,7 @@ public class HighScores {
                 }
                 return largestGrid.get(0);
             default:
-                throw new AssertionError("Invalid grid size");
-                //return null; //this should never happen
+                return null; //this should never happen
         }//switch
     }//getHighScores
 
@@ -267,8 +264,7 @@ public class HighScores {
                 sort(largestGrid);
                 return true;
             default:
-                throw new AssertionError("Invalid grid size");
-                //return false; //this should never happen
+                return false; //this should never happen
         }//switch
     }
 
@@ -277,26 +273,32 @@ public class HighScores {
      */
     public static void reduceSize(){
         boolean tooLarge = false;
+
         if (smallestGrid.size() >= 6){
             smallestGrid.remove(5);
             tooLarge = smallestGrid.size() >= 6;
         }//if
+
         if (smallGrid.size() >= 6){
             smallGrid.remove(5);
             tooLarge = tooLarge || smallGrid.size() >= 6;
         }//if
+
         if (mediumGrid.size() >= 6){
             mediumGrid.remove(5);
             tooLarge = tooLarge || mediumGrid.size() >= 6;
         }//if
+
         if (largeGrid.size() >= 6){
             largeGrid.remove(5);
             tooLarge = tooLarge || largeGrid.size() >= 6;
         }//if
+
         if (largestGrid.size() >= 6){
             largestGrid.remove(5);
             tooLarge = tooLarge || largestGrid.size() >= 6;
         }//if
+
         if (tooLarge){
             reduceSize();
         }//if

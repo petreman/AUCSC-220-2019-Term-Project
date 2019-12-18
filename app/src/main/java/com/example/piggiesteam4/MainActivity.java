@@ -36,6 +36,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import android.widget.ZoomButton;
+
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import java.util.List;
@@ -104,8 +107,9 @@ public class MainActivity extends AppCompatActivity implements
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // tuggle the button and swap the games
+
                 changeGameModeIcon(customButton);
+
                 swap(currentGame.isMultiplayer());
                 toggleCurrentGame();
                 setScoreButtonColor();
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements
 
         showTopScore();
 
+        // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -195,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements
             fragmentTransaction.replace(R.id.fragment_container, multiPlayerFragment, "multiplayer");
             fragmentTransaction.commit();
         }//else
-
     }//swap
 
     /**
@@ -206,19 +210,20 @@ public class MainActivity extends AppCompatActivity implements
 
         setP1Color(getColor(R.color.red), getColor(R.color.lightRed));
 
-        if (isMultiPlayer) {
-            setP2Color(getColor(R.color.blue), getColor(R.color.lightBlue));
-            multiPlayer = new Game(size, true, p1Color, p2Color);
-            multiPlayerFragment = createGridFragment(isMultiPlayer);
-        }//if
-
-        else {
+         if(isMultiPlayer){
+             setP2Color(getColor(R.color.blue), getColor(R.color.lightBlue));
+             multiPlayer = new Game(size, true, p1Color,p2Color);
+             multiPlayerFragment = createGridFragment(isMultiPlayer);
+             multiPlayerFragment.setMain(this);
+         }
+         else{
             setP2Color(getColor(R.color.ai), getColor(R.color.aiLight));
-            singlePlayer = new Game(size, false, p1Color, p2Color);
+            singlePlayer = new Game(size,false,p1Color,p2Color);
             singlePlayerFragment = createGridFragment(isMultiPlayer);
-        }//else
+            singlePlayerFragment.setMain(this);
 
-    }//newGame
+         }//else
+     }// end of newGame
 
     /**
      * This basically tells the main activity that is has an options menu
@@ -402,6 +407,11 @@ public class MainActivity extends AppCompatActivity implements
         confirmation.setListener(listener);
     }//askForResetConfirmation
 
+     public void onLossAlert(){
+        OnLossFragment loss = new OnLossFragment();
+        loss.show(getSupportFragmentManager(), "onLoss");
+     }
+
     public void showTieAlert() {
         TieAlertFragment alert = new TieAlertFragment();
         alert.show(getSupportFragmentManager(), "tieAlert");
@@ -410,9 +420,9 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * Sets player 1's color locally
      * Also takes it's color's lighter version for un-highlighting
-     * <p>
+     *
      * Stored as an array of these two colors, as they're heavily associated with each other
-     * <p>
+     *
      * By Keegan
      *
      * @param color      - the main color of the player
@@ -549,28 +559,11 @@ public class MainActivity extends AppCompatActivity implements
         editor.putString("singleplayer", gson.toJson(singlePlayer));
         editor.putString("multiplayer", gson.toJson(multiPlayer));
         editor.putBoolean("isMulti", currentGame.isMultiplayer());
-        editor.putInt("gridSize", currentGame.getGrid().getX());
-        //editor.putString("currentPlayer", gson.toJson(currentPlayer));
+        editor.putInt("gridSizeSingle", singlePlayer.getGrid().getX());
+        editor.putInt("gridSizeMulti", multiPlayer.getGrid().getX());
         editor.commit();
 
-//        if (currentGame.isMultiplayer()) {
-//            pref = context.getSharedPreferences("multi", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putString("game", gson.toJson(multiPlayer));
-//            editor.putString("fragGame", gson.toJson(currentGame)); //see next comment in else
-//            editor.putBoolean("isMulti", false);
-//            editor.commit();
-//        }//if
-//        else{
-//            pref = context.getSharedPreferences("single", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putString("game", gson.toJson(singlePlayer));
-//            editor.putString("fragGame", gson.toJson(currentGame)); //these should be the same game instance remove later
-//            editor.putBoolean("isMulti", false);
-//            editor.commit();
-//        }
-
-    }//saveGame
+    }
 
     /**
      * @return
@@ -586,11 +579,16 @@ public class MainActivity extends AppCompatActivity implements
             boolean isMulti = pref.getBoolean("isMulti", true);
             String singlePlayerString = pref.getString("singleplayer", null);
             String multiPlayerString = pref.getString("multiplayer", null);
-            String currentPlayerString = pref.getString("currentPlayer", null);
+            int singleGridSize = pref.getInt("gridSizeSingle", 5);
+            int multiGridSize = pref.getInt("gridSizeMulti", 5);
+
+            newGame(singleGridSize * 11, false);
+            newGame(multiGridSize * 11, true);
 
             if (singlePlayerString != null) {
                 singlePlayer = gson.fromJson(singlePlayerString, Game.class);
                 if (singlePlayer != null) {
+                    singlePlayerFragment.setFragmentGame(singlePlayer);
                     singlePlayer.cyclePlayers();
                     isNull = true;
                 }
@@ -599,49 +597,56 @@ public class MainActivity extends AppCompatActivity implements
             if (multiPlayerString != null) {
                 multiPlayer = gson.fromJson(multiPlayerString, Game.class);
                 if (multiPlayer != null) {
+                    multiPlayerFragment.setFragmentGame(multiPlayer);
                     multiPlayer.cyclePlayers();
                     isNull = true;
                 }
             }//if
 
-            if (isMulti && !isNull) {
+            if (isMulti) {
                 currentGame = multiPlayer;
             }//if
-            else if (!isNull) {
+            else{
                 currentGame = singlePlayer;
             }//else
 
             requestedGridSize = pref.getInt("gridSize", DEFAULT_GRID_SIZE);
 
-//        if (currentPlayerString != null){
-//            currentPlayer = gson.fromJson(currentPlayerString, Player.class);
-//            Log.d("retrieveGame", "retrieved current player is: " + currentPlayer.getColor());
-//        }//if
-//        else{
-//            Log.d("retrieveGame", "currentPlayer not retrieved, nothing else should have been retrieved either");
-//        }
-
-
             try {
                 p1Score.setText(((Integer) currentGame.getPlayer1().getScore()).toString());
                 p2Score.setText(((Integer) currentGame.getPlayer2().getScore()).toString());
-                Log.d("retrieveGame", "Try to set scores from save");
-            }//try
+            }
 
             catch (NullPointerException e) {
                 p1Score.setText("0");
                 p2Score.setText("0");
-                Log.d("retrieveGame", "Fail to set scores from save, NULL value");
-            }//catch
+            }
 
-            Log.d("retrieveGame", "single game exists? " + (singlePlayer != null));
-            Log.d("retrieveGame", "multi game exists? " + (multiPlayer != null));
-            Log.d("retrieveGame", "current game exists? " + (currentGame != null));
-            Log.d("retrieveGame", "Retrieved P1 score " + currentGame.getPlayer1().getScore());
-            Log.d("retrieveGame", "Retrieved P2 score " + currentGame.getPlayer2().getScore());
+            Log.d("retrieving", "Adding fragments and showing");
+            FragmentManager fragManager = getSupportFragmentManager();
+            FragmentTransaction fragTrans = fragManager.beginTransaction();
+            if (isMulti){
+                fragTrans.add(R.id.fragment_container, multiPlayerFragment).commit();
+                multiPlayerFragment.setScoreButtons(p1Score, p2Score);
+                multiPlayerFragment.updateScoreView();
+            }
+            else{
+                fragTrans.add(R.id.fragment_container, singlePlayerFragment).commit();
+                singlePlayerFragment.setScoreButtons(p1Score, p2Score);
+                singlePlayerFragment.updateScoreView();
+            }
+            setScoreButtonColor();
+            ImageButton imageButton = (ImageButton) findViewById(R.id.tuggleBtn);
+            Log.e("setImage", "run");
+            if (isMulti){
+                Log.e("setImage", "Multiplayer");
+                imageButton.setImageResource(R.drawable.twopeople);
+            }
+            else{
+                Log.e("setImage", "Singleplayer");
+                imageButton.setImageResource(R.drawable.singleperson);
+            }
 
-//        p1Color = new int[]{currentGame.getPlayer1().getColor(), currentGame.getPlayer1().getColorLight()};
-//        p2Color = new int[]{currentGame.getPlayer2().getColor(), currentGame.getPlayer2().getColorLight()};
             return true;
         }//try
         catch (Exception e) {
@@ -673,9 +678,14 @@ public class MainActivity extends AppCompatActivity implements
                     game.endGame();
                     showTieAlert();
                 }//if
-                else {
+                else if (frag.fragmentGame.isMultiplayer() ||
+                        (frag.fragmentGame.getPlayer1().getScore() > frag.fragmentGame.getPlayer2().getScore())){
                     askForName(game);
                 }//else
+                else{
+                    game.endGame();
+                    onLossAlert();
+                }
 
                 HighScores.save(getApplicationContext());
                 saveGame();
@@ -766,19 +776,15 @@ public class MainActivity extends AppCompatActivity implements
         TextView bestScore = (TextView) findViewById(R.id.HighestScoreGrid);
         if (currentGame == null) {
             bestScore.setText(R.string.main_highscore_default);
-            Log.d("showTopScore", "IF");
             return;
         }
         HighScores.retrieveScores(getApplicationContext());
         HighScores.Score topScore = HighScores.getHighScore(currentGame.getGrid());
         List<HighScores.Score> aa = HighScores.getHighScores(0);
-        System.out.println(aa + " THIS IS LIST");
-        if (topScore == null) {
+        if (topScore == null){
             bestScore.setText(R.string.main_highscore_default);
-            Log.d("showTopScore", "IF");
             return;
         }
-        Log.d("showTopScore", "NOT IF");
         int score = topScore.getScore();
         bestScore.setText(getString(R.string.main_highscore) + score);
 

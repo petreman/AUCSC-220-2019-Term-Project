@@ -30,5 +30,6 @@
         Single Player and Multiplayer with one button. You can press the toggle button to do
         that action.\n\nFor more information on the different features of our app,
         please refer to our help menu.</string>
+    <string name="player_loss">You lose</string>
     <string name="todo">TODO</string>
 </resources>

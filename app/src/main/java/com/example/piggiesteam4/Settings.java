@@ -86,7 +86,6 @@ public class Settings {
         SharedPreferences.Editor editor = pref.edit();
         musicOn = pref.getBoolean("music", true);
         sfxOn = pref.getBoolean("sfx", true);
-
     }//save
 
 }//Settings
