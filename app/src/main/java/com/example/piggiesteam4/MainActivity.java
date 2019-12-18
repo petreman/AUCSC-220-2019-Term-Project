@@ -203,8 +203,12 @@ public class MainActivity extends AppCompatActivity implements
     }//swap
 
     /**
-     * @param size
-     * @param isMultiPlayer
+     * This function will be creating a fragment for the multiPlayer and singlePlayer
+     * the very first time the game is launched.
+     *
+     * by Arnold
+     * @param size-- the size of the game
+     * @param isMultiPlayer-- whether the game is multiplayer or not.
      */
     public void newGame(int size, boolean isMultiPlayer) {
 
@@ -519,7 +523,9 @@ public class MainActivity extends AppCompatActivity implements
     }//setScoreButtonColor
 
     /**
+     * This functions changes whether the game is in single player or multi player
      *
+     * By Arnold
      */
     public void toggleCurrentGame() {
 
