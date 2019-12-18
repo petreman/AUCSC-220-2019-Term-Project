@@ -330,6 +330,7 @@ public class GridFragment extends Fragment
 
         }//for
 
+        main.setScoreButtonColor();
     }//showSaved
 
     /**
@@ -443,6 +444,7 @@ public class GridFragment extends Fragment
                 }
             }).start();
         }
+
         if (fragmentGame.isGameOver()){
             listener.endGame(fragmentGame, this);
         }

@@ -32,4 +32,32 @@
         please refer to our help menu.</string>
     <string name="player_loss">You lose</string>
     <string name="todo">TODO</string>
+    <string name="about_alvin">Alvin is a second year computing science student. On this game,
+        Alvin worked in getting the proper scores sorted for the player and the AI, worked on the
+        high score, leaderboard and had major contributions in getting the AI implemented within
+        the game. If you have any questions in regards of the back end work, feel free to contact
+        ajwang@ualberta.ca.</string>
+    <string name="about_arnold">Arnold is a second year Computing Science Major. On this
+        application, Arnold worked on the creation of the AI algorithm, fragment switch
+        between Multi Player and Single Player,as well as the Player class.
+        If you have any questions regarding these areas, please feel free to contact
+        him a gihozo@ualberta.ca.</string>
+    <string name="about_keegan">Keegan is a third year Computing Science major. In this game,
+        he in swapping fragments between different grid sizes, designing the overall user
+        interface and finally working on the overall functionality of the grid. If you have petreman@ualberta.ca</string>
+    <string name="rules_info">The game is set in a pre defined grid chosen by the player.
+        Each player in the games takes a turn into placing a fence between two adjacents points
+        , If a point is made (by closing a fence), the current player gets another turn. The game
+        ends when all there is no more fences left to place on the grid.</string>
+    <string name="mode_info">The player is given an option to play with another player/friend
+        or against a computer. In both game modes, the same rules are applied.</string>
+    <string name="features_info">This game comes with several features. First, you are given
+        the opportunity to play with a friend through the Single Player and Multi Player option.
+        To do so, simply press the Tuggle Button on the top right corner of the screen.\n\nUpon press,
+        you will be directed into a new game where you can interact either with the AI or your
+        friend. In this game, you also get a chance to switch between multiple grids.
+        \n\nIndeed, within our game, you are given the chance to play within a 5x5, 6x6 and a 7x7
+        grid. Finally, our game has been build around a farm theme. This means that we have
+        designed our user experience to reflect that theme! You will hear sounds, see pigs and
+        fences reflecting that theme.</string>
 </resources>
