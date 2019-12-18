@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/testButton"
+        android:id="@+id/tuggleBtn"
         android:layout_width="69dp"
         android:layout_height="68dp"
         android:src="@drawable/tuggle"
@@ -42,7 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/HighestScoreGrid"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/p1ScoreButton"
@@ -77,7 +78,7 @@
         android:textColor="@android:color/primary_text_light_nodisable"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_container"
-        app:layout_constraintEnd_toStartOf="@+id/testButton"
+        app:layout_constraintEnd_toStartOf="@+id/tuggleBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/hamMenuButton"
         app:layout_constraintTop_toTopOf="parent" />

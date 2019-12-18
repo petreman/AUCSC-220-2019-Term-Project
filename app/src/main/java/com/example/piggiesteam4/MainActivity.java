@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView menuView = findViewById(R.id.navigationId);
         p1Score = (Button) findViewById(R.id.p1ScoreButton);
         p2Score = (Button) findViewById(R.id.p2ScoreButton);
-        final ImageButton customButton = findViewById(R.id.testButton);
+        final ImageButton customButton = findViewById(R.id.tuggleBtn);
 
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
@@ -104,17 +104,8 @@ public class MainActivity extends AppCompatActivity implements
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (currentGame.isMultiplayer()) {
-                    Toast.makeText(MainActivity.this, "You are now in single player mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.singleperson);
-                }//if
-
-                else {
-                    Toast.makeText(MainActivity.this, "You are now in multi player Mode", Toast.LENGTH_SHORT).show();
-                    customButton.setImageResource(R.drawable.twopeople);
-                }//else
-
+                // tuggle the button and swap the games
+                changeGameModeIcon(customButton);
                 swap(currentGame.isMultiplayer());
                 toggleCurrentGame();
                 setScoreButtonColor();
@@ -133,20 +124,8 @@ public class MainActivity extends AppCompatActivity implements
             }//onClick
         });
 
-//        int p1sc = currentGame.getPlayer1().getScore();
-//        int p2sc = currentGame.getPlayer2().getScore();
-//        currentGame.getPlayer1().setWhichplayer(1);
-//        currentGame.getPlayer2().setWhichplayer(2);
-//        currentPlayer = currentGame.getCurrentPlayer();
         showTopScore();
-//
-//        Log.d("AfterRetrieval", "P1 Score " + p1sc);
-//        Log.d("AfterRetrieval", "P2 Score " + p2sc);
-//        Log.d("AfterRetrieval", "Is current game multiplayer " + currentGame.isMultiplayer());
-//        Log.d("AfterRetrieval", "Is current game  equal to multiplayer " + (currentGame==multiPlayer));
-//        Log.d("AfterRetrieval", "Is current game  equal to singleplayer " + (currentGame==singlePlayer));
 
-        // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -161,10 +140,22 @@ public class MainActivity extends AppCompatActivity implements
 
     }//onCreate
 
-    /**
-     * This function will display a pop up message the very first time the game is opened. Afterwards
-     * the message will stop displaying.
-     *
+     private void changeGameModeIcon(ImageButton customButton) {
+         if (currentGame.isMultiplayer()) {
+             Toast.makeText(MainActivity.this, "You are now in Single Player mode",
+                     Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.singleperson);
+         }else{
+             Toast.makeText(MainActivity.this, "You are now in Multi Player Mode",
+                     Toast.LENGTH_SHORT).show();
+             customButton.setImageResource(R.drawable.twopeople);
+
+         }// else
+     }// changeGameModeIcon
+
+     /**
+     * This function will display a pop up message the very first time the game is opened.
+     * Afterwards the message will stop displaying.
      * By Arnold
      */
     private void popUpMenu() {
@@ -174,6 +165,9 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        Toast.makeText(MainActivity.this, "You are now in " +
+                                "Single Player mode. You are playing again'st the Computer",
+                                Toast.LENGTH_LONG).show();
                     }
                 })
                 .create().show();
@@ -528,10 +522,10 @@ public class MainActivity extends AppCompatActivity implements
 
     /**
      * Intentionally left blank
-     * <p>
+     *
      * Needs to be "implemented" for fragments to display
      * and not cause the app to throw an exception
-     * <p>
+     *
      * By Keegan
      *
      * @param uri - no idea
