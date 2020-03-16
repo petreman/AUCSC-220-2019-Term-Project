@@ -32,7 +32,7 @@ A simple Android game made in Android Studio by two other team members and I. Si
 
 ## How to Install
 ### Option 1:
-Clone this repo, open the project in [Android Studio](https://developer.android.com/studio), and either run the built-in Android emulator, or make an .apk of the project to install on your own device.
+Clone this repo, open the project in [Android Studio](https://developer.android.com/studio), and either install and run with the built-in Android emulator, or make an .apk of the project to install on your own device.
 
 ### Option 2
 Check the releases section for a premade .apk of the latest version.
