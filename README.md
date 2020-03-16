@@ -9,7 +9,6 @@ A simple Android game made in Android Studio by two other team members and I. Si
 - High score tracking with gameboard specific leaderboards
 
 ## Project Components
-The project itself was composed of:
 
 1. [Project Design Document](https://ualbertaca-my.sharepoint.com/:w:/g/personal/petreman_ualberta_ca/Eauz9nBTYTlGiRkrfQmCU40Bi1rED3KdrFAoD1-5n8yHVQ?e=Oq6Gaa)
    
