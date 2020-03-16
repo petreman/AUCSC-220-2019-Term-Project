@@ -1,7 +1,7 @@
 # Pigs In a Pen
 My Software Engineering I 2019 Term Project, which is an Android game made using Android Studio by two other team members and I. Similar to the games "[Dots and Boxes](https://en.wikipedia.org/wiki/Dots_and_Boxes)", but with a pig theme: "Lines" represent pens and "boxes" represent pens for pigs. The player takes turns against an AI or other human player, trying to enclose pigs of in pens. Whoever ends the game with the most points wins.
 
-## Features:
+## Features
 - Single player (vs computer player) and local multiplayer (vs another person o nthe same device)
 - Multiple gameboard sizes
 - Simplified UI with a single screen for all games, with a hamburger menu to view other options
@@ -34,5 +34,5 @@ My Software Engineering I 2019 Term Project, which is an Android game made using
 ### Option 1:
 Clone this repo, open the project in [Android Studio](https://developer.android.com/studio), and either install and run with the built-in Android emulator, or make an .apk of the project to install on your own device.
 
-### Option 2
+### Option 2:
 Check the releases section for a premade .apk of the latest version.
