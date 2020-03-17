@@ -2,7 +2,7 @@
 My Software Engineering I 2019 Term Project, which is an Android game made using Android Studio by two other team members and I. Similar to the games "[Dots and Boxes](https://en.wikipedia.org/wiki/Dots_and_Boxes)", but with a pig theme: "Lines" represent pens and "boxes" represent pens for pigs. The player takes turns against an AI or other human player, trying to enclose pigs of in pens. Whoever ends the game with the most points wins.
 
 ## Features
-- Single player (vs computer player) and local multiplayer (vs another person o nthe same device)
+- Single player (vs computer player) and local multiplayer (vs another person on the same device)
 - Multiple gameboard sizes
 - Simplified UI with a single screen for all games, with a hamburger menu to view other options
 - Instant swapping between computer and multiplayer games
